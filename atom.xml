@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[DataMan]]></title>
+  <link href="I'm a DataMan!/atom.xml" rel="self"/>
+  <link href="I'm a DataMan!/"/>
+  <updated>2016-05-02T13:27:37+08:00</updated>
+  <id>I'm a DataMan!/</id>
+  <author>
+    <name><![CDATA[]]></name>
+    
+  </author>
+  <generator uri="http://www.coderforart.com/">CoderForArt</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome to MWeb]]></title>
+    <link href="I'm a DataMan!/14269481407962.html"/>
+    <updated>2015-03-21T22:29:00+08:00</updated>
+    <id>I'm a DataMan!/14269481407962.html</id>
+    <content type="html"><![CDATA[
+<p>What is MWeb? MWeb is a Pro Markdown writing, note taking and static blog generator App.</p>
+
+<span id="more"></span><!-- more -->  
+
+<p>MWeb has two Mode, External Mode and Library Mode. 
+In External Mode, you can edit classic text and markdown files from anywhere on your Mac. As an example, you can point MWeb to a folder on Dropbox. Shortcuts <code>CMD + E</code> or <code>View</code> - <code>Open External</code> to open External Mode.
+Library Mode design for note taking and static blog/website generator. Shortcuts <code>CMD + L</code> or <code>View</code> - <code>Open Library</code> to open Library Mode. 
+External Mode&#39;s folders and Library Mode are supported <strong>Full Text Search</strong>, drag &amp; drop or paste to insert images.</p>
+
+<h2 id="toc_0">View Mode and Live Preview</h2>
+
+<p>For Minimal UI, MWeb&#39;s interface only has a few buttons. The right-top corner buttons shortcuts: <code>CMD + 7/8/9</code>. <code>CMD + 7</code> is Library Mode only. For enable Typewriter Scrolling, Dark Mode and switch panes, please check the <code>View</code> menu.</p>
+
+<ul>
+<li>Shortcut: <code>CMD + 1</code> to toggle Editor Only and Three Panes.</li>
+<li>Shortcut: <code>CMD + 2</code> to toggle Two Panes and Editor Only.</li>
+<li>Shortcut: <code>CMD + 3</code> to toggle Three Panes and Editor Only.</li>
+<li>Shortcut: <code>CMD + 4</code> to toggle Editor/Preview and Three Panes.</li>
+<li>Shortcut: <code>CMD + R</code> to toggle Editor and Live Preview.</li>
+</ul>
+
+<p><strong>Note</strong>: When <code>Preferences</code> - <code>General</code> - <code>Resize window when hide pane</code> is enable, shortcuts <code>CMD + 1/2/3/4</code> behavior will be changed. You can enable this option and try it. When the <code>Live Preview (CMD + R) open new window</code> is enable, shortcut <code>CMD + R</code> will open new window for Live Preview.</p>
+
+<h2 id="toc_1">More about MWeb</h2>
+
+<ul>
+<li>MWeb used Github Flavored Markdown syntax, please open <code>Help</code> - <code>Markdown syntax</code> for detail.</li>
+<li>MWeb official website: <a href="http://www.mweb.im">http://www.mweb.im</a></li>
+<li>MWeb documents: <code>Help</code> - <code>Help...</code> or <a href="http://www.mweb.im/help.html">http://www.mweb.im/help.html</a>.</li>
+</ul>
+
+<h2 id="toc_2">Help us to make MWeb better!</h2>
+
+<ol>
+<li>Tell your friends about MWeb.</li>
+<li>Send a feedback: <a href="mailto:coderforart+233@gmail.com">coderforart+233@gmail.com</a></li>
+<li>Leave a review or at least a rating in Mac App Store.</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Markdown syntax guide and writing on MWeb]]></title>
+    <link href="I'm a DataMan!/14269481403147.html"/>
+    <updated>2015-03-21T22:29:00+08:00</updated>
+    <id>I'm a DataMan!/14269481403147.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">Philosophy</h2>
+
+<blockquote>
+<p>Markdown is intended to be as easy-to-read and easy-to-write as is feasible.
+Readability, however, is emphasized above all else. A Markdown-formatted document should be publishable as-is, as plain text, without looking like it&#39;s been marked up with tags or formatting instructions.
+Markdown&#39;s syntax is intended for one purpose: to be used as a format for <em>writing</em> for the web.</p>
+</blockquote>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_1">Notice</h2>
+
+<p>You can use  <code>CMD + 4</code> or <code>CMD + R</code> to preview the result.</p>
+
+<h2 id="toc_2">Headers</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code># This is an `&lt;h1&gt;` tag
+## This is an `&lt;h2&gt;` tag
+###### This is an `&lt;h6&gt;` tag
+</code></pre>
+
+<p><strong>Result:</strong></p>
+
+<h1 id="toc_3">This is an <code>&lt;h1&gt;</code> tag</h1>
+
+<h2 id="toc_4">This is an <code>&lt;h2&gt;</code> tag</h2>
+
+<h6 id="toc_5">This is an <code>&lt;h6&gt;</code> tag</h6>
+
+<h2 id="toc_6">Emphasis</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>*This text will be italic*
+_This will also be italic_
+
+**This text will be bold**
+__This will also be bold__
+
+*You **can** combine them*
+</code></pre>
+
+<p><strong>Shortcuts:</strong>  <code>CMD + U</code>、<code>CMD + I</code>、<code>CMD + B</code>
+<strong>Result:</strong></p>
+
+<p><em>This text will be italic</em>
+<u>This will also be italic</u></p>
+
+<p><strong>This text will be bold</strong>
+<strong>This will also be bold</strong></p>
+
+<p>*You <strong>can</strong> combine them*</p>
+
+<h2 id="toc_7">Newlines</h2>
+
+<p>End a line with two or more spaces + enter.
+Just typing enter to newline,please set：<code>Preferences</code> - <code>Themes</code> - <code>Translate newlines to &lt;br&gt; tags</code>  enable ( default is enable )</p>
+
+<h2 id="toc_8">Lists</h2>
+
+<h3 id="toc_9">Unordered</h3>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>* Item 1 unordered list `* + SPACE`
+* Item 2
+* Item 2a unordered list `TAB + * + SPACE`
+* Item 2b
+</code></pre>
+
+<p><strong>Shortcuts:</strong>  <code>Option + U</code>
+<strong>Result:</strong></p>
+
+<ul>
+<li>Item 1 unordered list <code>* + SPACE</code></li>
+<li>Item 2
+
+<ul>
+<li>Item 2a unordered list <code>TAB + * + SPACE</code></li>
+<li>Item 2b</li>
+</ul></li>
+</ul>
+
+<h3 id="toc_10">Ordered</h3>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>1. Item 1 ordered list `Number + . + SPACE`
+2. Item 2 
+3. Item 3
+1. Item 3a ordered list `TAB + Number + . + SPACE`
+2. Item 3b
+</code></pre>
+
+<p><strong>Result:</strong></p>
+
+<ol>
+<li>Item 1 ordered list <code>Number + . + SPACE</code></li>
+<li>Item 2 </li>
+<li>Item 3
+
+<ol>
+<li>Item 3a ordered list <code>TAB + Number + . + SPACE</code></li>
+<li>Item 3b</li>
+</ol></li>
+</ol>
+
+<h3 id="toc_11">Task lists</h3>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>- [ ] task one not finish `- + SPACE + [ ]`
+- [x] task two finished `- + SPACE + [x]`
+</code></pre>
+
+<p><strong>Result:</strong></p>
+
+<ul>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> task one not finish <code>- + SPACE + [ ]</code>
+</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked /> task two finished <code>- + SPACE + [x]</code>
+</li>
+</ul>
+
+<h2 id="toc_12">Images</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>![GitHub set up](https://help.github.com/assets/images/site/set-up-git.gif)
+Format: ![Alt Text](url)
+</code></pre>
+
+<p><strong>Shortcuts:</strong>  <code>Control + Shift + I</code>
+The Library&#39;s document support drag &amp; drop or <code>CMD + V</code> paste or <code>CMD + Option + I</code> to insert  the picture.
+<strong>Result:</strong></p>
+
+<p><img src="https://help.github.com/assets/images/site/set-up-git.gif" alt="GitHub set up"/></p>
+
+<p>In MWeb, you can use <code>-w + Number</code> to control image width, for example, set the image width 140px:</p>
+
+<p><img src="https://help.github.com/assets/images/site/set-up-git.gif" alt="GitHub set up" style="width:140px;"/></p>
+
+<h2 id="toc_13">Links</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>email &lt;example@example.com&gt;
+[GitHub](http://github.com)
+autolink  &lt;http://www.github.com/&gt;
+</code></pre>
+
+<p><strong>Shortcuts:</strong>  <code>Control + Shift + L</code>
+The Library&#39;s document support drag &amp; drop or <code>CMD + Option + I</code> to insert attachment.
+<strong>Result:</strong></p>
+
+<p>An email <a href="mailto:example@example.com">example@example.com</a> link.
+<a href="http://github.com">GitHub</a>
+Automatic linking for URLs
+Any URL (like <a href="http://www.github.com/">http://www.github.com/</a>) will be automatically converted into a clickable link.</p>
+
+<h2 id="toc_14">Blockquotes</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>As Kanye West said:
+&gt; We&#39;re living the future so
+&gt; the present is our past.
+</code></pre>
+
+<p><strong>Shortcuts:</strong>  <code>CMD + Shift + B</code>
+<strong>Result:</strong></p>
+
+<p>As Kanye West said:</p>
+
+<blockquote>
+<p>We&#39;re living the future so
+the present is our past.</p>
+</blockquote>
+
+<h2 id="toc_15">Inline code</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>I think you should use an
+`&lt;addr&gt;` `code` element here instead.
+</code></pre>
+
+<p><strong>Shortcuts:</strong>  <code>CMD + K</code>
+<strong>Result:</strong></p>
+
+<p>I think you should use an
+<code>&lt;addr&gt;</code> <code>code</code> element here instead.</p>
+
+<h2 id="toc_16">Multi-line code</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>```js
+function fancyAlert(arg) {
+    if(arg) {
+        $.facebox({div:&#39;#foo&#39;})
+    }
+
+}
+```
+</code></pre>
+
+<p><strong>Shortcuts:</strong>  <code>CMD + Shift + K</code>
+<strong>Result:</strong></p>
+
+<pre><code class="language-js">function fancyAlert(arg) {
+    if(arg) {
+        $.facebox({div:&#39;#foo&#39;})
+    }
+
+}
+</code></pre>
+
+<h2 id="toc_17">Sequence and Flow chart</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>```sequence
+Andrew-&gt;China: Says Hello
+Note right of China: China thinks about it
+China--&gt;Andrew: How are you?
+Andrew-&gt;&gt;China: I am good thanks!
+```
+
+```flow
+st=&gt;start: Start:&gt;http://www.google.com[blank]
+e=&gt;end:&gt;http://www.google.com
+op1=&gt;operation: My Operation
+sub1=&gt;subroutine: My Subroutine
+cond=&gt;condition: Yes
+or No?:&gt;http://www.google.com
+io=&gt;inputoutput: catch something...
+
+st-&gt;op1-&gt;cond
+cond(yes)-&gt;io-&gt;e
+cond(no)-&gt;sub1(right)-&gt;op1
+```
+</code></pre>
+
+<p><strong>Result:</strong> ( Please enable  <code>Preferences</code> - <code>Themes</code> - <code>Enable sequence &amp; flow chart</code>, default is enable. )</p>
+
+<pre><code class="language-sequence">Andrew-&gt;China: Says Hello
+Note right of China: China thinks about it
+China--&gt;Andrew: How are you?
+Andrew-&gt;&gt;China: I am good thanks!
+</code></pre>
+
+<pre><code class="language-flow">st=&gt;start: Start:&gt;http://www.google.com[blank]
+e=&gt;end:&gt;http://www.google.com
+op1=&gt;operation: My Operation
+sub1=&gt;subroutine: My Subroutine
+cond=&gt;condition: Yes
+or No?:&gt;http://www.google.com
+io=&gt;inputoutput: catch something...
+
+st-&gt;op1-&gt;cond
+cond(yes)-&gt;io-&gt;e
+cond(no)-&gt;sub1(right)-&gt;op1
+</code></pre>
+
+<p>More info: <a href="http://bramp.github.io/js-sequence-diagrams/">http://bramp.github.io/js-sequence-diagrams/</a>, <a href="http://adrai.github.io/flowchart.js/">http://adrai.github.io/flowchart.js/</a></p>
+
+<h2 id="toc_18">Tables</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column
+</code></pre>
+
+<p>You can create tables by assembling a list of words and dividing them with hyphens - (for the first row), and then separating each column with a pipe |:</p>
+
+<p><strong>Result:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Content from cell 1</td>
+<td>Content from cell 2</td>
+</tr>
+<tr>
+<td>Content in the first column</td>
+<td>Content in the second column</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="toc_19">Strikethrough</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>(like ~~this~~)
+</code></pre>
+
+<p><strong>Result:</strong></p>
+
+<p>Any word wrapped with two tildes (like <del>this</del>) will appear crossed out.</p>
+
+<h2 id="toc_20">Horizontal Rules</h2>
+
+<p>Following lines will produce a horizontal rule:</p>
+
+<pre><code>***
+
+*****
+
+- - -
+</code></pre>
+
+<p><strong>Result:</strong></p>
+
+<hr/>
+
+<hr/>
+
+<hr/>
+
+<h2 id="toc_21">LaTex</h2>
+
+<p>Use double US dollars sign pair for Block level Math formula, and one US dollar sign pair for Inline Level.</p>
+
+<pre><code>For example this is a Block level $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$ formula, and this is an inline Level $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$ formula.
+
+\\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+{1+\frac{e^{-8\pi}} {1+\ldots} } } } \\]
+
+</code></pre>
+
+<p><strong>Result:</strong></p>
+
+<p>For example this is a Block level \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}\] formula, and this is an inline Level \(x = {-b \pm \sqrt{b^2-4ac} \over 2a}\) formula.</p>
+
+<p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]</p>
+
+<h2 id="toc_22">Footnote</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>This is a footnote:[^sample_footnote]
+</code></pre>
+
+<p><strong>Result:</strong></p>
+
+<p>This is a footnote:<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup></p>
+
+<h2 id="toc_23">Comment And Read More..</h2>
+
+<!-- comment -->
+
+<!-- more -->
+
+<p>Actions-&gt;Insert Read More Comment <em>OR</em> <code>CMD + .</code></p>
+
+<h2 id="toc_24">TOC</h2>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>```
+[TOC]
+```
+</code></pre>
+
+<p><strong>Result:</strong></p>
+
+<ul>
+<li>
+<a href="#toc_0">Philosophy</a>
+</li>
+<li>
+<a href="#toc_1">Notice</a>
+</li>
+<li>
+<a href="#toc_2">Headers</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_3">This is an <code>&lt;h1&gt;</code> tag</a>
+<ul>
+<li>
+<a href="#toc_4">This is an <code>&lt;h2&gt;</code> tag</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<a href="#toc_5">This is an <code>&lt;h6&gt;</code> tag</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_6">Emphasis</a>
+</li>
+<li>
+<a href="#toc_7">Newlines</a>
+</li>
+<li>
+<a href="#toc_8">Lists</a>
+<ul>
+<li>
+<a href="#toc_9">Unordered</a>
+</li>
+<li>
+<a href="#toc_10">Ordered</a>
+</li>
+<li>
+<a href="#toc_11">Task lists</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_12">Images</a>
+</li>
+<li>
+<a href="#toc_13">Links</a>
+</li>
+<li>
+<a href="#toc_14">Blockquotes</a>
+</li>
+<li>
+<a href="#toc_15">Inline code</a>
+</li>
+<li>
+<a href="#toc_16">Multi-line code</a>
+</li>
+<li>
+<a href="#toc_17">Sequence and Flow chart</a>
+</li>
+<li>
+<a href="#toc_18">Tables</a>
+</li>
+<li>
+<a href="#toc_19">Strikethrough</a>
+</li>
+<li>
+<a href="#toc_20">Horizontal Rules</a>
+</li>
+<li>
+<a href="#toc_21">LaTex</a>
+</li>
+<li>
+<a href="#toc_22">Footnote</a>
+</li>
+<li>
+<a href="#toc_23">Comment And Read More..</a>
+</li>
+<li>
+<a href="#toc_24">TOC</a>
+</li>
+</ul>
+
+
+<div class="footnotes">
+<hr/>
+<ol>
+
+<li id="fn1">
+<p>footnote text detail...&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>
