@@ -4,7 +4,7 @@
   <title><![CDATA[DataMan]]></title>
   <link href="http://yaozh1918.github.io/atom.xml" rel="self"/>
   <link href="http://yaozh1918.github.io/"/>
-  <updated>2016-05-02T14:49:10+08:00</updated>
+  <updated>2016-05-02T15:13:41+08:00</updated>
   <id>http://yaozh1918.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -74,11 +74,11 @@ cond(no)-&gt;sub1(right)-&gt;op1
 
 <p>My avatar.</p>
 
-<p><img src="media/14621706709086/icon.jpg" alt="icon"/></p>
+<p><img src="http://ooo.0o0.ooo/2016/05/02/5726ffee18657.jpg" alt="icon"/></p>
 
-<p>Resize and center</p>
+<p>Resize and center.</p>
 
-<p><img src="media/14621706709086/icon.jpg" alt="icon" class="mw_img_center" style="width:100px;display: block; clear:both; margin: 0 auto;"/></p>
+<p><img src="http://ooo.0o0.ooo/2016/05/02/5726ffee18657.jpg" alt="icon" class="mw_img_center" style="width:100px;display: block; clear:both; margin: 0 auto;"/></p>
 
 ]]></content>
   </entry>
