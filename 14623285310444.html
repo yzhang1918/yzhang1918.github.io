@@ -125,12 +125,16 @@
       <div class="article-content">
       <p>It&#39;s said that <code>pygame</code> provided on their <a href="http://www.pygame.org/download.shtml">website</a> is not compatible with Mac system python because <code>pygame</code> is built for 32 bit python while system python is 64 bit. </p>
 
+<span id="more"></span><!-- more -->
+
 <p>Luckily I have found a <a href="https://bitbucket.org/pygame/pygame/issues/82/homebrew-on-leopard-fails-to-install#comment-627494">solution</a> and now I post it on my blog in case I forget it.</p>
 
 <pre><code>brew install mercurial
 brew install sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi 
 sudo pip install hg+http://bitbucket.org/pygame/pygame
 </code></pre>
+
+<p>After installation, you can validate it via this interesting <a href="https://github.com/sourabhv/FlapPyBird">repo</a>.</p>
 
       </div>
 
