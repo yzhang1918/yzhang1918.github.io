@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Archives - YaoZh1918
+  Installing phpMyAdmin on Ubuntu - YaoZh1918
   
   </title>
   
@@ -95,80 +95,152 @@
 
  <script type="text/javascript">
   $(function(){
-    $('#menu_item_archives').addClass('is_active');
+    $('#menu_item_index').addClass('is_active');
   });
 </script>
 <div class="row">
   <div class="large-8 medium-8 columns">
-    <div id="archives-page-wrap">
-        <h1>Archives</h1>
-        <div class="markdown-body archives-wrap">
+      <div class="markdown-body article-wrap">
+       <div class="article">
           
-             
-                <h1>2016</h1>
-            
-            <div class="article">
-              <a class="clearlink" href="14633851869005.html">
-                <h1>Installing phpMyAdmin on Ubuntu</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/16</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='linux.html'>Linux</a></span>
-                 
-              </div>
-            </div><!-- article -->
+          <h1>Installing phpMyAdmin on Ubuntu</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2016/5/16</span>
 
+          <span>posted in&nbsp;</span> 
           
-            
-            <div class="article">
-              <a class="clearlink" href="14623285310444.html">
-                <h1>Installing Pygame on Mac OS X</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/4</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='python.html'>Python</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14621764503901.html">
-                <h1>Sort 3x3 grid by rotating 2x2 subgrids</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/2</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='algorithm.html'>Algorithm</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14621706709086.html">
-                <h1>开博客啦！</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/2</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='idle-talk.html'>Idle Talk</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
+              <span class="posted-in"><a href='linux.html'>Linux</a></span>
            
+         
+          <span class="comments">
+            
+
+            
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14633851869005.html" data-count-type="comments" href="14633851869005.html#ds-thread"></a>
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>This article is used to record the installation steps of phpMyAdmin.</p>
+
+<span id="more"></span><!-- more -->
+
+<p>These days, I have a large dataset to deal with, which contains several tables. So I want to use a database to store it. And finally I chose <code>mysql</code>, but I found it was hard to have an intuitive insight into dataset through command line. A GUI was needed. It seemed that <code>phpMyAdmin</code> could meet my need. But installing was not very easy, so I wrote this article to record the correct steps in case I forget.</p>
+
+<p>Besides, my operating system is <code>Ubuntu 14.04.4 LTS</code>.</p>
+
+<h2 id="toc_0">Install Apache</h2>
+
+<p><a href="http://my.oschina.net/tinydeng/blog/338579?fromerr=6i6O5LLs">This</a> article shows a correct and convenient way.</p>
+
+<p>First, update the package lists.</p>
+
+<p><code>sudo apt-get update</code></p>
+
+<p>And then, install apache. Note that the package name is <code>apache2</code>.</p>
+
+<p><code>sudo apt-get install apache2</code></p>
+
+<p>After installation, you can visit <code>localhost</code> to ensure installation succeeded. Henceforth, you can start the server by using <code>sudo apachectl -k start</code>, or stop it by using <code>sudo apachectl -k stop</code>.</p>
+
+<h2 id="toc_1">Install php</h2>
+
+<p>Well, it&#39;s quiet easy.</p>
+
+<p><code>sudo apt-get install php5 libapache2-mod-php5</code></p>
+
+<p>Maybe the apache server need restarted.</p>
+
+<p><code>sudo apachectl -k restart</code></p>
+
+<h2 id="toc_2">Install mysql</h2>
+
+<p>In the <a href="http://my.oschina.net/tinydeng/blog/338579?fromerr=6i6O5LLs">article</a> I mentioned before, the author only installed <code>mysql-server</code>. But I installed 3 packages.</p>
+
+<p><code>sudo apt-get install mysql-server mysql-client libmysqlclient-dev</code></p>
+
+<p>During the installation, you will be asked to input the password of root user. If you want to use <code>phpMyAdmin</code>, you should set one, because your database can be visited through network by other users. </p>
+
+<p>I doubt there may be some other packages needed. I&#39;m sorry I don&#39;t remember it. You can install them all, just in case. XD</p>
+
+<p><code>sudo apt-get install php5-mysql php5-curl php5-gd</code></p>
+
+<h2 id="toc_3">Install phpMyAdmin</h2>
+
+<p>Finally, install <code>phpMyAdmin</code>.</p>
+
+<p><code>sudo apt-get install phpmyadmin</code></p>
+
+<p>During the installation, you will be asked to choose whether to use default settings or not(Of course choose yes) and a password is required.</p>
+
+<p>Your <code>phpMyAdmin</code> will be installed automatically under <code>/usr/share/phpMyAdmin</code>, so you should make a symbolic link of this folder in <code>/var/www/html</code>.</p>
+
+<p><code>sudo ln -s /usr/share/phpmyadmin/ /var/www/html/</code></p>
+
+<h2 id="toc_4">An unexpected error</h2>
+
+<p>When I logged in the phpMyAdmin, there was a warning, saying &#39;The mcrypt extension is missing. Please check your PHP configuration&#39;. There is a solution on <a href="http://stackoverflow.com/questions/22721630/the-mcrypt-extension-is-missing-please-check-your-php-configuration/">stackoverflow</a>. The top voted answer offered a 4-step solution:</p>
+
+<pre><code>sudo apt-get install php5-mcrypt
+sudo ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available
+sudo php5enmod mcrypt 
+sudo service apache2 restart
+</code></pre>
+
+<p>But actually, the last 2 steps are enough, at least for me.</p>
+
+<h2 id="toc_5">Job Done!</h2>
+
+<p>Now you can enjoy your <code>mysql</code> using GUI through <code>localhost/phpmyadmin</code>!</p>
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14623285310444.html" 
+          title="Next Post: Installing Pygame on Mac OS X">Installing Pygame on Mac OS X &raquo;</a>
+      
+      </p>
         </div>
       </div>
-  </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_fb"></a>
+	<a class="jiathis_button_twitter"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          
+
+          
+              <div class="ds-thread" data-thread-key="14633851869005.html" data-url="http://yaozh1918.github.io/14633851869005.html" data-title="Installing phpMyAdmin on Ubuntu"></div>
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
