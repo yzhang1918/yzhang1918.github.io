@@ -1,24 +1,131 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-
-  <title><![CDATA[YaoZh1918]]></title>
-  <link href="http://yaozh1918.github.io/atom.xml" rel="self"/>
-  <link href="http://yaozh1918.github.io/"/>
-  <updated>2016-05-16T18:46:58+08:00</updated>
-  <id>http://yaozh1918.github.io/</id>
-  <author>
-    <name><![CDATA[]]></name>
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
     
-  </author>
-  <generator uri="http://www.mweb.im/">MWeb</generator>
+  MongoDB安装及pymongo入门 - YaoZh1918
   
-  <entry>
-    <title type="html"><![CDATA[MongoDB安装及pymongo入门]]></title>
-    <link href="http://yaozh1918.github.io/14641625300131.html"/>
-    <updated>2016-05-25T15:48:50+08:00</updated>
-    <id>http://yaozh1918.github.io/14641625300131.html</id>
-    <content type="html"><![CDATA[
-<p>在自己的ubuntu上装MongoDB时遇到了一些问题，装好也不太会用，写篇文章记录下吧！</p>
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="YaoZh1918" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site:yaozh1918.github.io ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        <li id="menu_item_index"><a href="index.html">HOME</a></li>
+        <li id="menu_item_archives"><a href="archives.html">Archives</a></li>
+        <li id="menu_item_about"><a href="about.html">ABOUT</a></li>
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; YaoZh1918</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+       
+       <li><a href="index.html">HOME</a></li>
+    <li><a href="archives.html">Archives</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="idle-talk.html">Idle Talk</a></li>
+        
+            <li><a href="algorithm.html">Algorithm</a></li>
+        
+            <li><a href="python.html">Python</a></li>
+        
+            <li><a href="linux.html">Linux</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>MongoDB安装及pymongo入门</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2016/5/25</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='linux.html'>Linux</a></span>
+           
+         
+          <span class="comments">
+            
+
+            
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14641625300131.html" data-count-type="comments" href="14641625300131.html#ds-thread"></a>
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>在自己的ubuntu上装MongoDB时遇到了一些问题，装好也不太会用，写篇文章记录下吧！</p>
 
 <span id="more"></span><!-- more -->
 
@@ -351,277 +458,215 @@ result.deleted_count
 ])
 </code></pre>
 
-]]></content>
-  </entry>
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14633851869005.html" 
+          title="Next Post: Installing phpMyAdmin on Ubuntu">Installing phpMyAdmin on Ubuntu &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_fb"></a>
+	<a class="jiathis_button_twitter"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          
+
+          
+              <div class="ds-thread" data-thread-key="14641625300131.html" data-url="http://yaozh1918.github.io/14641625300131.html" data-title="MongoDB安装及pymongo入门"></div>
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="asset/icon.jpg" /></div>
+            
+                <h1>YaoZh1918</h1>
+                <div class="site-des">I'm DataMan!</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/YaoZh1918" title="GitHub">GitHub</a>
+
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="idle-talk.html"><strong>Idle Talk</strong></a>
+        
+            <a href="algorithm.html"><strong>Algorithm</strong></a>
+        
+            <a href="python.html"><strong>Python</strong></a>
+        
+            <a href="linux.html"><strong>Linux</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="14641625300131.html">MongoDB安装及pymongo入门</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14633851869005.html">Installing phpMyAdmin on Ubuntu</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14623285310444.html">Installing Pygame on Mac OS X</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14621764503901.html">Sort 3x3 grid by rotating 2x2 subgrids</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14621706709086.html">开博客啦！</a>
+			      </li>
+		     
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
   
-  <entry>
-    <title type="html"><![CDATA[Installing phpMyAdmin on Ubuntu]]></title>
-    <link href="http://yaozh1918.github.io/14633851869005.html"/>
-    <updated>2016-05-16T15:53:06+08:00</updated>
-    <id>http://yaozh1918.github.io/14633851869005.html</id>
-    <content type="html"><![CDATA[
-<p>This article is used to record the installation steps of phpMyAdmin.</p>
 
-<span id="more"></span><!-- more -->
 
-<p>These days, I have a large dataset to deal with, which contains several tables. So I want to use a database to store it. And finally I chose <code>mysql</code>, but I found it was hard to have an intuitive insight into dataset through command line. A GUI was needed. It seemed that <code>phpMyAdmin</code> could meet my need. But installing was not very easy, so I wrote this article to record the correct steps in case I forget.</p>
-
-<p>Besides, my operating system is <code>Ubuntu 14.04.4 LTS</code>.</p>
-
-<h2 id="toc_0">Install Apache</h2>
-
-<p><a href="http://my.oschina.net/tinydeng/blog/338579?fromerr=6i6O5LLs">This</a> article shows a correct and convenient way.</p>
-
-<p>First, update the package lists.</p>
-
-<p><code>sudo apt-get update</code></p>
-
-<p>And then, install apache. Note that the package name is <code>apache2</code>.</p>
-
-<p><code>sudo apt-get install apache2</code></p>
-
-<p>After installation, you can visit <code>localhost</code> to ensure installation succeeded. Henceforth, you can start the server by using <code>sudo apachectl -k start</code>, or stop it by using <code>sudo apachectl -k stop</code>.</p>
-
-<h2 id="toc_1">Install php</h2>
-
-<p>Well, it&#39;s quiet easy.</p>
-
-<p><code>sudo apt-get install php5 libapache2-mod-php5</code></p>
-
-<p>Maybe the apache server need restarted.</p>
-
-<p><code>sudo apachectl -k restart</code></p>
-
-<h2 id="toc_2">Install mysql</h2>
-
-<p>In the <a href="http://my.oschina.net/tinydeng/blog/338579?fromerr=6i6O5LLs">article</a> I mentioned before, the author only installed <code>mysql-server</code>. But I installed 3 packages.</p>
-
-<p><code>sudo apt-get install mysql-server mysql-client libmysqlclient-dev</code></p>
-
-<p>During the installation, you will be asked to input the password of root user. If you want to use <code>phpMyAdmin</code>, you should set one, because your database can be visited through network by other users. </p>
-
-<p>I doubt there may be some other packages needed. I&#39;m sorry I don&#39;t remember it. You can install them all, just in case. XD</p>
-
-<p><code>sudo apt-get install php5-mysql php5-curl php5-gd</code></p>
-
-<h2 id="toc_3">Install phpMyAdmin</h2>
-
-<p>Finally, install <code>phpMyAdmin</code>.</p>
-
-<p><code>sudo apt-get install phpmyadmin</code></p>
-
-<p>During the installation, you will be asked to choose whether to use default settings or not(Of course choose yes) and a password is required.</p>
-
-<p>Your <code>phpMyAdmin</code> will be installed automatically under <code>/usr/share/phpMyAdmin</code>, so you should make a symbolic link of this folder in <code>/var/www/html</code>.</p>
-
-<p><code>sudo ln -s /usr/share/phpmyadmin/ /var/www/html/</code></p>
-
-<h2 id="toc_4">An unexpected error</h2>
-
-<p>When I logged in the phpMyAdmin, there was a warning, saying &#39;The mcrypt extension is missing. Please check your PHP configuration&#39;. There is a solution on <a href="http://stackoverflow.com/questions/22721630/the-mcrypt-extension-is-missing-please-check-your-php-configuration/">stackoverflow</a>. The top voted answer offered a 4-step solution:</p>
-
-<pre><code>sudo apt-get install php5-mcrypt
-sudo ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available
-sudo php5enmod mcrypt 
-sudo service apache2 restart
-</code></pre>
-
-<p>But actually, the last 2 steps are enough, at least for me.</p>
-
-<h2 id="toc_5">Job Done!</h2>
-
-<p>Now you can enjoy your <code>mysql</code> using GUI through <code>localhost/phpmyadmin</code>!</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing Pygame on Mac OS X]]></title>
-    <link href="http://yaozh1918.github.io/14623285310444.html"/>
-    <updated>2016-05-04T10:22:11+08:00</updated>
-    <id>http://yaozh1918.github.io/14623285310444.html</id>
-    <content type="html"><![CDATA[
-<p>It&#39;s said that <code>pygame</code> provided on their <a href="http://www.pygame.org/download.shtml">website</a> is not compatible with Mac system python because <code>pygame</code> is built for 32 bit python while system python is 64 bit. </p>
-
-<span id="more"></span><!-- more -->
-
-<p>Luckily I have found a <a href="https://bitbucket.org/pygame/pygame/issues/82/homebrew-on-leopard-fails-to-install#comment-627494">solution</a> and now I post it on my blog in case I forget it.</p>
-
-<pre><code>brew install mercurial
-brew install sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi 
-sudo pip install hg+http://bitbucket.org/pygame/pygame
-</code></pre>
-
-<p>After installation, you can validate it via this interesting <a href="https://github.com/sourabhv/FlapPyBird">repo</a>.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Sort 3x3 grid by rotating 2x2 subgrids]]></title>
-    <link href="http://yaozh1918.github.io/14621764503901.html"/>
-    <updated>2016-05-02T16:07:30+08:00</updated>
-    <id>http://yaozh1918.github.io/14621764503901.html</id>
-    <content type="html"><![CDATA[
-<p>Given a 3x3 grid filled with 1-9, how do you sort it to another given grid by rotating 2x2 subgrids?</p>
-
-<p>Some discussions can be found <a href="http://stackoverflow.com/questions/23433442/sort-3x3-grid-by-rotating-2x2-subgrids">here</a>.</p>
-
-<span id="more"></span><!-- more -->
-
-<pre><code>import numpy as np
-from Queue import Queue
-
-
-class Sort_Grid:
-
-    def __init__(self, S=123456789, T=947852361):
-        self.source = S
-        self.terminal = T
-
-    def num2array(self, num):
-        ret = np.zeros(9, np.uint8)
-        for i in xrange(9):
-            ret[i] = num / 10**(8-i)
-            num -= ret[i] * 10**(8-i)
-        return ret
-
-    def array2num(self, arr):
-        return np.sum(arr * 10**np.arange(8,-1,-1))
-
-    def biBFS(self):
-        self.basis = [[0,0], [0,1], [1,0], [1,1]]
-        self.subbasis = [[1,3,0,2], [2,0,3,1]]
-        self.lookup = [np.zeros(987654321+1, bool) for i in range(2)]
-        self.queue = [Queue() for i in range(2)]
-        self.lookup[0][self.source] = True
-        self.lookup[1][self.terminal] = True
-        level0 = 0
-        level1 = 0
-        c0 = self.source
-        c1 = self.terminal
-        if c0 == c1:
-            return 0, 0, 0
-        while True:
-            if level0 &lt; level1:
-                midstate = self.EnQueue(c0, level0, 0)
-                if midstate:
-                    return midstate, level0, level1
-                c0, level0 = self.queue[0].get()
-            else:
-                midstate = self.EnQueue(c1, level1, 1)
-                if midstate:
-                    return midstate, level0, level1
-                c1, level1 = self.queue[1].get()
-
-    def EnQueue(self, state, level, ind):
-        array = self.num2array(state)
-        for i in range(4):
-            shadow = array.copy()
-            x, y = self.basis[i]
-            base = np.array([x*3+y, x*3+y+1, (x+1)*3+y, (x+1)*3+y+1])
-            for j in range(2):
-                shadow[base] = array[base[self.subbasis[j]]]
-                num = self.array2num(shadow)
-                if ~self.lookup[ind][num]:
-                    if self.lookup[1-ind][num]:
-                        return num
-                    self.queue[ind].put((num, level+1))
-                    self.lookup[ind][num] = True
-
-def biBFS(S, T, seqlist):
-    if S == T:
-        return
-    mid, l0, l1 = Sort_Grid(S, T).biBFS()
-    if mid==0 or mid in seqlist:
-        return
-    seqlist.insert(seqlist.index(S)+1, mid)
-    biBFS(S, mid, seqlist)
-    biBFS(mid, T, seqlist)
-
-def main():
-    S = 123456789
-    T = 947852361
-    seqlist = [S, T]
-    biBFS(S, T, seqlist)
-    return seqlist
-
-if __name__ == &#39;__main__&#39;:
-    main()
-
-</code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[开博客啦！]]></title>
-    <link href="http://yaozh1918.github.io/14621706709086.html"/>
-    <updated>2016-05-02T14:31:10+08:00</updated>
-    <id>http://yaozh1918.github.io/14621706709086.html</id>
-    <content type="html"><![CDATA[
-<p>终于开了一个博客，感谢有<code>MWeb</code>这么好用的软件。
-之前一直用的作业部落的<code>Cmd Markdown</code>，也很不错，也感谢一下XD。但比起<code>MWeb</code>还是逊色不少，这个可以直接生成静态页面，几步就可以挂到<code>Github Pages</code>上了，方便的很！图片、URL什么的插入都很方便。安利一波！</p>
-
-<span id="more"></span><!-- more -->
-
-<p>那么这个博客就主要记录一下关于Machine Learning, Data Mining的一些内容吧，可能还会有一些基本的算法、编程语言、数学的内容。</p>
-
-<p>接下来的内容仅仅是测试一下各项功能是否正常。</p>
-
-<ul>
-<li>
-<a href="#toc_0">LaTex</a>
-</li>
-<li>
-<a href="#toc_1">Sequence and Flow Chart</a>
-</li>
-<li>
-<a href="#toc_2">Images</a>
-</li>
-</ul>
-
-
-<h2 id="toc_0">LaTex</h2>
-
-<p>For example this is a Block level \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}\] formula, and this is an inline Level \(x = {-b \pm \sqrt{b^2-4ac} \over 2a}\) formula.</p>
-
-<p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
-1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
-{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]</p>
-
-<h2 id="toc_1">Sequence and Flow Chart</h2>
-
-<pre><code class="language-sequence">Andrew-&gt;China: Says Hello
-Note right of China: China thinks about it
-China--&gt;Andrew: How are you?
-Andrew-&gt;&gt;China: I am good thanks!
-</code></pre>
-
-<pre><code class="language-flow">st=&gt;start: Start:&gt;http://www.google.com[blank]
-e=&gt;end:&gt;http://www.google.com
-op1=&gt;operation: My Operation
-sub1=&gt;subroutine: My Subroutine
-cond=&gt;condition: Yes
-or No?:&gt;http://www.google.com
-io=&gt;inputoutput: catch something...
-
-st-&gt;op1-&gt;cond
-cond(yes)-&gt;io-&gt;e
-cond(no)-&gt;sub1(right)-&gt;op1
-</code></pre>
-
-<h2 id="toc_2">Images</h2>
-
-<p>My avatar.</p>
-
-<p><img src="http://ooo.0o0.ooo/2016/05/02/5726ffee18657.jpg" alt="icon"/></p>
-
-<p>Resize and center.</p>
-
-<p><img src="http://ooo.0o0.ooo/2016/05/02/5726ffee18657.jpg" alt="icon" class="mw_img_center" style="width:100px;display: block; clear:both; margin: 0 auto;"/></p>
-
-]]></content>
-  </entry>
-  
-</feed>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'yaozh1918'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"><div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"><div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?35d23b19c3170fe7309d3c4385cfd8ba";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77357711-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
