@@ -4,7 +4,7 @@
   <title><![CDATA[YaoZh1918]]></title>
   <link href="http://yaozh1918.github.io/atom.xml" rel="self"/>
   <link href="http://yaozh1918.github.io/"/>
-  <updated>2016-05-16T18:46:58+08:00</updated>
+  <updated>2016-05-25T21:51:14+08:00</updated>
   <id>http://yaozh1918.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -82,9 +82,11 @@
 
 <h2 id="toc_0">安装</h2>
 
-<p>安装还是按照<a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/">官方教程</a>比较好，虽然<code>apt-get</code>中有个<code>mongodb</code>，但我们用的不是这个。</p>
+<p>我的系统是<code>Ubuntu 14.04.4 LTS</code>.</p>
 
-<p>安装过程也比较无脑，找着做就好了：</p>
+<p>安装还是按照<a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/">官方教程</a>比较好，虽然<code>ubuntu</code>的<code>apt-get</code>中有个<code>mongodb</code>，但我们用的不是这个。</p>
+
+<p>安装过程也比较无脑，照着做就好了：</p>
 
 <pre><code>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 echo &quot;deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
@@ -107,13 +109,15 @@ sudo service mongod restart
 
 <h2 id="toc_2">PyMongo</h2>
 
-<p>按照<a href="https://docs.mongodb.com/getting-started/python/">官网</a>的教程，记录一下一些常用的函数。</p>
+<p>感觉shell不是很给力，就直接看pymongo的教程吧，下面是按照<a href="https://docs.mongodb.com/getting-started/python/">官网</a>的教程，和api的<a href="http://api.mongodb.com/python/current/index.html">文档</a>整理写的一些基本函数。</p>
 
-<p>首先导入官网给出的一个数据：</p>
+<p>首先导入官网给出的一个数据，我们后面的教程都会在这个数据上操作：</p>
 
 <pre><code>wget https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json
 mongoimport --db test --collection restaurants --drop --file primer-dataset.json
 </code></pre>
+
+<p>第一行是下载文件，第二行是将数据导入到名为test的database中名为restaurants的collection中。</p>
 
 <h3 id="toc_3">Installation</h3>
 
@@ -147,18 +151,18 @@ client = MongoClient(&#39;mongodb://localhost:27017/&#39;)
 
 <p>一般来说会看到一个叫<code>test</code>的数据库。</p>
 
-<p>连接到一个数据库有两种方法，第二种方法类似字典，如果数据库名有特殊字符就只能用这种。</p>
+<p>连接到一个数据库有两种方法，第二种方法类似dict，如果数据库名有特殊字符就只能用这种。</p>
 
 <pre><code>db = client.test
 db = client[&#39;a-database&#39;]
 </code></pre>
 
-<p>注意，MongoDB<strong>无需显示创建数据库</strong>，例如上面的代码，<code>a-database</code>如果不存在，此时会自动创建一个（其实也不是，只有真正对这个数据库进行操作后才会创建）。</p>
+<p>注意，MongoDB<strong>无需显式创建数据库</strong>，例如上面的代码，<code>a-database</code>如果不存在，此时会自动创建一个（其实也不是，只有真正对这个数据库进行操作后才会创建）。</p>
 
-<p>如果要删除一个database，则需要在<code>client</code>中操作：
-<code>
-db.drop_database(&#39;a_database&#39;)
-</code></p>
+<p>如果要删除一个database，则需要在<code>client</code>中操作：</p>
+
+<pre><code>db.drop_database(&#39;a_database&#39;)
+</code></pre>
 
 <p>现在我们进入<code>test</code>数据库进行后续的教程。</p>
 
@@ -166,17 +170,17 @@ db.drop_database(&#39;a_database&#39;)
 
 <p>因为<code>MongoDB</code>是<code>NoSQL</code>的，有一些概念与传统的RDBMS有区别，比如这个<code>collection</code>就类似于RDBMS中的关系表<code>table</code>，<code>table</code>是记录<code>row</code>的集合，而<code>collection</code>是<code>document</code>的集合。</p>
 
-<p>和操作database很像，两种连接方式，无须现实创建。</p>
+<p>和操作database很像，两种连接方式，无须显式创建。</p>
 
 <pre><code>db.collection_names()  # 查看当前数据库下的所有collection
 collection = db.restaurants
 collection = db[&#39;restaurants&#39;]
 </code></pre>
 
-<p>类似的，删除<code>collection</code>要在database中进行：
-<code>
-db.drop_collection(&#39;a_collection&#39;)
-</code></p>
+<p>类似的，删除<code>collection</code>要在database中进行：</p>
+
+<pre><code>db.drop_collection(&#39;a_collection&#39;)
+</code></pre>
 
 <h4 id="toc_8">Documents</h4>
 
@@ -260,15 +264,15 @@ find_one()  # 返回第一个document
 <pre><code>cursor = db.restaurants.find({&quot;grades.grade&quot;: &quot;B&quot;})
 </code></pre>
 
-<p>如果涉及到操作符，如大于小于，则用下面这种格式（dict套dict）：
-<code>
-{ &lt;field1&gt;: { &lt;operator1&gt;: &lt;value1&gt; } }
-</code></p>
+<p>如果涉及到操作符，如大于小于，则用下面这种格式（dict套dict）：</p>
 
-<p>比如
-<code>
-cursor = db.restaurants.find({&quot;grades.score&quot;: {&quot;$gt&quot;: 30}})
-</code></p>
+<pre><code>{ &lt;field1&gt;: { &lt;operator1&gt;: &lt;value1&gt; } }
+</code></pre>
+
+<p>比如</p>
+
+<pre><code>cursor = db.restaurants.find({&quot;grades.score&quot;: {&quot;$gt&quot;: 30}})
+</code></pre>
 
 <p>具体的操作符可以去看<a href="https://docs.mongodb.com/manual/reference/operator/">官方文档</a>。</p>
 
@@ -277,7 +281,7 @@ cursor = db.restaurants.find({&quot;grades.score&quot;: {&quot;$gt&quot;: 30}})
 <pre><code>cursor = db.restaurants.find({&quot;cuisine&quot;: &quot;Italian&quot;, &quot;address.zipcode&quot;: &quot;10075&quot;})
 </code></pre>
 
-<p><code>OR</code>则比较特殊，dict中用<code>&quot;$or&quot;</code>作为key，条件写在list中作value：</p>
+<p><code>OR</code>则比较特殊，dict中用<code>$or</code>作为key，条件写在list中作value：</p>
 
 <pre><code>cursor = db.restaurants.find(
     {&quot;$or&quot;: [{&quot;cuisine&quot;: &quot;Italian&quot;}, {&quot;address.zipcode&quot;: &quot;10075&quot;}]})
@@ -300,19 +304,19 @@ cursor = db.restaurants.find({&quot;grades.score&quot;: {&quot;$gt&quot;: 30}})
 <pre><code>cursor = db.restaurants.find().sort(&quot;borough&quot;, pymongo.ASCENDING)
 </code></pre>
 
-<p>注意，<code>sort</code>是inplace的，虽然也会返回一个<code>Cursor</code>，假如已经查询完返回了一个<code>Cursor</code>，则下面两句代码没有区别：
-<code>
-cursor = cursor.sort(&quot;borough&quot;, pymongo.ASCENDING)
+<p>注意，<code>sort</code>是inplace的，虽然也会返回一个<code>Cursor</code>，但假如已经查询完返回了一个<code>Cursor</code>，则下面两句代码没有区别：</p>
+
+<pre><code>cursor = cursor.sort(&quot;borough&quot;, pymongo.ASCENDING)
 cursor.sort(&quot;borough&quot;, pymongo.ASCENDING)
-</code></p>
+</code></pre>
 
 <h5 id="toc_12">update</h5>
 
 <p>类似的，本节也有两个函数<code>update_one</code>和<code>update_many</code>。</p>
 
-<p>只需将查询条件和更新内容作为两个参数传入即可，例如修改<code>cuisine</code>为<code>American (New)</code>（用到<code>$set</code>），修改<code>lastModified</code>为当前时间（用到<code>$currentDate</code>）：
-<code>
-result = db.restaurants.update_one(
+<p>只需将查询条件和更新内容作为两个参数传入即可，例如修改<code>cuisine</code>为<code>American (New)</code>（用到<code>$set</code>），修改<code>lastModified</code>为当前时间（用到<code>$currentDate</code>）：</p>
+
+<pre><code>result = db.restaurants.update_one(
     {&quot;name&quot;: &quot;Juni&quot;},
     {
         &quot;$set&quot;: {
@@ -323,7 +327,9 @@ result = db.restaurants.update_one(
 )
 result.matched_count  # 查找到的数量
 result.modified_count  # 实际修改的数量
-</code></p>
+</code></pre>
+
+<p>这个部分也有好多操作符，还是推荐去扫一遍<a href="https://docs.mongodb.com/manual/reference/operator/">官方文档</a>。</p>
 
 <p>这个是更新，如果要进行替换，可以用<code>replace_one</code>（并没有<code>replace_many</code>），第一个参数为条件，第二个参数为替换内容，替换后只有<code>_id</code>会保留。</p>
 
@@ -339,7 +345,7 @@ result.deleted_count
 
 <h4 id="toc_14">Aggregation</h4>
 
-<p>聚合这一块内容很复杂，通过<code>aggregate</code>可以实现SQL中的<code>group by</code>、<code>having</code>等功能，等有空再单独写一章吧。</p>
+<p>聚合这一块内容很复杂，通过<code>aggregate</code>可以实现SQL中的<code>group by</code>、<code>having</code>等功能，在3.2版本后，还可以实现<code>join</code>操作！坑比较大，等有空再单独写一章吧。</p>
 
 <h4 id="toc_15">Indexes</h4>
 
