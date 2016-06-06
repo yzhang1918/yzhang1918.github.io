@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Idle Talk - YaoZh1918
+  Ubuntu安装Nvidia驱动及tensorflow - YaoZh1918
   
   </title>
   
@@ -94,72 +94,177 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="14621706709086.html">
-                
-                  <h1>开博客啦！</h1>
-                  <div class="a-content">
-                      
-		                  <div class="a-content-img">
-                      		<img src="http://ooo.0o0.ooo/2016/05/02/5726ffee18657.jpg" />
-                      	  </div>
-		              
-                      <div class="a-content-text">
-                        
-                        	<p>终于开了一个博客，感谢有<code>MWeb</code>这么好用的软件。
-之前一直用的作业部落的<code>Cmd Markdown</code>，也很不错，也感谢一下XD。但比起<code>MWeb</code>还是逊色不少，这个可以直接生成静态页面，几步就可以挂到<code>Github Pages</code>上了，方便的很！图片、URL什么的插入都很方便。安利一波！</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Ubuntu安装Nvidia驱动及tensorflow</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2016/6/6</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='linux.html'>Linux</a></span>
+          
+              <span class="posted-in"><a href='python.html'>Python</a></span>
+           
+         
+          <span class="comments">
+            
+
+            
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14652179403403.html" data-count-type="comments" href="14652179403403.html#ds-thread"></a>
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>刚刚搞了台新机器，带的GTX960显卡，想装个ubuntu跑deep learning，在安装中遇到了一些问题，这里记录一下。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">安装Ubuntu</h2>
+
+<p>用u盘安装<code>64bit 14.04LTS</code>，不知道是不是显示器的原因，960没有vga的口，所以用了个vga转dvi的转接头，导致安装引导一进图形界面显示器就黑屏，显示分辨率超出范围。</p>
+
+<p>因此安装的时候要稍作处理，u盘一进引导就按<code>F1</code>，进入下图的这个界面，然后选择第一个试用或者第二个安装，按<code>F6</code>，可以看到一个参数<code>nomodeset</code>，回车选中，然后再回车开始。然而这个方法对我的电脑不管用，换用第二种方法，按<code>Tab</code>，在启动参数末尾删除<code>--</code>，再加上<code>nomodeset</code>，回车安装，此时分辨率会调整为<code>640x480</code>。</p>
+
+<p><img src="http://o6jlkx4pl.bkt.clouddn.com/2016-06-06-IMG_1360%20copy.jpg" alt="IMG_1360 copy " class="mw_img_center" style="display: block; clear:both; margin: 0 auto;"/></p>
+
+<p>系统装好后，应该还是进不去的，也要调为<code>nomodest</code>，或者简单一点，Grub时选择<code>Advanced-recovery mode-resume</code>。进系统安装nvidia驱动后应该就可以了。</p>
+
+<h2 id="toc_1">安装Nvidia驱动</h2>
+
+<p>安装nvidia驱动尝试了好久才装上去，一开始我是从官网上下载的驱动，安装没问题，但分辨率就被锁在<code>640x480</code>了，折腾了半天，后来发现了一个很方便的安装方法。</p>
+
+<p>打开<code>Additional Drivers</code>，然后直接选中驱动，apply，重启即可。</p>
+
+<p><img src="http://o6jlkx4pl.bkt.clouddn.com/2016-06-06-Screenshot%20from%202016-06-06%2019_30_39.png" alt="Additional Drivers " class="mw_img_center" style="display: block; clear:both; margin: 0 auto;"/></p>
+
+<h2 id="toc_2">安装python</h2>
+
+<p>图省事，我选择了直接安装<a href="https://www.continuum.io/downloads">Anaconda</a>，下载好<code>.sh</code>文件，我用的是2.7的版本，然后terminal执行：</p>
+
+<pre><code>bash ~/Downloads/Anaconda2-4.0.0-Linux-x86_64.sh
+</code></pre>
+
+<p>根据提示完成安装。</p>
+
+<p>完成后最好<code>source ~/.bashrc</code>一下。</p>
+
+<h2 id="toc_3">安装Cuda</h2>
+
+<p>首先从nvidia官网上下载<a href="https://developer.nvidia.com/cuda-downloads">Cuda Toolkit</a>和<a href="https://developer.nvidia.com/cudnn">cudnn</a>，其中cuDNN需要注册一个账号。</p>
+
+<p>先安装cuda，我下载的是<code>deb</code>文件，然后安装：</p>
+
+<pre><code>sudo dpkg -i cuda-repo-ubuntu1404-7-5-local_7.5-18_amd64.deb
+sudo apt-get update
+sudo apt-get install cuda
+</code></pre>
+
+<p>现在安装cudnn，按照tensorflow官网提示，安装v5要从源码安装tensorflow才行，懒得搞，直接下载v4版本的。然后复制文件到cuda的目录：</p>
+
+<pre><code>tar xvzf cudnn-7.0-linux-x64-v4.0-prod.tgz
+sudo cp cuda/include/* /usr/local/cuda/include
+sudo cp cuda/lib64/* /usr/local/cuda/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+</code></pre>
+
+<p>然后在<code>~/.bash_profile</code>中加入：</p>
+
+<pre><code>export LD_LIBRARY_PATH=&quot;$LD_LIBRARY_PATH:/usr/local/cuda/lib64&quot;
+export CUDA_HOME=/usr/local/cuda
+</code></pre>
+
+<p>最后再更新一下：<code>source .bash_profile</code>。</p>
+
+<h2 id="toc_4">安装Tensorflow</h2>
+
+<p>准备工作都已搞定，最后安装tensorflow即可，官网给出了anaconda环境的<a href="https://www.tensorflow.org/versions/r0.8/get_started/os_setup.html#anaconda-environment-installation">安装方法</a>，但我想把tensorflow安装到全局，而不是一个环境中，所以直接用pip安装即可。</p>
+
+<p>（下午第一次装的时候还是0.8的教程，晚上写这篇文章的时候就更新到了0.9...）</p>
+
+<p>找到gpu版本的地址：</p>
+
+<pre><code>$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow-0.9.0rc0-cp27-none-linux_x86_64.whl
+</code></pre>
+
+<p>然后用<code>pip</code>安装，注意我们要用anaconda中的pip：</p>
+
+<pre><code>$ sudo ~/anaconda2/bin/pip install --ignore-installed --upgrade $TF_BINARY_URL
+</code></pre>
+
+<p>其中，<code>--ignore-installed</code>是因为<code>easy_install</code>会报错。</p>
+
+<h2 id="toc_5">Test</h2>
+
+<p>至此，已全部安装好了！让我们来测试一下！</p>
+
+<pre><code>python -c &#39;import tensorflow&#39;
+</code></pre>
+
+<p>看到全是successfully opened...就可以了！</p>
+
+<p>也可以跑个cnn试一下：</p>
+
+<pre><code>python -m tensorflow.models.image.mnist.convolutional
+</code></pre>
+
+<p>gpu就是快啊，我的rmbp每步是要290ms左右，现在只要12ms，不说了，跑cnn去了XD</p>
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14641625300131.html" 
+          title="Next Post: MongoDB安装及pymongo入门">MongoDB安装及pymongo入门 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_fb"></a>
+	<a class="jiathis_button_twitter"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          
+
+          
+              <div class="ds-thread" data-thread-key="14652179403403.html" data-url="http://yaozh1918.github.io/14652179403403.html" data-title="Ubuntu安装Nvidia驱动及tensorflow"></div>
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14621706709086.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/5/2</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='idle-talk.html'>Idle Talk</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
 
-                      
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14621706709086.html" data-count-type="comments" href="14621706709086.html#ds-thread"></a>
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
-
-
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
