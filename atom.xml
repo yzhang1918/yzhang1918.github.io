@@ -4,7 +4,7 @@
   <title><![CDATA[YaoZh1918]]></title>
   <link href="http://yaozh1918.github.io/atom.xml" rel="self"/>
   <link href="http://yaozh1918.github.io/"/>
-  <updated>2016-05-26T09:05:20+08:00</updated>
+  <updated>2016-06-22T22:45:16+08:00</updated>
   <id>http://yaozh1918.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -111,6 +111,20 @@ export CUDA_HOME=/usr/local/cuda
 </code></pre>
 
 <p>gpu就是快啊，我的rmbp每步是要290ms左右，现在只要12ms，不说了，跑cnn去了XD</p>
+
+<h2 id="toc_6">Error</h2>
+
+<p>2016-6-22更新：</p>
+
+<p>有段时间没用，突然出现了这样的问题：</p>
+
+<pre><code>libcudart.so.7.5: cannot open shared object file: No such file or directory
+</code></pre>
+
+<p>解决方案：</p>
+
+<pre><code>sudo ldconfig /usr/local/cuda/lib64
+</code></pre>
 
 ]]></content>
   </entry>
@@ -669,8 +683,9 @@ if __name__ == &#39;__main__&#39;:
     <updated>2016-05-02T14:31:10+08:00</updated>
     <id>http://yaozh1918.github.io/14621706709086.html</id>
     <content type="html"><![CDATA[
-<p>终于开了一个博客，感谢有<code>MWeb</code>这么好用的软件。
-之前一直用的作业部落的<code>Cmd Markdown</code>，也很不错，也感谢一下XD。但比起<code>MWeb</code>还是逊色不少，这个可以直接生成静态页面，几步就可以挂到<code>Github Pages</code>上了，方便的很！图片、URL什么的插入都很方便。安利一波！</p>
+<p>终于开了一个博客，感谢有<code>MWeb</code>这么好用的软件。</p>
+
+<p>之前一直用的作业部落的<code>Cmd Markdown</code>，也很不错，也感谢一下XD。但比起<code>MWeb</code>还是逊色不少，这个可以直接生成静态页面，几步就可以挂到<code>Github Pages</code>上了，方便的很！图片、URL什么的插入都很方便。安利一波！</p>
 
 <span id="more"></span><!-- more -->
 
@@ -695,8 +710,8 @@ if __name__ == &#39;__main__&#39;:
 
 <p>For example this is a Block level \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}\] formula, and this is an inline Level \(x = {-b \pm \sqrt{b^2-4ac} \over 2a}\) formula.</p>
 
-<p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
-1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+<p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =<br/>
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}<br/>
 {1+\frac{e^{-8\pi}} {1+\ldots} } } } \]</p>
 
 <h2 id="toc_1">Sequence and Flow Chart</h2>

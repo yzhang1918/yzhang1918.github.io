@@ -110,9 +110,9 @@
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='linux.html'>Linux</a></span>
-          
               <span class="posted-in"><a href='python.html'>Python</a></span>
+          
+              <span class="posted-in"><a href='linux.html'>Linux</a></span>
            
          
           <span class="comments">
@@ -220,6 +220,20 @@ export CUDA_HOME=/usr/local/cuda
 </code></pre>
 
 <p>gpu就是快啊，我的rmbp每步是要290ms左右，现在只要12ms，不说了，跑cnn去了XD</p>
+
+<h2 id="toc_6">Error</h2>
+
+<p>2016-6-22更新：</p>
+
+<p>有段时间没用，突然出现了这样的问题：</p>
+
+<pre><code>libcudart.so.7.5: cannot open shared object file: No such file or directory
+</code></pre>
+
+<p>解决方案：</p>
+
+<pre><code>sudo ldconfig /usr/local/cuda/lib64
+</code></pre>
 
       </div>
 
