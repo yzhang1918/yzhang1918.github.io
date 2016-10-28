@@ -39,9 +39,11 @@
   <div class="row">
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
-        <li id="menu_item_index"><a href="index.html">HOME</a></li>
-        <li id="menu_item_archives"><a href="archives.html">Archives</a></li>
-        <li id="menu_item_about"><a href="about.html">ABOUT</a></li>
+        
+        <li id=""><a target="self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
         </ul>
 
         <ul class="right" id="search-wrap">
@@ -199,6 +201,9 @@ sudo service apache2 restart
 
 <p>Now you can enjoy your <code>mysql</code> using GUI through <code>localhost/phpmyadmin</code>!</p>
 
+
+    
+
       </div>
 
       <div class="row">
@@ -308,6 +313,18 @@ sudo service apache2 restart
 	      
 		      
 			      <li class="post">
+			        <a href="14776396449421.html">设置Server开机启动ssh服务</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14770379590045.html">构建一个可复用的Python实验环境(1)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14679024129375.html">cliclick: some basic usages</a>
 			      </li>
 		     
@@ -325,16 +342,8 @@ sudo service apache2 restart
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14633851869005.html">Installing phpMyAdmin on Ubuntu</a>
-			      </li>
-		     
 		  
 		      
-			      <li class="post">
-			        <a href="14623285310444.html">Installing Pygame on Mac OS X</a>
-			      </li>
-		     
 		  
 		      
 		  
@@ -394,7 +403,7 @@ var duoshuoQuery = {short_name:'yaozh1918'};
      
     </script>
 
-    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"><div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"><div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
+    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
 <script>
 var _hmt = _hmt || [];

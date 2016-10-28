@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Archives - YaoZh1918
+  设置Server开机启动ssh服务 - YaoZh1918
   
   </title>
   
@@ -99,157 +99,107 @@
 
  <script type="text/javascript">
   $(function(){
-    $('#menu_item_archives').addClass('is_active');
+    $('#menu_item_index').addClass('is_active');
   });
 </script>
 <div class="row">
   <div class="large-8 medium-8 columns">
-    <div id="archives-page-wrap">
-        <h1>Archives</h1>
-        <div class="markdown-body archives-wrap">
+      <div class="markdown-body article-wrap">
+       <div class="article">
           
-             
-                <h1>2016</h1>
-            
-            <div class="article">
-              <a class="clearlink" href="14776396449421.html">
-                <h1>设置Server开机启动ssh服务</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/10/28</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='linux.html'>Linux</a></span>
-                 
-              </div>
-            </div><!-- article -->
+          <h1>设置Server开机启动ssh服务</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2016/10/28</span>
 
+          <span>posted in&nbsp;</span> 
           
-            
-            <div class="article">
-              <a class="clearlink" href="14770379590045.html">
-                <h1>构建一个可复用的Python实验环境(1)</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/10/21</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='python.html'>Python</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14679024129375.html">
-                <h1>cliclick: some basic usages</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/7/7</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='Mac.html'>Mac</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14652179403403.html">
-                <h1>Ubuntu安装Nvidia驱动及tensorflow</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/6/6</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='linux.html'>Linux</a></span>
-                
-                    <span class="posted-in"><a href='python.html'>Python</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14641625300131.html">
-                <h1>MongoDB安装及pymongo入门</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/25</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='linux.html'>Linux</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14633851869005.html">
-                <h1>Installing phpMyAdmin on Ubuntu</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/16</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='linux.html'>Linux</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14623285310444.html">
-                <h1>Installing Pygame on Mac OS X</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/4</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='python.html'>Python</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14621764503901.html">
-                <h1>Sort 3x3 grid by rotating 2x2 subgrids</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/2</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='algorithm.html'>Algorithm</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14621706709086.html">
-                <h1>开博客啦！</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2016/5/2</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='idle-talk.html'>Idle Talk</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
+              <span class="posted-in"><a href='linux.html'>Linux</a></span>
            
+         
+          <span class="comments">
+            
+
+            
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14776396449421.html" data-count-type="comments" href="14776396449421.html#ds-thread"></a>
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>为了能够远程访问server，肯定需要通过ssh，但有时候服务器需要重启，而ssh server是在login后才启动的，也就是说我们需要坐在电脑前，手动登陆一次才能继续使用ssh。今天搜了一下，发现一个简单有效的<a href="http://askubuntu.com/questions/3913/start-ssh-server-on-boot">解决方案</a>。</p>
+
+<span id="more"></span><!-- more -->
+
+<p>其实核心就一条命令，这条命令的作用是设置ssh server在default runlevels时启动。</p>
+
+<pre><code>sudo update-rc.d ssh defaults
+</code></pre>
+
+<p>但是此时，我们在图形界面下的Network Manager中修改的如ip地址，网关等是不会生效的。我们要在<code>/etc/network/interfaces</code>添加我们的设置。</p>
+
+<pre><code>auto lo
+iface lo inet loopback
+
+auto enp4s0
+iface enp4s0 inet static
+address 111.111.111.111
+netmask 255.255.254.0
+gateway 111.111.111.1
+dns-nameserver 8.8.8.8
+</code></pre>
+
+<p>具体的设置可以参考<a href="http://www.cyberciti.biz/faq/setting-up-an-network-interfaces-file/">这里</a>。</p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14770379590045.html" 
+          title="Next Post: 构建一个可复用的Python实验环境(1)">构建一个可复用的Python实验环境(1) &raquo;</a>
+      
+      </p>
         </div>
       </div>
-  </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_fb"></a>
+	<a class="jiathis_button_twitter"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          
+
+          
+              <div class="ds-thread" data-thread-key="14776396449421.html" data-url="http://yaozh1918.github.io/14776396449421.html" data-title="设置Server开机启动ssh服务"></div>
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

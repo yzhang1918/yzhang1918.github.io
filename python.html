@@ -39,9 +39,11 @@
   <div class="row">
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
-        <li id="menu_item_index"><a href="index.html">HOME</a></li>
-        <li id="menu_item_archives"><a href="archives.html">Archives</a></li>
-        <li id="menu_item_about"><a href="about.html">ABOUT</a></li>
+        
+        <li id=""><a target="self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
         </ul>
 
         <ul class="right" id="search-wrap">
@@ -105,6 +107,43 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14770379590045.html">
+                
+                  <h1>构建一个可复用的Python实验环境(1)</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>毕竟是野路子出身，以前跑实验，总是每一个模型都有一套完整的代码，从读数据，跑模型，算得分，写代码的过程中也是大量复制粘贴，因为读数据和算得分的代码通常都是通用的。<br/>
+这次访学，师兄拷给我一份实验环境的代码，看后惊叹原来代码要这样写，耦合解得非常好。但我这种强迫症总是觉得别人写的不漂亮，自己照着重写了一遍，结果并没能领悟其精髓，结果最后跑实验的时候各种出问题。项目好不容易结束，决定认认真真分析一下代码，再重新写一遍。代码在github上同步更新。</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14770379590045.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/10/21</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='python.html'>Python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14770379590045.html" data-count-type="comments" href="14770379590045.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14652179403403.html">
                 
                   <h1>Ubuntu安装Nvidia驱动及tensorflow</h1>
@@ -125,9 +164,9 @@
                     <span class="date">2016/6/6</span>
                     <span>posted in&nbsp;</span> 
           				  
-          					    <span class="posted-in"><a href='python.html'>Python</a></span>
-          				  
           					    <span class="posted-in"><a href='linux.html'>Linux</a></span>
+          				  
+          					    <span class="posted-in"><a href='python.html'>Python</a></span>
           				   
                   </div>
                   <div class="more-right right">
@@ -160,7 +199,7 @@
                 <div class="read-more clearfix">
                   <div class="more-left left">
                    <a href="14623285310444.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/5/3</span>
+                    <span class="date">2016/5/4</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='python.html'>Python</a></span>
@@ -257,6 +296,18 @@
 	      
 		      
 			      <li class="post">
+			        <a href="14776396449421.html">设置Server开机启动ssh服务</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14770379590045.html">构建一个可复用的Python实验环境(1)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14679024129375.html">cliclick: some basic usages</a>
 			      </li>
 		     
@@ -274,16 +325,8 @@
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14633851869005.html">Installing phpMyAdmin on Ubuntu</a>
-			      </li>
-		     
 		  
 		      
-			      <li class="post">
-			        <a href="14623285310444.html">Installing Pygame on Mac OS X</a>
-			      </li>
-		     
 		  
 		      
 		  
@@ -343,7 +386,7 @@ var duoshuoQuery = {short_name:'yaozh1918'};
      
     </script>
 
-    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"><div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"><div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
+    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
 <script>
 var _hmt = _hmt || [];
