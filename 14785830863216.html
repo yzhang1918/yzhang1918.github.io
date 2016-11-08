@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Python - YaoZh1918
+  Ubuntu上安装Transmission Web界面 - YaoZh1918
   
   </title>
   
@@ -98,142 +98,169 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="14770379590045.html">
-                
-                  <h1>构建一个可复用的Python实验环境(1)</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>毕竟是野路子出身，以前跑实验，总是每一个模型都有一套完整的代码，从读数据，跑模型，算得分，写代码的过程中也是大量复制粘贴，因为读数据和算得分的代码通常都是通用的。<br/>
-这次访学，师兄拷给我一份实验环境的代码，看后惊叹原来代码要这样写，耦合解得非常好。但我这种强迫症总是觉得别人写的不漂亮，自己照着重写了一遍，结果并没能领悟其精髓，结果最后跑实验的时候各种出问题。项目好不容易结束，决定认认真真分析一下代码，再重新写一遍。代码在github上同步更新。</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Ubuntu上安装Transmission Web界面</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2016/11/8</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='linux.html'>Linux</a></span>
+           
+         
+          <span class="comments">
+            
+
+            
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14785830863216.html" data-count-type="comments" href="14785830863216.html#ds-thread"></a>
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>考虑到实验室的电脑放着也是浪费，打算装个BT客户端下点种子，同时还可以为我的PT加点流量。但是，实验室的电脑一般就放置在那里，不想动它，最好有个可以远程操控的客户端，经过一番搜寻，打算用Transmission加web界面来实现。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">Install</h2>
+
+<p>首先安装Transmission，Ubuntu的repo里已经有Transmission了，如果想要最新版本也可以添加PPA：</p>
+
+<pre><code>sudo add-apt-repository ppa:transmissionbt/ppa
+sudo apt-get update
+</code></pre>
+
+<p>之后安装：</p>
+
+<pre><code>sudo apt-get install transmission-cli transmission-common transmission-daemon
+</code></pre>
+
+<h2 id="toc_1">Configure</h2>
+
+<p>安装好以后其实已经可以用了，在本地上访问<code>localhost:9091</code>，默认用户名密码都是<code>transmission</code>，但因为白名单的缘故，远程无法访问。为此，我们需要修改位于<code>/var/lib/transmission-daemon/info/settings.json</code>的配置文件。在此之前，记得先停止daemon：</p>
+
+<pre><code>sudo service transmission-daemon stop
+</code></pre>
+
+<p>那么在配置文件中，有哪些需要修改呢？<br/>
+首先添加白名单并修改账号密码，例如：</p>
+
+<pre><code>&quot;rpc-password&quot;: &quot;password&quot;,
+&quot;rpc-username&quot;: &quot;user&quot;,
+&quot;rpc-whitelist&quot;: &quot;127.0.0.1,192.168.*.*&quot;,
+</code></pre>
+
+<p>注意，默认的密码是SHA1加密后的，我们在修改的时候无需手动加密，直接改就好了，之后重启daemon会自动进行加密。</p>
+
+<p>然后还要修改<code>umask</code>参数，以保证Transmission创建的文件其他用户也可以访问：</p>
+
+<pre><code>&quot;umask&quot;: 2,
+</code></pre>
+
+<p>都修改好之后，重启daemon：</p>
+
+<pre><code>sudo service transmission-daemon start
+</code></pre>
+
+<p>现在，远程用户（白名单中）可以访问<code>http://server-ip:9091</code>来控制Transmission了。</p>
+
+<h2 id="toc_2">自定义下载位置</h2>
+
+<p>默认的下载位置在<code>/var/lib/transmission-daemon/downloads/</code>，有那么一丝丝不方便，可能需要修改到我们当前用户的<code>Downloads</code>目录下，这一小节就介绍下如何修改下载位置。</p>
+
+<p>首先，出于安全因素，Transmission有自己的一个用户，而现在我们需要让Transmission将文件下载至当前用户的目录下，那么首先需要将当前用户加至组里（假设当前用户叫user）：</p>
+
+<pre><code>sudo usermod -a -G debian-transmission user
+</code></pre>
+
+<p>然后我们在当前用户的下载目录中新建一些文件夹，并修改权限：</p>
+
+<pre><code>cd /home/user/Downloads
+mkdir transmission
+cd transmission
+mkdir completed incomplete torrents
+
+sudo chgrp -R debian-transmission /home/user/Downloads/transmission
+sudo chmod -R 775 /home/user/Downloads/transmission
+</code></pre>
+
+<p>最后修改<code>settings.json</code>:</p>
+
+<pre><code>&quot;download-dir&quot;: &quot;/home/user/Downloads/transmission/completed&quot;,
+&quot;incomplete-dir&quot;: &quot;/home/user/Downloads/transmission/incomplete&quot;,
+&quot;incomplete-dir-enabled&quot;: true,
+&quot;watch-dir&quot;: &quot;/home/user/Downloads/transmission/torrents&quot;,
+&quot;watch-dir-enabled&quot;: true
+</code></pre>
+
+<p>这样，下载中的文件都会在incomplete中，下载好的在completed中，将种子移至torrents文件夹就会自动开始下载。</p>
+
+<p>收工！</p>
+
+<h2 id="toc_3">Reference</h2>
+
+<p>本文主要参考了以下两篇文章：<br/>
+<a href="https://help.ubuntu.com/community/TransmissionHowTo">TransmissionHowTo</a><br/>
+<a href="http://www.htpcbeginner.com/install-transmission-web-interface-on-ubuntu-1204/">Install Transmission with web interface on Ubuntu</a></p>
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14770379590045.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/10/21</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='python.html'>Python</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
+    
 
-                      
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14770379590045.html" data-count-type="comments" href="14770379590045.html#ds-thread"></a>
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14652179403403.html">
-                
-                  <h1>Ubuntu安装Nvidia驱动及tensorflow</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>刚刚搞了台新机器，带的GTX960显卡，想装个ubuntu跑deep learning，在安装中遇到了一些问题，这里记录一下。</p>
+      </div>
 
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14776396449421.html" 
+          title="Next Post: 设置Server开机启动ssh服务">设置Server开机启动ssh服务 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_fb"></a>
+	<a class="jiathis_button_twitter"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14652179403403.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/6/6</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='linux.html'>Linux</a></span>
-          				  
-          					    <span class="posted-in"><a href='python.html'>Python</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
+          
 
-                      
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14652179403403.html" data-count-type="comments" href="14652179403403.html#ds-thread"></a>
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14623285310444.html">
-                
-                  <h1>Installing Pygame on Mac OS X</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>It&#39;s said that <code>pygame</code> provided on their <a href="http://www.pygame.org/download.shtml">website</a> is not compatible with Mac system python because <code>pygame</code> is built for 32 bit python while system python is 64 bit. </p>
+          
+              <div class="ds-thread" data-thread-key="14785830863216.html" data-url="http://yaozh1918.github.io/14785830863216.html" data-title="Ubuntu上安装Transmission Web界面"></div>
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14623285310444.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2016/5/4</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='python.html'>Python</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
 
-                      
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14623285310444.html" data-count-type="comments" href="14623285310444.html#ds-thread"></a>
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
-
-
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

@@ -4,13 +4,107 @@
   <title><![CDATA[YaoZh1918]]></title>
   <link href="http://yaozh1918.github.io/atom.xml" rel="self"/>
   <link href="http://yaozh1918.github.io/"/>
-  <updated>2016-07-22T12:29:06+08:00</updated>
+  <updated>2016-10-28T15:48:02+08:00</updated>
   <id>http://yaozh1918.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu上安装Transmission Web界面]]></title>
+    <link href="http://yaozh1918.github.io/14785830863216.html"/>
+    <updated>2016-11-08T13:31:26+08:00</updated>
+    <id>http://yaozh1918.github.io/14785830863216.html</id>
+    <content type="html"><![CDATA[
+<p>考虑到实验室的电脑放着也是浪费，打算装个BT客户端下点种子，同时还可以为我的PT加点流量。但是，实验室的电脑一般就放置在那里，不想动它，最好有个可以远程操控的客户端，经过一番搜寻，打算用Transmission加web界面来实现。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">Install</h2>
+
+<p>首先安装Transmission，Ubuntu的repo里已经有Transmission了，如果想要最新版本也可以添加PPA：</p>
+
+<pre><code>sudo add-apt-repository ppa:transmissionbt/ppa
+sudo apt-get update
+</code></pre>
+
+<p>之后安装：</p>
+
+<pre><code>sudo apt-get install transmission-cli transmission-common transmission-daemon
+</code></pre>
+
+<h2 id="toc_1">Configure</h2>
+
+<p>安装好以后其实已经可以用了，在本地上访问<code>localhost:9091</code>，默认用户名密码都是<code>transmission</code>，但因为白名单的缘故，远程无法访问。为此，我们需要修改位于<code>/var/lib/transmission-daemon/info/settings.json</code>的配置文件。在此之前，记得先停止daemon：</p>
+
+<pre><code>sudo service transmission-daemon stop
+</code></pre>
+
+<p>那么在配置文件中，有哪些需要修改呢？<br/>
+首先添加白名单并修改账号密码，例如：</p>
+
+<pre><code>&quot;rpc-password&quot;: &quot;password&quot;,
+&quot;rpc-username&quot;: &quot;user&quot;,
+&quot;rpc-whitelist&quot;: &quot;127.0.0.1,192.168.*.*&quot;,
+</code></pre>
+
+<p>注意，默认的密码是SHA1加密后的，我们在修改的时候无需手动加密，直接改就好了，之后重启daemon会自动进行加密。</p>
+
+<p>然后还要修改<code>umask</code>参数，以保证Transmission创建的文件其他用户也可以访问：</p>
+
+<pre><code>&quot;umask&quot;: 2,
+</code></pre>
+
+<p>都修改好之后，重启daemon：</p>
+
+<pre><code>sudo service transmission-daemon start
+</code></pre>
+
+<p>现在，远程用户（白名单中）可以访问<code>http://server-ip:9091</code>来控制Transmission了。</p>
+
+<h2 id="toc_2">自定义下载位置</h2>
+
+<p>默认的下载位置在<code>/var/lib/transmission-daemon/downloads/</code>，有那么一丝丝不方便，可能需要修改到我们当前用户的<code>Downloads</code>目录下，这一小节就介绍下如何修改下载位置。</p>
+
+<p>首先，出于安全因素，Transmission有自己的一个用户，而现在我们需要让Transmission将文件下载至当前用户的目录下，那么首先需要将当前用户加至组里（假设当前用户叫user）：</p>
+
+<pre><code>sudo usermod -a -G debian-transmission user
+</code></pre>
+
+<p>然后我们在当前用户的下载目录中新建一些文件夹，并修改权限：</p>
+
+<pre><code>cd /home/user/Downloads
+mkdir transmission
+cd transmission
+mkdir completed incomplete torrents
+
+sudo chgrp -R debian-transmission /home/user/Downloads/transmission
+sudo chmod -R 775 /home/user/Downloads/transmission
+</code></pre>
+
+<p>最后修改<code>settings.json</code>:</p>
+
+<pre><code>&quot;download-dir&quot;: &quot;/home/user/Downloads/transmission/completed&quot;,
+&quot;incomplete-dir&quot;: &quot;/home/user/Downloads/transmission/incomplete&quot;,
+&quot;incomplete-dir-enabled&quot;: true,
+&quot;watch-dir&quot;: &quot;/home/user/Downloads/transmission/torrents&quot;,
+&quot;watch-dir-enabled&quot;: true
+</code></pre>
+
+<p>这样，下载中的文件都会在incomplete中，下载好的在completed中，将种子移至torrents文件夹就会自动开始下载。</p>
+
+<p>收工！</p>
+
+<h2 id="toc_3">Reference</h2>
+
+<p>本文主要参考了以下两篇文章：<br/>
+<a href="https://help.ubuntu.com/community/TransmissionHowTo">TransmissionHowTo</a><br/>
+<a href="http://www.htpcbeginner.com/install-transmission-web-interface-on-ubuntu-1204/">Install Transmission with web interface on Ubuntu</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[设置Server开机启动ssh服务]]></title>
