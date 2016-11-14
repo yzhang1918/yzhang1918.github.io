@@ -85,6 +85,8 @@
             <li><a href="linux.html">Linux</a></li>
         
             <li><a href="Mac.html">Mac</a></li>
+        
+            <li><a href="Math.html">Math</a></li>
          
 
       </ul>
@@ -157,6 +159,115 @@
 <p>我们将基类都定义在<code>base.py</code>中，<code>utils.py</code>放一些常用的小函数，例如io操作等。模型等具体实现写在对应的文件夹下。</p>
 
 <h2 id="toc_2">基类定义</h2>
+
+<p>首先定义整个实验环境的基类，其实没有也可以，这样写更一致一点。</p>
+
+<pre><code>from abc import abstractmethod, ABCMeta
+from bunch import Bunch
+
+
+class expBase(object):
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        self.params = Bunch()
+</code></pre>
+
+<p>首先导入<code>abc</code>模块，这样通过声明<code>__metaclass__ = ABCMeta</code>表明当前的<code>class</code>是一个抽象类，无法被直接实例化。<code>expBase</code>继承自<code>object</code>，考虑到所有的子类都可能有参数，我们在<code>__init__</code>中初始化<code>self.params</code>为一个<code>Bunch</code>。<code>Bunch</code>是<code>dict</code>的一个子类，可以用<code>params.x1</code>来代替<code>params[&#39;x1&#39;]</code>，写起来比较方便。</p>
+
+<h3 id="toc_3">dataset and model</h3>
+
+<p>接下来定义关于数据集合模型的基类：</p>
+
+<pre><code>class expDataset(expBase):
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        super(expDataset, self).__init__()
+
+    @abstractmethod
+    def load(self):
+        &quot;&quot;&quot;Load data
+        to be implemented in subclass
+        &quot;&quot;&quot;
+        return
+
+
+class expModel(expBase):
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        super(expModel, self).__init__()
+
+    @abstractmethod
+    def fit(self, data):
+        &quot;&quot;&quot;Fit model to the data
+        to be implemented in subclass
+        &quot;&quot;&quot;
+        return
+</code></pre>
+
+<p>我们希望所有的dataset都有一个统一的<code>load</code>接口，可以读取数据并返回，所有的<code>model</code>也要有一个<code>fit</code>接口来将模型用到data上。通过用装饰器<code>abstractmethod</code>声明函数为抽象方法，子类中必须要实现该方法，否则会报错。</p>
+
+<p>这里函数命名<code>fit</code>主要是参考scikit-learn的写法。</p>
+
+<h3 id="toc_4">metric</h3>
+
+<p>接下来定义评估指标的基类：</p>
+
+<pre><code>class expMetric(expBase):
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        super(expMetric, self).__init__()
+        self.values = []
+
+    @abstractmethod
+    def evaluate(self):
+        &quot;&quot;&quot;Evaluate the result
+        to be implemented in subclass
+        &quot;&quot;&quot;
+        return
+</code></pre>
+
+<p>其实这一块我还是不太清楚该怎么写，这是之前师兄的写法，这样写考虑的是一般实验都要重复多次取平均值，用一个列表来存每次的结果，这样最后可以返回均值和方差。</p>
+
+<p>这个类有待改进。</p>
+
+<h3 id="toc_5">setting</h3>
+
+<p>实验设置的类：</p>
+
+<pre><code>class expSetting(expBase):
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        super(expSetting, self).__init__()
+        self.dataset = None
+        self.model = None
+        self.metrics = []
+
+    def setup(self, dataset, model, metrics):
+        self.dataset = dataset
+        self.model = model
+        self.metrics = metrics
+
+    @abstractmethod
+    def run(self):
+        &quot;&quot;&quot;Fit data and evaluate the result
+        to be implemented in subclass
+        &quot;&quot;&quot;
+        return
+</code></pre>
+
+<p>要注意的一点是，评估方法可能有多个，所以应该是一个列表。</p>
+
+<h3 id="toc_6">profile</h3>
+
+<p>最后一个类，这个类将4个模块进行拼装并运行：</p>
+
+<pre><code>
+</code></pre>
 
 
     
@@ -254,6 +365,8 @@
             <a href="linux.html"><strong>Linux</strong></a>
         
             <a href="Mac.html"><strong>Mac</strong></a>
+        
+            <a href="Math.html"><strong>Math</strong></a>
          
         </p>
 
@@ -268,6 +381,12 @@
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="14791104542390.html">A Smooth Thresholding Function</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="14785830863216.html">Ubuntu上安装Transmission Web界面</a>
@@ -293,10 +412,6 @@
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14652179403403.html">Ubuntu安装Nvidia驱动及tensorflow</a>
-			      </li>
-		     
 		  
 		      
 		  

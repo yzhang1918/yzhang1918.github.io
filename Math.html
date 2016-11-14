@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  设置Server开机启动ssh服务 - YaoZh1918
+  Math - YaoZh1918
   
   </title>
   
@@ -100,111 +100,67 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>设置Server开机启动ssh服务</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2016/10/28</span>
-
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='linux.html'>Linux</a></span>
-           
-         
-          <span class="comments">
-            
-
-            
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14776396449421.html" data-count-type="comments" href="14776396449421.html#ds-thread"></a>
-            
-          </span>
-
-        </div>
-      </div><!-- article -->
-
-      <div class="article-content">
-      <p>为了能够远程访问server，肯定需要通过ssh，但有时候服务器需要重启，而ssh server是在login后才启动的，也就是说我们需要坐在电脑前，手动登陆一次才能继续使用ssh。今天搜了一下，发现一个简单有效的<a href="http://askubuntu.com/questions/3913/start-ssh-server-on-boot">解决方案</a>。</p>
-
-<span id="more"></span><!-- more -->
-
-<p>其实核心就一条命令，这条命令的作用是设置ssh server在default runlevels时启动。</p>
-
-<pre><code>sudo update-rc.d ssh defaults
-</code></pre>
-
-<p>但是此时，我们在图形界面下的Network Manager中修改的如ip地址，网关等是不会生效的。我们要在<code>/etc/network/interfaces</code>添加我们的设置。</p>
-
-<pre><code>auto lo
-iface lo inet loopback
-
-auto enp4s0
-iface enp4s0 inet static
-address 111.111.111.111
-netmask 255.255.254.0
-gateway 111.111.111.1
-dns-nameserver 8.8.8.8
-</code></pre>
-
-<p>具体的设置可以参考<a href="http://www.cyberciti.biz/faq/setting-up-an-network-interfaces-file/">这里</a>。</p>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="14791104542390.html">
+                
+                  <h1>A Smooth Thresholding Function</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>最近读paper<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup>的时候，看到了一个有趣的函数，可以看成thresholding function的一个光滑的近似，故我决定写篇文章简单介绍一下。</p>
 
 
-    
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14791104542390.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2016/11/14</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Math.html'>Math</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="14785830863216.html" 
-          title="Previous Post: Ubuntu上安装Transmission Web界面">&laquo; Ubuntu上安装Transmission Web界面</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="14770379590045.html" 
-          title="Next Post: 构建一个可复用的Python实验环境(1)">构建一个可复用的Python实验环境(1) &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style_24x24">
-	<a class="jiathis_button_tsina"></a>
-	<a class="jiathis_button_tqq"></a>
-	<a class="jiathis_button_weixin"></a>
-	<a class="jiathis_button_fb"></a>
-	<a class="jiathis_button_twitter"></a>
-	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-          
-
-          
-              <div class="ds-thread" data-thread-key="14776396449421.html" data-url="http://yaozh1918.github.io/14776396449421.html" data-title="设置Server开机启动ssh服务"></div>
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14791104542390.html" data-count-type="comments" href="14791104542390.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
 
 
-
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

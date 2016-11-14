@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  设置Server开机启动ssh服务 - YaoZh1918
+  A Smooth Thresholding Function - YaoZh1918
   
   </title>
   
@@ -109,21 +109,21 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>设置Server开机启动ssh服务</h1>
+          <h1>A Smooth Thresholding Function</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/10/28</span>
+          <span class="date">2016/11/14</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='linux.html'>Linux</a></span>
+              <span class="posted-in"><a href='Math.html'>Math</a></span>
            
          
           <span class="comments">
             
 
             
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14776396449421.html" data-count-type="comments" href="14776396449421.html#ds-thread"></a>
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14791104542390.html" data-count-type="comments" href="14791104542390.html#ds-thread"></a>
             
           </span>
 
@@ -131,29 +131,85 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>为了能够远程访问server，肯定需要通过ssh，但有时候服务器需要重启，而ssh server是在login后才启动的，也就是说我们需要坐在电脑前，手动登陆一次才能继续使用ssh。今天搜了一下，发现一个简单有效的<a href="http://askubuntu.com/questions/3913/start-ssh-server-on-boot">解决方案</a>。</p>
+      <p>最近读paper<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup>的时候，看到了一个有趣的函数，可以看成thresholding function的一个光滑的近似，故我决定写篇文章简单介绍一下。</p>
 
 <span id="more"></span><!-- more -->
 
-<p>其实核心就一条命令，这条命令的作用是设置ssh server在default runlevels时启动。</p>
+<h2 id="toc_0">原函数</h2>
 
-<pre><code>sudo update-rc.d ssh defaults
-</code></pre>
+<p>文中给出的这个函数是这样的：</p>
 
-<p>但是此时，我们在图形界面下的Network Manager中修改的如ip地址，网关等是不会生效的。我们要在<code>/etc/network/interfaces</code>添加我们的设置。</p>
+<p>\[f(x)=0.25\ln(\cosh(2x))+0.5x+0.17.\]</p>
 
-<pre><code>auto lo
-iface lo inet loopback
+<p>图像是这样的：</p>
 
-auto enp4s0
-iface enp4s0 inet static
-address 111.111.111.111
-netmask 255.255.254.0
-gateway 111.111.111.1
-dns-nameserver 8.8.8.8
-</code></pre>
+<p><img src="media/14791104542390/origin.png" alt="origin"/></p>
 
-<p>具体的设置可以参考<a href="http://www.cyberciti.biz/faq/setting-up-an-network-interfaces-file/">这里</a>。</p>
+<p>很神奇是不是！但我们还是要研究下这个函数为什么就work？</p>
+
+<p>首先函数中的那个0.17是怎么来的？从图像上观察，应该是进行平移保证整个函数是非负的。</p>
+
+<p>令\(g(x)=\ln \cosh (x) + x\)，这样\(f(x)=\frac{1}{4}g(2x) + 0.17\)。那我们先来看下\(g(x)\)趋于负无穷时的极限：</p>
+
+<p>\[<br/>
+\begin{align*}<br/>
+ &amp; \lim_{x\to -\infty}\ln \cosh(x) + x \\<br/>
+=&amp; \lim_{x\to -\infty} \ln \frac{e^{-x} + e^x}{2} + x \\<br/>
+=&amp; \lim_{x\to -\infty} \ln \exp (\ln(e^{-x} + e^x) + x) - \ln 2\\<br/>
+=&amp; \lim_{x\to -\infty} \ln(1+e^{2x}) - \ln 2\\<br/>
+=&amp; -\ln 2<br/>
+\end{align*}<br/>
+\]</p>
+
+<p>这样\(\frac{1}{4}g(2x) = -\frac{1}{4}\ln 2\approx -0.17\)，所以这个函数最精确的表达应该是</p>
+
+<p>\[f(x)=0.25\ln(\cosh(2x))+0.5x+0.25\ln2.\]</p>
+
+<h2 id="toc_1">导函数</h2>
+
+<p>接下来我们换个角度，一般的thresholding function是</p>
+
+<p>\[h(x)=\left\{<br/>
+\begin{aligned}<br/>
+0 &amp; \qquad \mathrm{if}~ x &lt; 0\\<br/>
+x &amp; \qquad \mathrm{if}~ x \ge 0,<br/>
+\end{aligned}<br/>
+\right.<br/>
+\]</p>
+
+<p>其导数是<br/>
+\[h&#39;(x)=\left\{<br/>
+\begin{aligned}<br/>
+0 &amp; \qquad \mathrm{if}~ x &lt; 0\\<br/>
+1 &amp; \qquad \mathrm{if}~ x &gt; 0.<br/>
+\end{aligned}<br/>
+\right.<br/>
+\]</p>
+
+<p>而这个光滑版的thresholding function的导数是</p>
+
+<p>\[f&#39;(x)=0.5\tanh(2x)+0.5,\]</p>
+
+<p><img src="media/14791104542390/tanh.png" alt="tanh"/></p>
+
+<p>可以看作是\(h&#39;(x)\)的光滑近似，图像上看就是sigmoid形的。它保证了\(x&lt;0\)时，随着\(x\)减小，\(f&#39;(x)\)能很快的下降到接近于0，反映到原函数上就是此时函数几乎无增长；在\(x&gt;0\)时，随着\(x\)增大，\(f&#39;(x)\)能很快的增长到1，这样原函数就有着线性的增长率。</p>
+
+<h2 id="toc_2">设计更多的smooth thresholding functions</h2>
+
+<p>上一节最后给我们提供了一个角度，我们先选择一个长得像sigmoid的函数，然后求积分，就可以得到一个smooth thresholding function。</p>
+
+<p>例如可以取sigmoid函数\(f&#39;(x)=\frac{1}{1+e^x}\)，这样得到\(f(x)=\ln(1+e^x)\).</p>
+
+<div class="footnotes">
+<hr/>
+<ol>
+
+<li id="fn1">
+<p>M.U. Gutmann and A. Hyvärinen. Noise-contrastive estimation of unnormalized statistical models, with applications to natural image statistics. Journal of Machine Learning Research, 13:307–361, 2012.&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
+</li>
+
+</ol>
+</div>
 
 
     
@@ -164,16 +220,13 @@ dns-nameserver 8.8.8.8
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14785830863216.html" 
-          title="Previous Post: Ubuntu上安装Transmission Web界面">&laquo; Ubuntu上安装Transmission Web界面</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14770379590045.html" 
-          title="Next Post: 构建一个可复用的Python实验环境(1)">构建一个可复用的Python实验环境(1) &raquo;</a>
+          <a  href="14785830863216.html" 
+          title="Next Post: Ubuntu上安装Transmission Web界面">Ubuntu上安装Transmission Web界面 &raquo;</a>
       
       </p>
         </div>
@@ -196,7 +249,7 @@ dns-nameserver 8.8.8.8
           
 
           
-              <div class="ds-thread" data-thread-key="14776396449421.html" data-url="http://yaozh1918.github.io/14776396449421.html" data-title="设置Server开机启动ssh服务"></div>
+              <div class="ds-thread" data-thread-key="14791104542390.html" data-url="http://yaozh1918.github.io/14791104542390.html" data-title="A Smooth Thresholding Function"></div>
           
         </div>
       </div>
