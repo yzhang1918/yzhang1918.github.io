@@ -225,7 +225,7 @@ trust_host_root_certs: false
 
 <p>如果我们想同时把多个端口映射到server上怎么办？当然可以打开多个<code>ngrok</code>，不过更方便的做法是把它们都写在配置文件中。</p>
 
-<p><a href="https://ngrok.com/docs#multiple-tunnels">官网的材料</a>是关于2.0版本的，而2.0版本没有开源，github上的是1.7版本的，所以写法还不一样，之前一直报错，读了<a href="https://github.com/inconshreveable/ngrok/blob/master/src/ngrok/client/config.go#L124">源码</a>才知道这个地方该怎么写。</p>
+<p><a href="https://ngrok.com/docs#multiple-tunnels">官网的材料</a>是关于2.0版本的，而2.0版本没有开源，github上的是1.7版本的，所以写法还不一样，之前一直报错，读了<a href="https://github.com/inconshreveable/ngrok/blob/master/src/ngrok/client/config.go#L124">源码</a>才知道这个地方该怎么写。ps. 配置文件其实是yaml格式的。</p>
 
 <p>比方说我们想创建3个tunnels，一个同时映射80和443端口，一个映射web interface，一个映射22用来ssh连接，我们可以这样写：</p>
 
@@ -242,9 +242,9 @@ tunnels:
         proto:
             http: 4040
     ssh:
-        subdomain: ssh
         proto:
             tcp: 22
+        remote_port: 8022
 </code></pre>
 
 <p>这样如果我想运行其中两个，可以写</p>
@@ -257,7 +257,7 @@ tunnels:
 <pre><code>./ngrok start-all
 </code></pre>
 
-<p>这样，我们访问<code>http://wep-app.ngrok.mydomain.com</code>和<code>https://wep-app.ngrok.mydomain.com</code>就可以访问内网架的网页，访问<code>http://web-interface.ngrok.mydomain.com</code>可以访问web interface。如果改过端口别忘记加端口号。注意ssh的端口是连接建立后生成的，有了端口后就可以<code>ssh user@ssh.ngrok.mydomain.com -p [port]</code>了！</p>
+<p>这样，我们访问<code>http://wep-app.ngrok.mydomain.com</code>和<code>https://wep-app.ngrok.mydomain.com</code>就可以访问内网架的网页，访问<code>http://web-interface.ngrok.mydomain.com</code>可以访问web interface。注意ssh不需要声明<code>subdomain</code>，但最好给定<code>remote_port</code>，这样ssh就可以这样执行<code>ssh user@ngrok.mydomain.com -p 8022</code>！</p>
 
 
     
