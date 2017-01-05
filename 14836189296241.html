@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  A Smooth Thresholding Function - YaoZh1918
+  利用Ngrok实现内网穿透 - YaoZh1918
   
   </title>
   
@@ -109,21 +109,21 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>A Smooth Thresholding Function</h1>
+          <h1>利用Ngrok实现内网穿透</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2016/11/14</span>
+          <span class="date">2017/1/5</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='Math.html'>Math</a></span>
+              <span class="posted-in"><a href='linux.html'>Linux</a></span>
            
          
           <span class="comments">
             
 
             
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14791104542390.html" data-count-type="comments" href="14791104542390.html#ds-thread"></a>
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14836189296241.html" data-count-type="comments" href="14836189296241.html#ds-thread"></a>
             
           </span>
 
@@ -131,85 +131,133 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>最近读paper<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup>的时候，看到了一个有趣的函数，可以看成thresholding function的一个光滑的近似，故我决定写篇文章简单介绍一下。</p>
+      <p>放假快回家了，想着回家就用不了学校的机器了，所以打算内网穿透试一下，折腾一下午总算搞定了。</p>
 
 <span id="more"></span><!-- more -->
 
-<h2 id="toc_0">原函数</h2>
+<h2 id="toc_0">前期准备</h2>
 
-<p>文中给出的这个函数是这样的：</p>
+<p>首先你要有一台有公网ip的server，同时还要有个域名。server我是用腾讯云学生特惠1块钱搞定的，域名是之前在namecheap上买的，一刀左右一年。server端和client端我都用的是<code>Ubuntu LTS 16.04 64</code>的系统，这样之后编译Ngrok时会方便一些。</p>
 
-<p>\[f(x)=0.25\ln(\cosh(2x))+0.5x+0.17.\]</p>
+<h2 id="toc_1">编译Ngrok</h2>
 
-<p>图像是这样的：</p>
+<p>这一节内容主要参考了这篇文章：<a href="http://www.tuicool.com/articles/ZraURrq">在阿里云搭建自己的ngrok服务</a></p>
 
-<p><img src="media/14791104542390/origin.png" alt="origin"/></p>
+<p>因为Ngrok是用go开发的，所以我们需要安装一下go的环境，看github上的说明，还需要装一个<code>mercurial</code>也不知道是什么，都装了肯定不会错。</p>
 
-<p>很神奇是不是！但我们还是要研究下这个函数为什么就work？</p>
+<pre><code>sudo apt install golang mercurial
+</code></pre>
 
-<p>首先函数中的那个0.17是怎么来的？从图像上观察，应该是进行平移保证整个函数是非负的。</p>
+<p>对了，如果是低版本的centos系统，还需要自己升级一下<code>git</code>，<code>yum</code>里的版本比较低，否则后面编译的时候会出错。</p>
 
-<p>令\(g(x)=\ln \cosh (x) + x\)，这样\(f(x)=\frac{1}{4}g(2x) + 0.17\)。那我们先来看下\(g(x)\)趋于负无穷时的极限：</p>
+<p>之后就是clone下repo，准备编译：</p>
 
-<p>\[<br/>
-\begin{align*}<br/>
- &amp; \lim_{x\to -\infty}\ln \cosh(x) + x \\<br/>
-=&amp; \lim_{x\to -\infty} \ln \frac{e^{-x} + e^x}{2} + x \\<br/>
-=&amp; \lim_{x\to -\infty} \ln \exp (\ln(e^{-x} + e^x) + x) - \ln 2\\<br/>
-=&amp; \lim_{x\to -\infty} \ln(1+e^{2x}) - \ln 2\\<br/>
-=&amp; -\ln 2<br/>
-\end{align*}<br/>
-\]</p>
+<pre><code>export NGROK_DOMAIN=&quot;ngork.mydomain.com&quot;
+git clone https://github.com/inconshreveable/ngrok.git
+cd ngrok
+</code></pre>
 
-<p>这样\(\frac{1}{4}g(2x) = -\frac{1}{4}\ln 2\approx -0.17\)，所以这个函数最精确的表达应该是</p>
+<p>注意把<code>NGROK_DOMAIN</code>替换成自己的域名。</p>
 
-<p>\[f(x)=0.25\ln(\cosh(2x))+0.5x+0.25\ln2.\]</p>
+<p>然后生成自签名证书并拷贝到正确的位置：</p>
 
-<h2 id="toc_1">导函数</h2>
+<pre><code>openssl genrsa -out rootCA.key 2048
 
-<p>接下来我们换个角度，一般的thresholding function是</p>
+openssl req -x509 -new -nodes -key rootCA.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -days 5000 -out rootCA.pem
 
-<p>\[h(x)=\left\{<br/>
-\begin{aligned}<br/>
-0 &amp; \qquad \mathrm{if}~ x &lt; 0\\<br/>
-x &amp; \qquad \mathrm{if}~ x \ge 0,<br/>
-\end{aligned}<br/>
-\right.<br/>
-\]</p>
+openssl genrsa -out device.key 2048
 
-<p>其导数是<br/>
-\[h&#39;(x)=\left\{<br/>
-\begin{aligned}<br/>
-0 &amp; \qquad \mathrm{if}~ x &lt; 0\\<br/>
-1 &amp; \qquad \mathrm{if}~ x &gt; 0.<br/>
-\end{aligned}<br/>
-\right.<br/>
-\]</p>
+openssl req -new -key device.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -out device.csr
 
-<p>而这个光滑版的thresholding function的导数是</p>
+openssl x509 -req -in device.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out device.crt -days 5000
 
-<p>\[f&#39;(x)=0.5\tanh(2x)+0.5,\]</p>
+cp rootCA.pem assets/client/tls/ngrokroot.crt
 
-<p><img src="media/14791104542390/tanh.png" alt="tanh"/></p>
+cp device.crt assets/server/tls/snakeoil.crt
 
-<p>可以看作是\(h&#39;(x)\)的光滑近似，图像上看就是sigmoid形的。它保证了\(x&lt;0\)时，随着\(x\)减小，\(f&#39;(x)\)能很快的下降到接近于0，反映到原函数上就是此时函数几乎无增长；在\(x&gt;0\)时，随着\(x\)增大，\(f&#39;(x)\)能很快的增长到1，这样原函数就有着线性的增长率。</p>
+cp device.key assets/server/tls/snakeoil.key 
+</code></pre>
 
-<h2 id="toc_2">设计更多的smooth thresholding functions</h2>
+<p>之后就可以编译server端和client端：</p>
 
-<p>上一节最后给我们提供了一个角度，我们先选择一个长得像sigmoid的函数，然后求积分，就可以得到一个smooth thresholding function。</p>
+<pre><code>make release-server release-client
+</code></pre>
 
-<p>例如可以取sigmoid函数\(f&#39;(x)=\frac{1}{1+e^x}\)，这样得到\(f(x)=\ln(1+e^x)\).</p>
+<p>如果server和client系统不一样，需要在前面指定。如生成64位macos客户端：</p>
 
-<div class="footnotes">
-<hr/>
-<ol>
+<pre><code>GOOS=darwin GOARCH=amd64 make release-client
+</code></pre>
 
-<li id="fn1">
-<p>M.U. Gutmann and A. Hyvärinen. Noise-contrastive estimation of unnormalized statistical models, with applications to natural image statistics. Journal of Machine Learning Research, 13:307–361, 2012.&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
-</li>
+<p><code>GOOS</code>和<code>GOARCH</code>的取值可通过<code>go env</code>查看。</p>
 
-</ol>
-</div>
+<p>如果一切顺利，会生成两个文件：<code>ngrokd</code>留在server上，<code>ngrok</code>拷贝到client上。</p>
+
+<h2 id="toc_2">开启server服务</h2>
+
+<p>在server上，通过以下命令开启服务：</p>
+
+<pre><code>export NGROK_DOMAIN=&quot;ngork.mydomain.com&quot;
+./ngrokd -domain=&quot;$NGROK_DOMAIN&quot; -httpAddr=&quot;:8001&quot; -httpsAddr=&quot;:8002&quot; -tunnelAddr=&quot;:8443&quot; -log=ngrokd.log -log-level=&quot;INFO&quot; &amp;
+</code></pre>
+
+<p><code>domain</code>肯定是要指定的，接下来三个端口可以用默认值，不过我习惯改一下，另外我们希望log输出到文件中，而不是stdout上，最后末尾的<code>&amp;</code>是为了让服务在后台运行。</p>
+
+<h2 id="toc_3">开启client服务</h2>
+
+<p>在client上，我们通过<code>ngrok</code>来实现内网穿透，首先新建<code>~/.ngrok</code>文件，写入以下内容：</p>
+
+<pre><code>server_addr: &quot;ngrok.mydomain.com:8443&quot;
+trust_host_root_certs: false
+</code></pre>
+
+<p>注意addr后面的端口要与server上的tunnelAddr相同。</p>
+
+<p>当然配置文件也可以另建一个，运行ngrok的时候用<code>-config=</code>传入就好。</p>
+
+<p>现在我们已经可以用了：</p>
+
+<pre><code>./ngrok -subdomain=test 80
+</code></pre>
+
+<p>这时ternimal会显示一些内容，当Tunnel Status变为online就连接成功了，这样我们访问<code>http://test.ngrok.mydomain.com:8001</code>就会被指向<code>127.0.0.1:80</code>。程序默认还会创建一个web interface，可以通过<code>127.0.0.1:4040</code>来访问，但没什么用。</p>
+
+<h2 id="toc_4">配置config文件</h2>
+
+<p>如果我们想同时把多个端口映射到server上怎么办？当然可以打开多个<code>ngrok</code>，不过更方便的做法是把它们都写在配置文件中。</p>
+
+<p><a href="https://ngrok.com/docs#multiple-tunnels">官网的材料</a>是关于2.0版本的，而2.0版本没有开源，github上的是1.7版本的，所以写法还不一样，之前一直报错，读了<a href="https://github.com/inconshreveable/ngrok/blob/master/src/ngrok/client/config.go#L124">源码</a>才知道这个地方该怎么写。</p>
+
+<p>比方说我们想创建3个tunnels，一个同时映射80和443端口，一个映射web interface，一个映射22用来ssh连接，我们可以这样写：</p>
+
+<pre><code>server_addr: &quot;ngrok.mydomain.com:8443&quot;
+trust_host_root_certs: false
+tunnels:
+    web-app:
+        subdomain: web-app
+        proto:
+            http: 80
+            https: 443
+    web-interface:
+        subdomain: web-interface
+        proto:
+            http: 4040
+    ssh:
+        subdomain: ssh
+        proto:
+            tcp: 22
+</code></pre>
+
+<p>这样如果我想运行其中两个，可以写</p>
+
+<pre><code>./ngrok start web-app ssh
+</code></pre>
+
+<p>如果想全部运行，可以写</p>
+
+<pre><code>./ngrok start-all
+</code></pre>
+
+<p>这样，我们访问<code>http://wep-app.ngrok.mydomain.com</code>和<code>https://wep-app.ngrok.mydomain.com</code>就可以访问内网架的网页，访问<code>http://web-interface.ngrok.mydomain.com</code>可以访问web interface。如果改过端口别忘记加端口号。注意ssh的端口是连接建立后生成的，有了端口后就可以<code>ssh user@ssh.ngrok.mydomain.com -p [port]</code>了！</p>
 
 
     
@@ -220,16 +268,13 @@ x &amp; \qquad \mathrm{if}~ x \ge 0,<br/>
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14836189296241.html" 
-          title="Previous Post: 利用Ngrok实现内网穿透">&laquo; 利用Ngrok实现内网穿透</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14785830863216.html" 
-          title="Next Post: Ubuntu上安装Transmission Web界面">Ubuntu上安装Transmission Web界面 &raquo;</a>
+          <a  href="14791104542390.html" 
+          title="Next Post: A Smooth Thresholding Function">A Smooth Thresholding Function &raquo;</a>
       
       </p>
         </div>
@@ -252,7 +297,7 @@ x &amp; \qquad \mathrm{if}~ x \ge 0,<br/>
           
 
           
-              <div class="ds-thread" data-thread-key="14791104542390.html" data-url="http://yaozh1918.github.io/14791104542390.html" data-title="A Smooth Thresholding Function"></div>
+              <div class="ds-thread" data-thread-key="14836189296241.html" data-url="http://yaozh1918.github.io/14836189296241.html" data-title="利用Ngrok实现内网穿透"></div>
           
         </div>
       </div>

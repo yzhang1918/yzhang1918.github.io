@@ -4,13 +4,150 @@
   <title><![CDATA[YaoZh1918]]></title>
   <link href="http://yaozh1918.github.io/atom.xml" rel="self"/>
   <link href="http://yaozh1918.github.io/"/>
-  <updated>2016-11-08T14:24:32+08:00</updated>
+  <updated>2016-11-14T18:29:08+08:00</updated>
   <id>http://yaozh1918.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[利用Ngrok实现内网穿透]]></title>
+    <link href="http://yaozh1918.github.io/14836189296241.html"/>
+    <updated>2017-01-05T20:22:09+08:00</updated>
+    <id>http://yaozh1918.github.io/14836189296241.html</id>
+    <content type="html"><![CDATA[
+<p>放假快回家了，想着回家就用不了学校的机器了，所以打算内网穿透试一下，折腾一下午总算搞定了。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">前期准备</h2>
+
+<p>首先你要有一台有公网ip的server，同时还要有个域名。server我是用腾讯云学生特惠1块钱搞定的，域名是之前在namecheap上买的，一刀左右一年。server端和client端我都用的是<code>Ubuntu LTS 16.04 64</code>的系统，这样之后编译Ngrok时会方便一些。</p>
+
+<h2 id="toc_1">编译Ngrok</h2>
+
+<p>这一节内容主要参考了这篇文章：<a href="http://www.tuicool.com/articles/ZraURrq">在阿里云搭建自己的ngrok服务</a></p>
+
+<p>因为Ngrok是用go开发的，所以我们需要安装一下go的环境，看github上的说明，还需要装一个<code>mercurial</code>也不知道是什么，都装了肯定不会错。</p>
+
+<pre><code>sudo apt install golang mercurial
+</code></pre>
+
+<p>对了，如果是低版本的centos系统，还需要自己升级一下<code>git</code>，<code>yum</code>里的版本比较低，否则后面编译的时候会出错。</p>
+
+<p>之后就是clone下repo，准备编译：</p>
+
+<pre><code>export NGROK_DOMAIN=&quot;ngork.mydomain.com&quot;
+git clone https://github.com/inconshreveable/ngrok.git
+cd ngrok
+</code></pre>
+
+<p>注意把<code>NGROK_DOMAIN</code>替换成自己的域名。</p>
+
+<p>然后生成自签名证书并拷贝到正确的位置：</p>
+
+<pre><code>openssl genrsa -out rootCA.key 2048
+
+openssl req -x509 -new -nodes -key rootCA.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -days 5000 -out rootCA.pem
+
+openssl genrsa -out device.key 2048
+
+openssl req -new -key device.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -out device.csr
+
+openssl x509 -req -in device.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out device.crt -days 5000
+
+cp rootCA.pem assets/client/tls/ngrokroot.crt
+
+cp device.crt assets/server/tls/snakeoil.crt
+
+cp device.key assets/server/tls/snakeoil.key 
+</code></pre>
+
+<p>之后就可以编译server端和client端：</p>
+
+<pre><code>make release-server release-client
+</code></pre>
+
+<p>如果server和client系统不一样，需要在前面指定。如生成64位macos客户端：</p>
+
+<pre><code>GOOS=darwin GOARCH=amd64 make release-client
+</code></pre>
+
+<p><code>GOOS</code>和<code>GOARCH</code>的取值可通过<code>go env</code>查看。</p>
+
+<p>如果一切顺利，会生成两个文件：<code>ngrokd</code>留在server上，<code>ngrok</code>拷贝到client上。</p>
+
+<h2 id="toc_2">开启server服务</h2>
+
+<p>在server上，通过以下命令开启服务：</p>
+
+<pre><code>export NGROK_DOMAIN=&quot;ngork.mydomain.com&quot;
+./ngrokd -domain=&quot;$NGROK_DOMAIN&quot; -httpAddr=&quot;:8001&quot; -httpsAddr=&quot;:8002&quot; -tunnelAddr=&quot;:8443&quot; -log=ngrokd.log -log-level=&quot;INFO&quot; &amp;
+</code></pre>
+
+<p><code>domain</code>肯定是要指定的，接下来三个端口可以用默认值，不过我习惯改一下，另外我们希望log输出到文件中，而不是stdout上，最后末尾的<code>&amp;</code>是为了让服务在后台运行。</p>
+
+<h2 id="toc_3">开启client服务</h2>
+
+<p>在client上，我们通过<code>ngrok</code>来实现内网穿透，首先新建<code>~/.ngrok</code>文件，写入以下内容：</p>
+
+<pre><code>server_addr: &quot;ngrok.mydomain.com:8443&quot;
+trust_host_root_certs: false
+</code></pre>
+
+<p>注意addr后面的端口要与server上的tunnelAddr相同。</p>
+
+<p>当然配置文件也可以另建一个，运行ngrok的时候用<code>-config=</code>传入就好。</p>
+
+<p>现在我们已经可以用了：</p>
+
+<pre><code>./ngrok -subdomain=test 80
+</code></pre>
+
+<p>这时ternimal会显示一些内容，当Tunnel Status变为online就连接成功了，这样我们访问<code>http://test.ngrok.mydomain.com:8001</code>就会被指向<code>127.0.0.1:80</code>。程序默认还会创建一个web interface，可以通过<code>127.0.0.1:4040</code>来访问，但没什么用。</p>
+
+<h2 id="toc_4">配置config文件</h2>
+
+<p>如果我们想同时把多个端口映射到server上怎么办？当然可以打开多个<code>ngrok</code>，不过更方便的做法是把它们都写在配置文件中。</p>
+
+<p><a href="https://ngrok.com/docs#multiple-tunnels">官网的材料</a>是关于2.0版本的，而2.0版本没有开源，github上的是1.7版本的，所以写法还不一样，之前一直报错，读了<a href="https://github.com/inconshreveable/ngrok/blob/master/src/ngrok/client/config.go#L124">源码</a>才知道这个地方该怎么写。</p>
+
+<p>比方说我们想创建3个tunnels，一个同时映射80和443端口，一个映射web interface，一个映射22用来ssh连接，我们可以这样写：</p>
+
+<pre><code>server_addr: &quot;ngrok.mydomain.com:8443&quot;
+trust_host_root_certs: false
+tunnels:
+    web-app:
+        subdomain: web-app
+        proto:
+            http: 80
+            https: 443
+    web-interface:
+        subdomain: web-interface
+        proto:
+            http: 4040
+    ssh:
+        subdomain: ssh
+        proto:
+            tcp: 22
+</code></pre>
+
+<p>这样如果我想运行其中两个，可以写</p>
+
+<pre><code>./ngrok start web-app ssh
+</code></pre>
+
+<p>如果想全部运行，可以写</p>
+
+<pre><code>./ngrok start-all
+</code></pre>
+
+<p>这样，我们访问<code>http://wep-app.ngrok.mydomain.com</code>和<code>https://wep-app.ngrok.mydomain.com</code>就可以访问内网架的网页，访问<code>http://web-interface.ngrok.mydomain.com</code>可以访问web interface。如果改过端口别忘记加端口号。注意ssh的端口是连接建立后生成的，有了端口后就可以<code>ssh user@ssh.ngrok.mydomain.com -p [port]</code>了！</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Smooth Thresholding Function]]></title>
