@@ -509,10 +509,8 @@ class Variable(Node):
 shape(2, 3, 5) + shape(3, 5) = shape(2, 3, 5)
 shape(2, 3, 5) + shape(2, 1, 5) = shape(2, 3, 5)
 shape(2, 3, 5) + shape(3) -&gt; incompatible
-shape(1, 5) + shape(5, 1) = shape(5, 5)
+shape(2, 1, 5) + shape(3, 5) = shape(2, 3, 5)
 </code></pre>
-
-<p>因为规则2的关系，会出现这种<code>shape(1, 5) + shape(5, 1) = shape(5, 5)</code>，处理起来比较麻烦，我们就暂不考虑了。</p>
 
 <p>现在我们弄明白broadcasting的规则，就要想一下broadcast之后的运算，梯度怎么求。其实也很简单，因为broadcast实际上就是将原始数据复制多份，类似参数共享，那我们只需要将梯度沿之前broadcast过的维度加起来就好了。从数学的角度看这个问题，只考虑2维数组（矩阵）和1维数组（向量）的运算</p>
 
@@ -594,7 +592,7 @@ A \circ b^T = <br/>
 
 <p>这里我搞了一个混入类，不知道合不合适，主要是不想再继承<code>Op</code>了。这个类提供2个方法：<code>_infer_shape</code>推断形状，<code>_sum_gradient_and_send</code>对梯度求和并<code>send</code>给之前的结点。</p>
 
-<p><code>_infer_shape</code>推断形状主要就是<code>if</code>那一块，但大部分代码都用来记录两组变量，<code>_sum_over_*</code>与<code>_squeeze_over_*</code>。接收到完整梯度（上文的\(\nabla_D\)）后，<code>_sum_over_*</code>告诉我们要对哪几个维求和，由于我们调用<code>sum</code>时令<code>keepdims=True</code>，这意味着求完和后，还要消除掉冗余的维，冗余的边由<code>_squeeze_over_*</code>提供。</p>
+<p><code>_infer_shape</code>推断形状主要就是<code>if</code>那一块，但大部分代码都用来记录两组变量，<code>_sum_over_*</code>与<code>_squeeze_over_*</code>。接收到完整梯度（上文的\(\nabla_D\)）后，<code>_sum_over_*</code>告诉我们要对哪几个维求和，由于我们调用<code>sum</code>时令<code>keepdims=True</code>，这意味着求完和后，还要消除掉冗余的维，冗余的维由<code>_squeeze_over_*</code>提供。</p>
 
 <p>举个例子：</p>
 

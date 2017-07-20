@@ -143,7 +143,7 @@
 
 <p>这里简单讲一下BP的思想，毕竟已经有很多专门介绍的文章了。</p>
 
-<p>考虑一个简单的模型(来源cs231n)：神经网络中的某一个神经元，接受两个输入\(x,y\)，在其内部经过处理，变成\(z=f(x,y)\)，其输出\(z\)再经过若干神经元，变成了网络的最终输出（通常是损失函数的值）\(f_1\circ f_2 \circ\cdots \circ f_k(z, ...)=g(z, ...)=L\)，假设我们已经得到了损失关于\(z\)的偏导\(\frac{\partial L}{\partial z}\)（可以称为上游梯度，upstream gradient，因为也是其他上游神经元传来的），那计算\(\frac{\partial L}{\partial x}\)与\(\frac{\partial L}{\partial y}\)可直接通过链式法则求得：</p>
+<p>考虑一个简单的模型(来源cs231n)：神经网络中的某一个神经元，接受两个输入\(x,y\)，在其内部经过处理，变成\(z=f(x,y)\)，其输出\(z\)再经过若干神经元，变成了网络的最终输出（通常是损失函数的值）\(f_1\circ f_2 \circ\cdots \circ f_k(z, ...)=g(z, ...)=L\)，假设我们已经得到了损失关于\(z\)的偏导\(\frac{\partial L}{\partial z}\)（可以称为上游梯度，upstream gradient，因为是其上游神经元传来的），那计算\(\frac{\partial L}{\partial x}\)与\(\frac{\partial L}{\partial y}\)可直接通过链式法则求得：</p>
 
 <p>\[\frac{\partial L}{\partial x}=\frac{\partial L}{\partial z} \frac{\partial z}{\partial x}, \quad <br/>
 \frac{\partial L}{\partial y}=\frac{\partial L}{\partial z} \frac{\partial z}{\partial y},\]</p>
@@ -186,7 +186,7 @@ class Node(abc.ABC):
         return self._grads
 </code></pre>
 
-<p>最简单的，Variable类型的结点，可以充当输入、常量（不可更新）或参数（可更新），<code>forward()</code>只需返回当前值，<code>backward()</code>也只是将上流梯度作为自己的梯度即可，不需要继续后向传播，即后向传播递归过程的终止状态。</p>
+<p>最简单的，Variable类型的结点，可以充当输入、常量（不可更新）或参数（可更新），<code>forward()</code>只需返回当前值，<code>backward()</code>也只是将上游梯度作为自己的梯度即可，不需要继续后向传播，即后向传播递归过程的终止状态。</p>
 
 <pre><code>class Variable(Node):
     
@@ -442,7 +442,7 @@ Gradients: <br/>
  [3.0, 5.0, 5.0]</p>
 </blockquote>
 
-<p>完全正确！要注意，因为在实例化时我们把上流梯度设置为了0，在反向传播前，要通过<code>.as_terminal()</code>先将最后一个结点的上流梯度设置为1（即\(\frac{\partial L}{\partial L}=1\))。</p>
+<p>完全正确！要注意，因为在实例化时我们把上游梯度设置为了0，在反向传播前，要通过<code>.as_terminal()</code>先将最后一个结点的上游梯度设置为1（即\(\frac{\partial L}{\partial L}=1\))。</p>
 
 <p>不过现在代码还是有点丑陋，功能也很欠缺，那么在下一篇文章中，我们将实现基本的矩阵运算的结点，同时要支持batch，再引入一个类似Tensorflow的Graph来管理计算图。</p>
 
