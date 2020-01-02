@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Ylog</title>
+    <link>https://yzhang1918.github.io/categories/</link>
+    <description>Recent content in Categories on Ylog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>©2020 yzhang1918</copyright>
+    <lastBuildDate>Thu, 02 Jan 2020 20:17:15 +0800</lastBuildDate>
+    
+	<atom:link href="https://yzhang1918.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Research</title>
+      <link>https://yzhang1918.github.io/categories/research/</link>
+      <pubDate>Thu, 02 Jan 2020 20:17:15 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/categories/research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Misc</title>
+      <link>https://yzhang1918.github.io/categories/misc/</link>
+      <pubDate>Wed, 01 Jan 2020 20:53:09 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/categories/misc/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reinforcement Learning on Ylog</title>
+    <link>https://yzhang1918.github.io/tags/reinforcement-learning/</link>
+    <description>Recent content in Reinforcement Learning on Ylog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>©2020 yzhang1918</copyright>
+    <lastBuildDate>Thu, 02 Jan 2020 20:17:15 +0800</lastBuildDate>
+    
+	<atom:link href="https://yzhang1918.github.io/tags/reinforcement-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Soft Policy Iteration</title>
+      <link>https://yzhang1918.github.io/posts/sac/</link>
+      <pubDate>Thu, 02 Jan 2020 20:17:15 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/sac/</guid>
+      <description>This is a note on the soft policy iteration from SAC12.
+ Soft Policy Evaluation Soft Policy Improvement Soft Policy Iteration    Soft Policy Evaluation We define the bellman backup operator for any $Q: \mathcal{S\times A} \rightarrow \Re$:
+ $$ \mathcal{T}^\pi Q(s_t, a_t) \triangleq r(s_t, a_t) + \gamma \mathbb{E}_{s_{t+1} \sim p} [V(s_{t+1})] $$ where we have the soft state value function:
+$$V(s_t) = \mathbb{E}_{a_t\sim \pi}[Q(s_t, a_t) - \alpha \log\pi(a_t|s_t)] $$</description>
+    </item>
+    
+  </channel>
+</rss>

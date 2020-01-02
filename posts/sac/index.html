@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Soft Policy Iteration - Ylog</title><link rel="icon" type="image/png" href=icons/Y.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Soft Policy Iteration" />
+<meta property="og:description" content="A note on soft policy iteration." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yzhang1918.github.io/posts/sac/" />
+<meta property="article:published_time" content="2020-01-02T20:17:15+08:00" />
+<meta property="article:modified_time" content="2020-01-02T20:17:15+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Soft Policy Iteration"/>
+<meta name="twitter:description" content="A note on soft policy iteration."/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/main.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://yzhang1918.github.io/js/main.js"></script>
+</head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false}
+                ]
+            });"></script>
+        
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://yzhang1918.github.io/">Ylog</a></h1>
+	<div class="site-description"><h2>yzhang1918's Blog</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/yzhang1918" title="Github"><i data-feather="github"></i></a><a href="https://www.instagram.com/yaozh1918/" title="Instagram"><i data-feather="instagram"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/categories">Categories</a>
+			</li>
+			
+			<li>
+				<a href="/tags">Tags</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">Soft Policy Iteration</h1>
+			<div class="meta">Posted at &mdash; Jan 2, 2020</div>
+		</div>
+
+		<div class="post-tags">
+			
+				
+				<nav class="nav">
+						<ul class="flat">
+							
+							<li class="tags"><a href="/tags/reinforcement-learning">Reinforcement Learning</a></li>
+							
+							
+							<li class="categories"><a href="/categories/research">Research</a></li>
+							
+						</ul>
+				</nav>
+				
+			
+		</div>
+
+		<div class="markdown">
+			<p>This is a note on the soft policy iteration from SAC<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<div class="toc">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#soft-policy-evaluation">Soft Policy Evaluation</a></li>
+    <li><a href="#soft-policy-improvement">Soft Policy Improvement</a></li>
+    <li><a href="#soft-policy-iteration">Soft Policy Iteration</a></li>
+  </ul>
+</nav>
+</div>
+<h2 id="soft-policy-evaluation">Soft Policy Evaluation</h2>
+<p>We define the bellman backup operator for any $Q: \mathcal{S\times A} \rightarrow \Re$:</p>
+<p>
+$$ \mathcal{T}^\pi Q(s_t, a_t) \triangleq r(s_t, a_t) + \gamma \mathbb{E}_{s_{t+1} \sim p} [V(s_{t+1})] $$
+</p>
+
+
+<p>where we have the soft state value function:</p>
+<p>$$V(s_t) = \mathbb{E}_{a_t\sim \pi}[Q(s_t, a_t) - \alpha \log\pi(a_t|s_t)] $$</p>
+<p>If we define the entropy augmented reward as</p>
+<p>
+$$ r_\pi(s_t, a_t) \triangleq r(s_t,a_t) + \alpha \gamma \mathbb{E}_{s_{t+1}\sim p }[\mathcal{H}(\pi(\cdot | s_{t+1}))], $$
+</p>
+
+
+<p>then we have</p>
+<p>
+$$\begin{aligned}
+&r(s_t, a_t) + \gamma \mathbb{E}_{s_{t+1}\sim p}[V(s_{t+1})]  \\
+=& r(s_t,a_t) + \gamma \mathbb{E}_{s_{t+1}\sim p}[\mathbb{E}_{a_{t+1}\sim \pi}[Q(s_{t+1}, a_{t+1}) - \alpha \log\pi(a_{t+1}|s_{t+1})]]\\
+=& r(s_t, a_t) + \gamma \mathbb{E}_{s_{t+1}\sim p, a_{t+1}\sim\pi}[Q(s_{t+1}, a_{t+1})] + \alpha \gamma \mathbb{E}_{s_{t+1}\sim p}[\mathcal{H}(\pi(\cdot | s_{t+1}))]\\
+=& r_\pi(s_t, a_t) +\gamma \mathbb{E}_{s_{t+1}\sim p, a_{t+1}\sim\pi}[Q(s_{t+1}, a_{t+1})]  .
+\end{aligned}
+$$
+</p>
+
+
+<p>With the standard convergence results for policy evaluation, we could know that $Q^k$ will converge to the soft Q-value of $\pi$ as $k\rightarrow \infty$, with any $Q^0$ ($|\mathcal{A}| &lt;\infty$) and $Q^{k+1} = \mathcal{T}^\pi Q^k$.</p>
+<h2 id="soft-policy-improvement">Soft Policy Improvement</h2>
+<p>For each state, we do the following update:</p>
+<p>$$
+\pi_{\text{new}} = \arg \min_{\pi^{\prime} \in \Pi} D_{\text{KL}}\left( \pi^{\prime}(\cdot|s_t) \Vert \frac{1}{Z^{\pi_{\text{old}}(s_t)}}\cdot \exp (\frac{1}{\alpha}\cdot Q^{\pi_{\text{old}}}(s_t, \cdot)\right).
+$$</p>
+<p>Then we have</p>
+<p>$$
+Q^{\pi_\text{new}}(s_t, a_t) \ge Q^{\pi_{\text{old}}}(s_t, a_t) \quad \forall (s_t, a_t) \in \mathcal{S\times A} ,|\mathcal{A}| &lt; \infty.
+$$</p>
+<p>Proof:</p>
+<p>Let
+<p>
+$$
+\begin{aligned}
+J_{\pi_{\text{old}}}(\pi^\prime (\cdot |s_t)) &=D_{\text{KL}}\left( \pi^{\prime}(\cdot|s_t) \Vert \frac{1}{Z^{\pi_{\text{old}}(s_t)}}\cdot \exp (\frac{1}{\alpha}\cdot Q^{\pi_{\text{old}}}(s_t, \cdot)\right) \\
+&= \mathbb{E}_{a_t\sim \pi^\prime} \left[\log \pi^\prime (a_t, s_t) -\frac{1}{\alpha} Q^{\pi_{\text{old}}}(s_t, a_t) + \log Z^{\pi_{\text{old}}(s_t)} \right]\\
+&= \mathbb{E}_{a_t\sim \pi^\prime} \left[\log \pi^\prime (a_t, s_t) -\frac{1}{\alpha} Q^{\pi_{\text{old}}}(s_t, a_t)\right] + \log Z^{\pi_{\text{old}}(s_t)}.
+\end{aligned}
+$$
+</p>
+
+</p>
+<p>Note that
+$$
+J_{\pi_{\text{old}}}(\pi_{\text{old}}(\cdot| s_t)) = -\frac{1}{\alpha} V^{\pi_{\text{old}}}(s_t) +\log Z^{\pi_{\text{old}}(s_t)}.
+$$</p>
+<p>Since $J_{\pi_{\text{old}}}(\pi_{\text{new}}) \le J_{\pi_{\text{old}}}(\pi_{\text{old}})$, we have</p>
+<p>$$
+V^{\pi_{\text{old}}}(s_t) \leq \mathbb{E}_{a_t\sim \pi_{\text{new}}} \left[Q^{\pi_{\text{old}}}(s_t, a_t)- \alpha \log \pi_{\text{new}} (a_t| s_t)\right].
+$$</p>
+<p>Now,
+<p>
+$$
+\begin{aligned}
+Q^{\pi_{\text{old}}}(s_t, a_t) &= r(s_t, a_t) + \gamma\mathbb{E}_{s_{t+1}\sim p}[V^{\pi_{\text{old}}}(s_{t+1})] \\
+&\leq r(s_t, a_t) + \gamma \mathbb{E}_{s_{t+1}\sim p}\left[ \mathbb{E}_{a_{t+1}\sim \pi_{\text{new}}}[Q^{\pi_{\text{old}}}(s_{t+1}, a_{t+1})- \alpha \log \pi_{\text{new}} (a_{t+1}| s_{t+1})]\right]
+\\
+&\leq \cdots \\
+&\leq r(s_t,a_t) +  \mathbb{E}_{s_{t+1:\infty}\sim p, a_{t+1:\infty}\sim \pi_{\text{new}}}\left[\sum_{l=1}^\infty \gamma^l (r(s_{t+l}, a_{t+l}) - \alpha \log\pi_\text{new}(a_{t+l}|s_{t+l})  ) \right] \\
+&= Q^{\pi_\text{new}}(s_t, a_t).
+\end{aligned}
+$$
+</p>
+
+</p>
+<h2 id="soft-policy-iteration">Soft Policy Iteration</h2>
+<p>Let $\pi_i$ be the policy at iteration $i$.
+The sequence $Q^{\pi_i}$ is monotonically increasing and bounded (since $|\mathcal{A}| &lt; \infty$ and rewards are bounded).
+So it converges to some $\pi^\star$, at which point, we have</p>
+<p>$$
+J_{\pi^\star}(\pi^\star(\cdot| s_t))  &lt; J_{\pi^\star}(\pi(\cdot| s_t)) \quad \forall \pi \in \Pi, \pi \ne \pi^\star.
+$$</p>
+<p>This implies that we cannot make any improvement from $\pi^\star$.</p>
+<p>Then we could use the same technique in the previous proof to show that</p>
+<p>$$
+Q^{\pi^\star}(s_t, a_t) \ge Q^\pi(s_t, a_t) \quad \forall \pi \in \Pi.
+$$</p>
+<hr>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>T. Haarnoja, A. Zhou, P. Abbeel, and S. Levine, “Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor,” presented at the ICML, 2018. <a href="https://arxiv.org/abs/1801.01290">arxiv</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>T. Haarnoja et al., “Soft Actor-Critic Algorithms and Applications,” arXiv:1812.05905 [cs, stat], Jan. 2019. <a href="https://arxiv.org/abs/1812.05905">arxiv</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+		</div>
+<script src="https://utteranc.es/client.js"
+    repo="yzhang1918/blog_comments"
+    issue-term="pathname"
+    label="Comment"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+</script></div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> ©2020 yzhang1918 |  <a href="https://github.com/yzhang1918/ezhil">Theme</a>  Modified from <a href="https://github.com/vividvilla/ezhil">Ezhil</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77357711-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>
