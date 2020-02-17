@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tutorial on Ylog</title>
+    <link>https://yzhang1918.github.io/categories/tutorial/</link>
+    <description>Recent content in tutorial on Ylog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>©2020 yzhang1918</copyright>
+    <lastBuildDate>Mon, 17 Feb 2020 20:51:33 +0800</lastBuildDate>
+    
+	<atom:link href="https://yzhang1918.github.io/categories/tutorial/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>图卷积GCN的直观理解</title>
+      <link>https://yzhang1918.github.io/posts/gcn_intuition/</link>
+      <pubDate>Mon, 17 Feb 2020 20:51:33 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/gcn_intuition/</guid>
+      <description>实验室又有新生进来了，也有对图卷积感兴趣的，那就写篇文章，简单的讲一下。本篇文章参考了Kipf的博客，主要是直观的理解，加上我的一点解读，数</description>
+    </item>
+    
+  </channel>
+</rss>

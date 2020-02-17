@@ -18,7 +18,7 @@
       
       <guid>https://yzhang1918.github.io/posts/sac/</guid>
       <description>This is a note on the soft policy iteration from SAC12.
- Soft Policy Evaluation Soft Policy Improvement Soft Policy Iteration    Soft Policy Evaluation We define the bellman backup operator for any $Q: \mathcal{S\times A} \rightarrow \Re$:
+ Soft Policy Evaluation Soft Policy Improvement Soft Policy Iteration Other References    Soft Policy Evaluation We define the bellman backup operator for any $Q: \mathcal{S\times A} \rightarrow \Re$:
  $$ \mathcal{T}^\pi Q(s_t, a_t) \triangleq r(s_t, a_t) + \gamma \mathbb{E}_{s_{t+1} \sim p} [V(s_{t+1})] $$ where we have the soft state value function:
 $$V(s_t) = \mathbb{E}_{a_t\sim \pi}[Q(s_t, a_t) - \alpha \log\pi(a_t|s_t)] $$</description>
     </item>

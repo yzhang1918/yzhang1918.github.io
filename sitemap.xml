@@ -4,12 +4,42 @@
   
   <url>
     <loc>https://yzhang1918.github.io/categories/</loc>
-    <lastmod>2020-01-02T20:17:15+08:00</lastmod>
+    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/tags/gnn/</loc>
+    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://yzhang1918.github.io/posts/</loc>
-    <lastmod>2020-01-02T20:17:15+08:00</lastmod>
+    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/categories/research/</loc>
+    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/tags/</loc>
+    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/categories/tutorial/</loc>
+    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/</loc>
+    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/posts/gcn_intuition/</loc>
+    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
   </url>
   
   <url>
@@ -18,22 +48,7 @@
   </url>
   
   <url>
-    <loc>https://yzhang1918.github.io/categories/research/</loc>
-    <lastmod>2020-01-02T20:17:15+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://yzhang1918.github.io/posts/sac/</loc>
-    <lastmod>2020-01-02T20:17:15+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yzhang1918.github.io/tags/</loc>
-    <lastmod>2020-01-02T20:17:15+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yzhang1918.github.io/</loc>
     <lastmod>2020-01-02T20:17:15+08:00</lastmod>
   </url>
   
@@ -48,12 +63,12 @@
   </url>
   
   <url>
-    <loc>https://yzhang1918.github.io/categories/misc/</loc>
+    <loc>https://yzhang1918.github.io/tags/misc/</loc>
     <lastmod>2020-01-01T20:53:09+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yzhang1918.github.io/tags/misc/</loc>
+    <loc>https://yzhang1918.github.io/categories/misc/</loc>
     <lastmod>2020-01-01T20:53:09+08:00</lastmod>
   </url>
   

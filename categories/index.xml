@@ -6,7 +6,7 @@
     <description>Recent content in Categories on Ylog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2020 yzhang1918</copyright>
-    <lastBuildDate>Thu, 02 Jan 2020 20:17:15 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 17 Feb 2020 20:51:33 +0800</lastBuildDate>
     
 	<atom:link href="https://yzhang1918.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>Research</title>
       <link>https://yzhang1918.github.io/categories/research/</link>
-      <pubDate>Thu, 02 Jan 2020 20:17:15 +0800</pubDate>
+      <pubDate>Mon, 17 Feb 2020 20:51:33 +0800</pubDate>
       
       <guid>https://yzhang1918.github.io/categories/research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://yzhang1918.github.io/categories/tutorial/</link>
+      <pubDate>Mon, 17 Feb 2020 20:51:33 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/categories/tutorial/</guid>
       <description></description>
     </item>
     
