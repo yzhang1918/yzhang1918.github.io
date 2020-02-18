@@ -4,6 +4,7 @@ body {
     color: #333;
     line-height: 1.6;
     font-size: 16px;
+    text-align: justify;
 }
 
 a, a:hover {
@@ -63,7 +64,7 @@ textarea {
 blockquote {
     margin-left: 1rem;
     font-style: italic;
-    font-size: 1.4rem;
+    font-size: 0.9rem;
     font-family: Georgia,bitstream charter,serif;
     border-left: 3px solid;
     border-color: #a00;
