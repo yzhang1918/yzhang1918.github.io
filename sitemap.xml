@@ -3,18 +3,38 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yzhang1918.github.io/posts/s2v/</loc>
+    <lastmod>2020-03-26T21:24:03+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yzhang1918.github.io/categories/</loc>
-    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+    <lastmod>2020-03-26T21:24:03+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://yzhang1918.github.io/tags/gnn/</loc>
-    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+    <lastmod>2020-03-26T21:24:03+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/categories/paper-reading/</loc>
+    <lastmod>2020-03-26T21:24:03+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://yzhang1918.github.io/posts/</loc>
-    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+    <lastmod>2020-03-26T21:24:03+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/tags/</loc>
+    <lastmod>2020-03-26T21:24:03+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yzhang1918.github.io/</loc>
+    <lastmod>2020-03-26T21:24:03+08:00</lastmod>
   </url>
   
   <url>
@@ -23,17 +43,7 @@
   </url>
   
   <url>
-    <loc>https://yzhang1918.github.io/tags/</loc>
-    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://yzhang1918.github.io/categories/tutorial/</loc>
-    <lastmod>2020-02-17T20:51:33+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yzhang1918.github.io/</loc>
     <lastmod>2020-02-17T20:51:33+08:00</lastmod>
   </url>
   
