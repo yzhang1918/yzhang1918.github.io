@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>[GCO系列-番外01] ClusterNet - Ylog</title><link rel="icon" type="image/png" href=icons/Y.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="[GCO系列-番外01] ClusterNet" />
+<meta property="og:description" content="如何让k-means作为神经网络中的一层" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yzhang1918.github.io/posts/clusternet/" />
+<meta property="article:published_time" content="2020-04-08T11:36:05+08:00" />
+<meta property="article:modified_time" content="2020-04-08T11:36:05+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[GCO系列-番外01] ClusterNet"/>
+<meta name="twitter:description" content="如何让k-means作为神经网络中的一层"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/main.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://yzhang1918.github.io/js/main.js"></script>
+</head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false}
+                ]
+            });"></script>
+        
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://yzhang1918.github.io/">Ylog</a></h1>
+	<div class="site-description"><h2>yzhang1918's Blog</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/yzhang1918" title="Github"><i data-feather="github"></i></a><a href="https://www.instagram.com/yaozh1918/" title="Instagram"><i data-feather="instagram"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/categories">Categories</a>
+			</li>
+			
+			<li>
+				<a href="/tags">Tags</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">[GCO系列-番外01] ClusterNet</h1>
+			<div class="meta">Posted at &mdash; Apr 8, 2020</div>
+		</div>
+
+		<div class="post-tags">
+			
+				
+				<nav class="nav">
+						<ul class="flat">
+							
+							<li class="tags"><a href="/tags/graph-comb-opt">graph-comb-opt</a></li>
+							
+							<li class="tags"><a href="/tags/reinforcement-learning">reinforcement-learning</a></li>
+							
+							
+							<li class="categories"><a href="/categories/research">research</a></li>
+							
+							<li class="categories"><a href="/categories/paper-reading">paper-reading</a></li>
+							
+						</ul>
+				</nav>
+				
+			
+		</div>
+
+		<div class="markdown">
+			<div class="toc">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#motivation">Motivation</a>
+      <ul>
+        <li><a href="#related-work">Related Work</a></li>
+      </ul>
+    </li>
+    <li><a href="#clusternet">ClusterNet</a>
+      <ul>
+        <li><a href="#forward-pass">Forward Pass</a></li>
+        <li><a href="#backward-pass">Backward Pass</a></li>
+        <li><a href="#a-visual-proof">A Visual Proof</a></li>
+      </ul>
+    </li>
+    <li><a href="#solving-the-optimization-problems">Solving the Optimization Problems</a></li>
+    <li><a href="#experimental-results">Experimental Results</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+</div>
+<p><code>Wilder et al., End to End Learning and Optimization on Graphs. NeurIPS'2019.</code></p>
+<p>这篇是我在遍历Graph Combinatorial Optimization相关工作过程中发现的一篇paper。不同于S2V-DQN等方法， 这篇工作实际聚焦于decision-focused learning，解决了node partitioning和subset selection两类问题。但我觉得，这篇工作的核心贡献是提出了一个高效的可微k-means层，可以嵌入到很多模型中去。</p>
+<h2 id="motivation">Motivation</h2>
+<p>在图上的任务主要有两种，一类叫做learning，另一类叫做optimization。Learning我们都很熟悉，例如link prediction、node classification等，这类任务可以看作是对给定的图$A^{train}$通过最小化损失函数进行补全</p>
+<p>$$\hat{A}^* = \arg \min ~\ell(\hat{A}, A^{train}).$$</p>
+<p>而optimization的任务则是去求解一个图上的最优化问题：</p>
+<p>
+$$ \max_{x \in \mathcal{X}}~f(x, A),$$
+</p>
+
+
+<p>这里$f$是目标函数，$\mathcal{X}$是解空间，可能存在一些约束。
+典型的optimization就是图组合优化问题，例如community detection（$x$用于指示各个节点属于第几个社区）、facility location（$x$用于指示facility建立在哪些节点上）等。这里，$x$都是离散的值。</p>
+<p>个人觉得，optimization与learning的最显著区别是optimization已经要为决策服务了，是我们的最终目的。
+然而很多场景下，给我们用来optimization的可能是一个不完整的图，即$A^{train}$，这时就有两种策略对其进行处理了：</p>
+<p>第一种二阶段（two-stage）的方法先用learning对图进行补全，然后再在补全后的图上进行optimization：</p>
+<p>$$\hat{A}^* = \arg\min \ell(\hat{A}, A^{train})\quad \Rightarrow \quad  \max_{x \in \mathcal{X}}~f(x, \hat{A}^*).$$</p>
+<p>第二种为端到端的方法（end-to-end）则直接优化在$A^{train}$上的目标函数：</p>
+<p>
+$$\max_{x \in \mathcal{X}}~f(x, A^{train}).$$
+</p>
+
+
+<p>二阶段的方案在第一阶段需要采用比较一般化的损失函数（例如交叉熵损失）进行learning，它可能并不适合后续的optimization任务；而端到端的方案一般基于强化学习如S2V-DQN则需要从零开始重新发现algorithmic structure<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。</p>
+<p>所以端到端与二阶段都存在着问题，而一个折中的方案就是decision-focused learning：</p>
+<blockquote>
+<p>Decision-focused learning embeds a solver for the optimization problem as a differentiable layer within a learned system.</p>
+</blockquote>
+<p>Decision-focused learning将一个可微的optimization solver<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> 作为神经网络中的一层，这样便可将一些先验algorithmic structure注入到神经网络模型中。</p>
+<p>之前的Decision-focused learning存在两个问题：（1）optimization领域在发展过程中，一般不会去考虑solver是不是可微的，因此想将问题建模为decision-focused learning就需要研究人员为每一个特定的问题去开发一个专用的可微solver；（2）神经网络需要不断训练，这势必导致每一次前向传播都需要调用一次solver，计算开销可能很大，也让整个模型显得笨拙。</p>
+<p>因此，在这篇文章中作者提出了ClusterNet，一个decision-focused learning算法致力于解决“多种”图组合优化问题。
+作者也很实在，指出设计一个通用solver是不太现实的，所以也只聚焦于两大类图组合优化问题：</p>
+<ol>
+<li>Partitioning：将节点分组，这包含了community detection、maxcut等问题；</li>
+<li>Subset selection：选择一个节点子集，这包含了facility location、influence maximization、immunization等问题。</li>
+</ol>
+<p>顾名思义，ClusterNet就是对网络中的节点做聚类，而聚类结果可自然地映射到这两类问题上：聚类的簇划分结果即为partitioning的结果；簇中心或接近簇中心的节点即为subset selection的结果。
+因此针对第一个问题，ClusterNet一个solver解决了多个任务；针对第二个问题，作者提出了一个可微的k-means layer，非常高效。</p>
+<h3 id="related-work">Related Work</h3>
+<p>这篇文章的相关工作主要分为两大块。</p>
+<p>Decision-focused learning是一个较新的领域，目前相关工作也不多。此前的研究主要聚焦于凸优化问题，或一些有凸逼近的离散优化问题。这些工作最主要的问题就是需要针对性地设计solver。而这篇工作与之最大的区别在于，ClusterNet为一个可以解决多个图组合优化问题的方法。</p>
+<p>端到端求解组合优化问题的工作主要基于强化学习，即本系列的其他文章介绍的算法。而强化学习求解这些问题就相当于从零开始设计启发式规则，而ClusterNet直接注入algorithmic structure，即可微k-means。</p>
+<h2 id="clusternet">ClusterNet</h2>
+<p>ClusterNet与二阶段的方法的区别如图所示：</p>
+<p><img src="/imgs/clusternet/framework.png" alt="Framework"></p>
+<p>可见，ClusterNet训练目标和端到端方法是一致的，只是加了一个k-means layer。此外，由于这篇工作研究的两类问题都是离散优化，而模型输出一般都是连续量，所以在最后需要进行离散化。</p>
+<p>下面我们主要研究这个可微的k-means layer的前向与后向如何传播。</p>
+<h3 id="forward-pass">Forward Pass</h3>
+<p>我们令$x_j$表示节点$j$的$p$维表征向量（可以由一个GNN给出），$\{\mu_k\}_{k=1}^K$为簇$k$的中心。$r_{jk}$表示节点$j$属于簇$k$的程度，满足$\sum_k r_{jk} = 1$，即可理解为节点在各个簇中的概率。</p>
+<p>前向传播即为计算簇的中心并对节点进行分配。这里采用类似k-means的更新公式</p>
+<p><p>
+$$
+\begin{cases}
+r_{jk} = \frac{\exp(-\beta \| x_j - \mu_k\|)}{\sum_\ell \exp(-\beta \| x_j - \mu_\ell \|)} ~ \forall k, j, \tag{1}
+\\
+\mu_{k}=\frac{\sum_{j} r_{j k} x_{j}}{\sum_j r_{jk}} ~ \forall k.
+\end{cases}
+$$
+</p>
+
+
+这里，$\beta$表示inverse-temperature，$\beta\rightarrow 0$时，这一步退化为传统的k-means。</p>
+<p>对于任意的初始簇中心，交替迭代两组更新公式定可收敛至一组不动点$\mu, r$。</p>
+<h3 id="backward-pass">Backward Pass</h3>
+<p>前向传播非常简单，其实重点在于如何后向传播梯度。</p>
+<p>定义函数$f$</p>
+<p><p>
+$$
+f_{k, \ell}(\mu, x)=\mu_{k}^{\ell}-\frac{\sum_{j} r_{j k} x_{j}^{\ell}}{\sum_{j} r_{j k}}.
+$$
+</p>
+
+
+这里$k$表示簇的序号，而$\ell$表示特征的维度。该函数表示当前的$\mu$与更新一步后的$\mu$的差异。</p>
+<p>如果$\mu$是不动点，那么便有$f(\mu, x)= 0$。注意到$\mu$为$x$的函数，利用隐函数求导法则，便可得到</p>
+<p>
+$$
+\frac{\partial \mu}{\partial x}=-\left[\frac{\partial f(\mu, x)}{\partial \mu}\right]^{-1} \frac{\partial f(\mu, x)}{\partial x}.\tag{2}
+$$
+</p>
+
+
+<p>$\frac{\partial r}{\partial x}$也可通过式1由链式法则得到。因此，如果后续需要使用$\mu$或$r$，梯度是完全可以传回去的。</p>
+<p>$\frac{\partial f}{\partial \mu}$和$\frac{\partial f}{\partial x}$是可以很容易计算出闭式解。
+但是，注意Jacobian矩阵$\frac{\partial f}{\partial \mu}$是一个$Kp$维的方阵，式2中计算其逆矩阵复杂度过高，为$O(K^3p^3)$。</p>
+<p>所以作者提出了一个近似的反向传播。核心思想为用单位阵近似Jacobian矩阵
+
+$\frac{\partial f}{\partial \mu} \approx I$
+。
+此时，式2简化为$\frac{\partial \mu}{\partial x} \approx -\frac{\partial f}{\partial x}$。
+现将$f$代入，观察簇$k$中心关于$x$的偏导
+<p>
+$$
+\frac{\partial \mu_k}{\partial x} = -\frac{\partial f_k}{\partial x}= -\frac{\partial}{\partial x} \frac{\sum_j r_{jk} x_j}{\sum_j r_{jk}}.
+$$
+</p>
+
+</p>
+<p>可以发现，最右侧即为式1的簇中心更新公式。这说明了什么？给定不动点$r$，我们计算一步簇中心的更新公式，得到$\mu$便可直接用于后续计算，此时梯度可以利用自动微分框架（例如PyTorch，Tensorflow）自动计算回传。而如何得到不动点$r$并不影响$\mu$的梯度，也就意味着我们可以利用各种高效优化过的算法计算。类似的，如果需要用$r$，也只需要再通过$\mu$计算一步更新公式即可。</p>
+<p>现在回头再看框架图，可以发现前向传播的时候计算不动点后，又执行了一步更新公式，其实既然已经是不动点，他们的值是不会发生变化的了，这只是为了把梯度续上，让模型能自动回传；而反向传播的时候，梯度绕过了计算不动点的一步。</p>
+<h3 id="a-visual-proof">A Visual Proof</h3>
+<p>可以看出这篇文章提出的k-means layer的关键在于近似
+$\frac{\partial f}{\partial \mu} \approx I$
+的合理性。文中对其给出了证明，这里，我用一个小例子来说明这一证明。</p>
+<p>我们考虑4个在数轴上的点（$p=1$）, 将其分为两个簇（$K=2$）。
+要说明
+
+$
+\begin{bmatrix}
+\frac{\partial f_1}{\partial \mu_1} & \frac{\partial f_1}{\partial \mu_2} \\
+\frac{\partial f_2}{\partial \mu_1} & \frac{\partial f_2}{\partial \mu_2}
+\end{bmatrix} \approx 
+\begin{bmatrix}
+1 &0\\0 & 1
+\end{bmatrix}
+$
+
+只需说明$\frac{\partial f_2}{\partial \mu_1}\approx 0$
+（对角元素为1显然）。
+而$f_2$衡量的是对簇2的中心进行一次更新的变化量，所以我们可以看当簇1移动了$\Delta \mu_1$时，$\Delta \mu_2$会移动多少。</p>
+<p><img src="/imgs/clusternet/proof1.png" alt="Proof1"></p>
+<p>这里的关键在于$\beta$，我们知道当$\beta$越大时，$r_{jk}$就会越集中于某一个值，此时对于簇中心的位置越不敏感。比如这个例子中，如果$\beta$很大，点1、2都“强烈地”属于簇1，点3、4“强烈地”属于簇2。此时簇1中心的位置移动一点，并不会对$r_{jk}$造成很大影响，而簇中心的更新只依赖于$r_{jk}$，因此簇2中心的位置也不会进行过多的移动。
+此外，两个簇之间的距离$\alpha$<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>越大，对$r_{jk}$的影响也会越轻微。
+故有$\alpha,\beta$越大，近似$\frac{\partial f_2}{\partial \mu_1}\approx 0$越精确。</p>
+<p><img src="/imgs/clusternet/proof2.png" alt="Proof2"></p>
+<h2 id="solving-the-optimization-problems">Solving the Optimization Problems</h2>
+<p>通过上述的k-means layer，我们得到了簇中心$\mu$与簇划分$r$，现只需求解后续的optimization任务：</p>
+<p>Partitioning：</p>
+<p>
+$$
+\ell=\mathbb{E}_{r^{hard} \sim r}\left[f\left(r^{hard}, A^{train}\right)\right].
+$$
+</p>
+
+
+<p>Subset Selection：</p>
+<p><p>
+$$
+\ell=\mathbb{E}_{y^{hard} \sim y}\left[f\left(y^{hard}, A^{train}\right)\right],
+$$
+</p>
+
+
+其中$y_j$表示的是节点$j$在解集中的概率，为关于$(x,\mu)$的函数，满足$|y|_1=K$，具体计算本文不再展开。</p>
+<p>由于我们讨论的是离散的组合优化问题，所以都需要从$r$或$y$中sample一个hard assignment，不过上面两个优化目标中，期望一般都可直接写为关于$r$或$y$的函数，训练可直接进行。hard assignment可以留待最后测试时再进行sample。</p>
+<h2 id="experimental-results">Experimental Results</h2>
+<p>为了验证ClusterNet的有效性，作者在cora、citeseer、protein、adol、fb五个数据集上进行了实验。不过这五个数据集都偏小，最大的citeseer也仅有3327个节点。选用的两个optimization任务为community detection和facility location。</p>
+<p>Community detection的优化目标为<strong>最大化</strong>modularity；facility location的优化目标为<strong>最小化</strong>任意节点到距离最近的facility的距离的最大值。</p>
+<p>实验分了两组设置：</p>
+<ol>
+<li><strong>Learning + optimization</strong>: 随机删除网络中60%的边作为输入；</li>
+<li><strong>Optimization</strong>: 将完整的图作为输入。</li>
+</ol>
+<p>对比算法有求解community detection的CNM、Newman、SC算法，求解facility location的greedy、gonzalez算法；有用GCN做补全后再求解的二阶段算法GCN-2stage-*；
+以及端到端的GCN-e2e。
+不过，实验部分的端到端和参考文献中介绍的基于RL的方法不同，是一种非常弱的算法：它要求GCN直接输出$r$或$y$。</p>
+<p>实验结果如下表：</p>
+<p><img src="/imgs/clusternet/exp1.png" alt="Exp1"></p>
+<p>可以发现，ClusterNet在两种设置上都达到了最好的表现。从模型角度可以发现，虽然文章叫做learning and optimization，但模型并没有显式地去补全网络，网络完整与否，模型的计算过程都是一致的。</p>
+<p>注意这里的评价指标只是目标函数值，与大多数机器学习的paper实验设置都不太一样。文中还有别的实验，本文也不再赘述。</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>这篇文章提出了decision-focused learning的一个新模型ClusterNet。不同以往的模型，ClusterNet致力于求解相对简单的节点聚类问题（a simple proxy），进而再映射到复杂的partitioning和subset selection问题上。</p>
+<p>个人对这篇文章的质疑主要在于实验部分：（1）相关工作提到了基于RL的方法，但实验部分完全没有进行对比，对于subset selection任务，此前有不少基于RL的工作；（2）community detection任务的评价准则为modularity的目标函数值，这在optimization领域可以理解，但还是比较希望看到和ground-truth的比较结果如NMI等。</p>
+<p>但去除decision-focused learning这个背景，我觉得differentiable k-means layer这个贡献就已经足够了。其实类似聚类的步骤很多算法中都有涉及，例如Capsule，完全可以尝试将k-means layer注入到已有模型中，提升效率。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>algorithmic structure算法结构这个词组文中提到多次，但没有给出具体的定义，这里说一下我的感受。假设我们的任务是做聚类，给定n个点，我可以通过k-means的迭代方式，很容易地找到k个簇中心；但我要求一个MLP直接输出k个簇中心向量是困难的，先不论损失函数如何设计，单单是让MLP发现簇中心与输入数据点的关联就很难实现。这里这个k-means就是algorithmic structure。 <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>求解learning task需要optimizer，而求解optimization则需要solver。 <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>文中的证明也用到了$\alpha$，思想类似但定义有差异。 <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+		</div>
+<script src="https://utteranc.es/client.js"
+    repo="yzhang1918/blog_comments"
+    issue-term="pathname"
+    label="Comment"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+</script></div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> ©2020 yzhang1918 |  <a href="https://github.com/yzhang1918/ezhil">Theme</a>  Modified from <a href="https://github.com/vividvilla/ezhil">Ezhil</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77357711-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>

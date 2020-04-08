@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>graph-comb-opt on Ylog</title>
+    <link>https://yzhang1918.github.io/tags/graph-comb-opt/</link>
+    <description>Recent content in graph-comb-opt on Ylog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>©2020 yzhang1918</copyright>
+    <lastBuildDate>Wed, 08 Apr 2020 11:36:05 +0800</lastBuildDate>
+    
+	<atom:link href="https://yzhang1918.github.io/tags/graph-comb-opt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[GCO系列-番外01] ClusterNet</title>
+      <link>https://yzhang1918.github.io/posts/clusternet/</link>
+      <pubDate>Wed, 08 Apr 2020 11:36:05 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/clusternet/</guid>
+      <description>Motivation Related Work ClusterNet Forward Pass Backward Pass A Visual Proof Solving the Optimization Problems Experimental Results Conclusion Wilder et al., End to End Learning and Optimization on Graphs. NeurIPS&#39;2019. 这篇是我在遍历Graph Combinatorial Optimization相关工作过程中发现的一篇pap</description>
+    </item>
+    
+  </channel>
+</rss>

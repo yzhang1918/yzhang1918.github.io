@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>[置顶] Paper速查 - Ylog</title><link rel="icon" type="image/png" href=icons/Y.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="[置顶] Paper速查" />
+<meta property="og:description" content="用一行评论总结paper" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yzhang1918.github.io/posts/paper_comments/" />
+<meta property="article:published_time" content="2020-04-07T15:03:44+08:00" />
+<meta property="article:modified_time" content="2020-04-07T15:03:44+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[置顶] Paper速查"/>
+<meta name="twitter:description" content="用一行评论总结paper"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/main.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://yzhang1918.github.io/js/main.js"></script>
+</head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false}
+                ]
+            });"></script>
+        
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://yzhang1918.github.io/">Ylog</a></h1>
+	<div class="site-description"><h2>yzhang1918's Blog</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/yzhang1918" title="Github"><i data-feather="github"></i></a><a href="https://www.instagram.com/yaozh1918/" title="Instagram"><i data-feather="instagram"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/categories">Categories</a>
+			</li>
+			
+			<li>
+				<a href="/tags">Tags</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">[置顶] Paper速查</h1>
+			<div class="meta">Posted at &mdash; Apr 7, 2020</div>
+		</div>
+
+		<div class="post-tags">
+			
+				
+				<nav class="nav">
+						<ul class="flat">
+							
+							<li class="tags"><a href="/tags/reference">reference</a></li>
+							
+							
+							<li class="categories"><a href="/categories/paper-reading">paper-reading</a></li>
+							
+							<li class="categories"><a href="/categories/research">research</a></li>
+							
+						</ul>
+				</nav>
+				
+			
+		</div>
+
+		<div class="markdown">
+			<p>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。</p>
+<div class="toc">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#graph">Graph</a>
+      <ul>
+        <li><a href="#node-embedding">Node Embedding</a></li>
+        <li><a href="#graph-neural-networks">Graph Neural Networks</a></li>
+      </ul>
+    </li>
+    <li><a href="#misc">Misc</a></li>
+  </ul>
+</nav>
+</div>
+<h2 id="graph">Graph</h2>
+<h3 id="node-embedding">Node Embedding</h3>
+<ul>
+<li><code>Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD'2018.</code></li>
+</ul>
+<blockquote>
+<p>将graph heat kernel（即wavelet）的特征函数作为节点embedding，对结构相同的节点可以得到几乎完全一致的embedding；kernel矩阵需要计算Chebyshev多项式近似；有关于特征系统bound的分析证明。</p>
+</blockquote>
+<h3 id="graph-neural-networks">Graph Neural Networks</h3>
+<p><code>Ma et al., Disentangled Graph Convolutional Networks. ICML'2019.</code></p>
+<blockquote>
+<p>学习解耦的表征，实际是对特征做clustering分了多个channel，很像Capsule；收敛性证明与GMM的类似；related work部分写的即简洁又全面。</p>
+</blockquote>
+<p><code>Xu et al., Graph Wavelet Neural Network. ICLR'2019.</code></p>
+<blockquote>
+<p>图谱分析中将Fourier基替换为wavelet基；基高度稀疏；kernel矩阵需要计算Chebyshev多项式近似。</p>
+</blockquote>
+<p><code>Zeng et al., GraphSAINT: Graph Sampling Based Inductive Learning Method. ICLR'2020.</code></p>
+<blockquote>
+<p>提前抽取子图输入到GNN中，可以保证GNN中各层都基于相同的图结构，不用layer-wise sampling（如graphSAGE、FastGCN）;提出了normalization方法保证为无偏估计量；分析variance并提出了optimal sampler。</p>
+</blockquote>
+<h2 id="misc">Misc</h2>
+<p><code>Wilder et al., End to End Learning and Optimization on Graphs. NeurIPS'2019.</code></p>
+<blockquote>
+<p>关注decision-focused learning，将optimization solver嵌入到神经网络中；提出了可微的k-means层，做节点聚类。</p>
+</blockquote>
+
+		</div>
+<script src="https://utteranc.es/client.js"
+    repo="yzhang1918/blog_comments"
+    issue-term="pathname"
+    label="Comment"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+</script></div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> ©2020 yzhang1918 |  <a href="https://github.com/yzhang1918/ezhil">Theme</a>  Modified from <a href="https://github.com/vividvilla/ezhil">Ezhil</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77357711-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>

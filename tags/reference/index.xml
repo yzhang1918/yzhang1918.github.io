@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>reference on Ylog</title>
+    <link>https://yzhang1918.github.io/tags/reference/</link>
+    <description>Recent content in reference on Ylog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>©2020 yzhang1918</copyright>
+    <lastBuildDate>Tue, 07 Apr 2020 15:03:44 +0800</lastBuildDate>
+    
+	<atom:link href="https://yzhang1918.github.io/tags/reference/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[置顶] Paper速查</title>
+      <link>https://yzhang1918.github.io/posts/paper_comments/</link>
+      <pubDate>Tue, 07 Apr 2020 15:03:44 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/paper_comments/</guid>
+      <description>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。 Graph Node Embedding Graph Neural Networks Misc Graph Node Embedding Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD&#39;2018. 将graph heat kernel（即wav</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,10 +6,28 @@
     <description>Recent content on Ylog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2020 yzhang1918</copyright>
-    <lastBuildDate>Thu, 26 Mar 2020 21:24:03 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2020 11:36:05 +0800</lastBuildDate>
     
 	<atom:link href="https://yzhang1918.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[置顶] Paper速查</title>
+      <link>https://yzhang1918.github.io/posts/paper_comments/</link>
+      <pubDate>Tue, 07 Apr 2020 15:03:44 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/paper_comments/</guid>
+      <description>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。 Graph Node Embedding Graph Neural Networks Misc Graph Node Embedding Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD&#39;2018. 将graph heat kernel（即wav</description>
+    </item>
+    
+    <item>
+      <title>[GCO系列-番外01] ClusterNet</title>
+      <link>https://yzhang1918.github.io/posts/clusternet/</link>
+      <pubDate>Wed, 08 Apr 2020 11:36:05 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/clusternet/</guid>
+      <description>Motivation Related Work ClusterNet Forward Pass Backward Pass A Visual Proof Solving the Optimization Problems Experimental Results Conclusion Wilder et al., End to End Learning and Optimization on Graphs. NeurIPS&#39;2019. 这篇是我在遍历Graph Combinatorial Optimization相关工作过程中发现的一篇pap</description>
+    </item>
     
     <item>
       <title>[GCO系列-前篇01] structure2vec</title>
