@@ -101,6 +101,7 @@
         <li><a href="#graph-neural-networks">Graph Neural Networks</a></li>
       </ul>
     </li>
+    <li><a href="#external-memory">External Memory</a></li>
     <li><a href="#misc">Misc</a></li>
   </ul>
 </nav>
@@ -108,26 +109,78 @@
 <h2 id="graph">Graph</h2>
 <h3 id="node-embedding">Node Embedding</h3>
 <ul>
-<li><code>Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD'2018.</code></li>
+<li><code>[GraphWave] Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD'2018.</code></li>
 </ul>
 <blockquote>
 <p>将graph heat kernel（即wavelet）的特征函数作为节点embedding，对结构相同的节点可以得到几乎完全一致的embedding；kernel矩阵需要计算Chebyshev多项式近似；有关于特征系统bound的分析证明。</p>
 </blockquote>
 <h3 id="graph-neural-networks">Graph Neural Networks</h3>
-<p><code>Ma et al., Disentangled Graph Convolutional Networks. ICML'2019.</code></p>
+<h4 id="gnn---architecture">GNN - Architecture</h4>
+<p><code>[DisenGCN] Ma et al., Disentangled Graph Convolutional Networks. ICML'2019.</code></p>
 <blockquote>
 <p>学习解耦的表征，实际是对特征做clustering分了多个channel，很像Capsule；收敛性证明与GMM的类似；related work部分写的即简洁又全面。</p>
 </blockquote>
-<p><code>Xu et al., Graph Wavelet Neural Network. ICLR'2019.</code></p>
+<p><code>[GWNN] Xu et al., Graph Wavelet Neural Network. ICLR'2019.</code></p>
 <blockquote>
 <p>图谱分析中将Fourier基替换为wavelet基；基高度稀疏；kernel矩阵需要计算Chebyshev多项式近似。</p>
 </blockquote>
-<p><code>Zeng et al., GraphSAINT: Graph Sampling Based Inductive Learning Method. ICLR'2020.</code></p>
+<p><code>[CapsGNN] Zhang and Chen, Capsule Graph Neural Network. ICLR'2019.</code></p>
+<blockquote>
+<p>Capsule在GNN上的应用；图分类；用GCN提取Primary Capsules，然后用Attention做scale，最后走dynamic routing的流程。</p>
+</blockquote>
+<p><code>[DGCNN] Zhang et al., An End-to-End Deep Learning Architecture for Graph Classification. AAAI'2018.</code></p>
+<blockquote>
+<p>提出了sort pooling用于图分类；用GCN得到节点表征后进行排序，取top-k输入到1d Conv；探讨了与WL算法及WL subtree kernel的关系。</p>
+</blockquote>
+<p><code>[Patchy-SAN] Niepert et al., Learning Convolutional Neural Networks for Graphs. ICML'2016.</code></p>
+<blockquote>
+<p>早期将CNN迁移到graph上的尝试之一；为每个节点生成定长的感受野（不等价于邻居）。</p>
+</blockquote>
+<p><code>[MCN] Lee et al., Graph Convolutional Networks with Motif-based Attention. CIKM'2019.</code></p>
+<blockquote>
+<p>计算了多种motif下的邻接矩阵，作为结构加强；在aggregation中动态决定选择哪一个motif矩阵，及阶数，利用RL进行训练。</p>
+</blockquote>
+<p><code>[MoNet] Monti et al., Geometric deep learning on graphs and manifolds using mixture model CNNs. CVPR'2017.</code></p>
+<blockquote>
+<p>经典算法之一的MoNet；对images、graphs、manifolds上的convolution做了泛化；利用Pseudo-coordinates和weight function将一系列方法概括为了template-matching；文中给出的weight function为gaussian核，对应了混合高斯。</p>
+</blockquote>
+<p><code>[DCNN] Atwood and Towsley. Diffusion-Convolutional Neural Networks. NeurIPS'2016.</code></p>
+<blockquote>
+<p>用转移矩阵建模diffusion过程；单层但同时考虑多阶的转移矩阵。</p>
+</blockquote>
+<h4 id="gnn---sampling">GNN - Sampling</h4>
+<p><code>[S-GCN/GCN-CV] Chen et al., Stochastic Training of Graph Convolutional Networks with Variance Reduction. ICML'2018.</code></p>
+<blockquote>
+<p>node sampling方式采样；利用节点历史的activation作为control variate进行方差减小；对dropout引入的随机性也进行了分析；理论证明在强假设下，考虑了激活函数与多层。</p>
+</blockquote>
+<p><code>[AS-GCN] Huang et al., Adaptive Sampling Towards Fast Graph Representation Learning. NeurIPS'2018.</code></p>
+<blockquote>
+<p>layer sampling方式采样；整体框架类似FastGCN，但引入一个self-dependent function用来计算importance weights；将l-1层的表征直接传给l+1层来捕捉second-order proximity，不同于普通的skip-connection，存在权重共享。</p>
+</blockquote>
+<p><code>[LADIES] Zou et al., Layer-Dependent Importance Sampling for Training Deep and Large Graph Convolutional Networks. NeurIPS'2019.</code></p>
+<blockquote>
+<p>在FastGCN的基础上做了改进，保证了层与层之间的稠密连接。</p>
+</blockquote>
+<p><code>[GraphSAINT] Zeng et al., GraphSAINT: Graph Sampling Based Inductive Learning Method. ICLR'2020.</code></p>
 <blockquote>
 <p>提前抽取子图输入到GNN中，可以保证GNN中各层都基于相同的图结构，不用layer-wise sampling（如graphSAGE、FastGCN）;提出了normalization方法保证为无偏估计量；分析variance并提出了optimal sampler。</p>
 </blockquote>
+<h4 id="gnn---misc">GNN - Misc.</h4>
+<p><code>Shchur et al., Pitfalls of Graph Neural Network Evaluation. NeurIPS(Workshop)'2018.</code></p>
+<blockquote>
+<p>详细比较了GCN、GAT、MoNet、GraphSAGE四种算法；说明了采用经典Planetoid划分会导致后续模型都在过拟合；不同的训练设置（如early stopping、lr decay等）也会导致不同的结果；在10个数据集上，大量的重复实验，表明GCN有着平均最佳性能；如果超参调整公平仔细，简单模型经常会能超越复杂模型；给出了四个算法的较佳参数设置。</p>
+</blockquote>
+<p><code>[Robust-GCN] Zügner and Günnemann, Certifiable Robustness and Robust Training for Graph Convolutional Networks. KDD'2019.</code></p>
+<blockquote>
+<p>图上的攻击的鲁棒性分析，允许的攻击被L0约束；提出了relu激活函数下的GCN的凸近似；将CR问题松弛为线性规划，再用对偶问题给出下界；提出了图上的robust training方法，实际就是将对偶问题插入到损失函数里。</p>
+</blockquote>
+<h2 id="external-memory">External Memory</h2>
+<p><code>[DNC] Alex et al., Hybrid computing using a neural network with dynamic external memory. Nature. 2016.</code></p>
+<blockquote>
+<p>类似NTM，但细节提升了非常多，包括memory usage indicator表示memory的空闲位置，temporal links表示数据的写入顺序；实验进行了图上的一些强化学习任务。</p>
+</blockquote>
 <h2 id="misc">Misc</h2>
-<p><code>Wilder et al., End to End Learning and Optimization on Graphs. NeurIPS'2019.</code></p>
+<p><code>[ClusterNet] Wilder et al., End to End Learning and Optimization on Graphs. NeurIPS'2019.</code></p>
 <blockquote>
 <p>关注decision-focused learning，将optimization solver嵌入到神经网络中；提出了可微的k-means层，做节点聚类。</p>
 </blockquote>
