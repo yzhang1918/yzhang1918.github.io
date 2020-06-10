@@ -98,10 +98,18 @@
     <li><a href="#graph">Graph</a>
       <ul>
         <li><a href="#node-embedding">Node Embedding</a></li>
+        <li><a href="#temporal-network-embedding">Temporal Network Embedding</a></li>
         <li><a href="#graph-neural-networks">Graph Neural Networks</a></li>
       </ul>
     </li>
+    <li><a href="#recommender-systems">Recommender Systems</a>
+      <ul>
+        <li><a href="#graph-based">Graph Based</a></li>
+      </ul>
+    </li>
+    <li><a href="#point-process">Point Process</a></li>
     <li><a href="#external-memory">External Memory</a></li>
+    <li><a href="#attention">Attention</a></li>
     <li><a href="#misc">Misc</a></li>
   </ul>
 </nav>
@@ -112,8 +120,25 @@
 <blockquote>
 <p>将graph heat kernel（即wavelet）的特征函数作为节点embedding，对结构相同的节点可以得到几乎完全一致的embedding；kernel矩阵需要计算Chebyshev多项式近似；有关于特征系统bound的分析证明。</p>
 </blockquote>
+<h3 id="temporal-network-embedding">Temporal Network Embedding</h3>
+<p><code>[HTNE] Zuo et al.,  Embedding Temporal Network via Neighborhood Formation. KDD'2018.</code></p>
+<blockquote>
+<p>将每个节点的邻居节点的形成顺序表示为一个事件序列，用Hawkes Process建模；利用attention机制调整不同历史节点的影响力；base intensity等均通过节点对的embedding计算得到。</p>
+</blockquote>
+<p><code>[MDNE] Lu et al., Temporal Network Embedding with Micro- and Macro-dynamics. CIKM'2019.</code></p>
+<blockquote>
+<p>Follow HTNE的工作，从HTNE的souce-&gt;target的建模变成了对称式的建模；将边的formation序列作为micro-dynamic用HP建模；将边的数量的序列作为marco-dynamic用类似power-law的形式建模。</p>
+</blockquote>
+<p><code>[DyRep] Trivedi et al., DyRep: Learning Representations over Dynamic Graphs. ICLR'2019.</code></p>
+<blockquote>
+<p>考虑了动态网络中的两种过程，一种为association，表现为图结构上的变化（增加边或节点）；另一种为communication，即图中两个（可能不相连）的节点的交互行为；将两种过程都用点过程建模，互相影响；设计了基于intensity的attention机制，聚合邻居信息进行传播；inductive learning。</p>
+</blockquote>
 <h3 id="graph-neural-networks">Graph Neural Networks</h3>
 <h4 id="gnn---architecture">GNN - Architecture</h4>
+<p><code>[CGNN] Xhonneux et al., Continuous Graph Neural Networks. ICML'2020.</code></p>
+<blockquote>
+<p>将GNN的逐层传播连续化，从而得到ODE，进而求解。</p>
+</blockquote>
 <p><code>[GMNN] Qu et al., GMNN: Graph Markov Neural Networks. ICML'2019.</code></p>
 <blockquote>
 <p>用GNN来建模CRF，将PGM与GNN做了统一；采用Variational EM训练，E、M均用一个GNN建模，不过M的GNN额外用到了label信息；将邻居节点的label信息泄露给了模型，但用了label信息的GNN效果反而差；两个GNN互相生成pseudo-label。</p>
@@ -202,15 +227,47 @@
 <blockquote>
 <p>图上的攻击的鲁棒性分析，允许的攻击被$/ell_0$约束；提出了relu激活函数下的GCN的凸近似；将CR问题松弛为线性规划，再用对偶问题给出下界；提出了图上的robust training方法，实际就是将对偶问题插入到损失函数里。</p>
 </blockquote>
+<h2 id="recommender-systems">Recommender Systems</h2>
+<h3 id="graph-based">Graph Based</h3>
+<p><code>[RMGCNN] Monti et al., Geometric Matrix Completion with Recurrent Multi-Graph Neural Networks. NeurIPS'2017.</code></p>
+<blockquote>
+<p>引入了column/row graphs，即user间的网络与item间的网络，提出了在两个dimension的分别做卷积的MGCNN；利用RNN建模score的传播过程，增量更新矩阵；大多数数据集上手工构建了k-NN graphs。</p>
+</blockquote>
+<p><code>[GCMC] Berg et al., Graph Convolutional Matrix Completion. KDD'2018.</code></p>
+<blockquote>
+<p>user-item二分图上用auto-encoder建模；用交叉熵优化explicit feedback；不同的rating有着不同的权重进行message passing，类似multi-channel；ordinal weight sharing能部分地捕捉到ratings之间的序；node dropout直接抛弃某节点的全部传出信号；onehot+节点属性。</p>
+</blockquote>
+<p><code>[GHP] Shang and Sun. Geometric Hawkes Processes with Graph Convolutional Recurrent Neural Networks. AAAI'2019.</code></p>
+<blockquote>
+<p>RMGCNN的输出用Hawkes Process来建模。</p>
+</blockquote>
+<h2 id="point-process">Point Process</h2>
+<p><code>[N-SM-MPP] Mei and Eisner, The Neural Hawkes Process: A Neurally Self-Modulating Multivariate Point Process. NeurIPS'2017.</code></p>
+<blockquote>
+<p>提出了一个continuous LSTM用于建模intensity；泛化了HP的self-excitation性质，还可以捕捉self-inhibition与inertia，即self-modulating；实验做了对缺失数据的讨论。</p>
+</blockquote>
+<p><code>[GMHP] Liu et al., Exploiting Graph Regularized Multi-dimensional Hawkes Processes for Modeling Events with Spatio-temporal Characteristics. IJCAI'2018.</code></p>
+<blockquote>
+<p>将图结构prior加入到MHP中；采用multi-view的方式，将MHP的influence matrix与图的connection matrix在子空间上对齐。</p>
+</blockquote>
 <h2 id="external-memory">External Memory</h2>
 <p><code>[DNC] Alex et al., Hybrid computing using a neural network with dynamic external memory. Nature. 2016.</code></p>
 <blockquote>
 <p>类似NTM，但细节提升了非常多，包括memory usage indicator表示memory的空闲位置，temporal links表示数据的写入顺序；实验进行了图上的一些强化学习任务。</p>
 </blockquote>
+<h2 id="attention">Attention</h2>
+<p><code>[GA-Net] Xue et al., Not All Attention Is Needed: Gated Attention Network for Sequence Data. AAAI'2020.</code></p>
+<blockquote>
+<p>提出了gated attention用于RNN上；引入auxiliary network输出0-1的值，从中sample binary gate，决定哪些位置不需要attend；利用gumbel softmax训练。</p>
+</blockquote>
 <h2 id="misc">Misc</h2>
 <p><code>[ClusterNet] Wilder et al., End to End Learning and Optimization on Graphs. NeurIPS'2019.</code></p>
 <blockquote>
 <p>关注decision-focused learning，将optimization solver嵌入到神经网络中；提出了可微的k-means层，做节点聚类。</p>
+</blockquote>
+<p><code>Chen et al., Neural Ordinary Differential Equations. NeurIPS'2018.</code></p>
+<blockquote>
+<p>将residual连接看作微分方程的Euler离散化，进而得到ODE；利用adjoint计算梯度，可以计算关于所有输入的梯度，而不需要知道solver的实现；对连续版本的Normalizing Flow计算有着一定的简化。</p>
 </blockquote>
 
 		</div>
