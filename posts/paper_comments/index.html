@@ -104,12 +104,19 @@
     </li>
     <li><a href="#recommender-systems">Recommender Systems</a>
       <ul>
+        <li><a href="#collaborative-filtering">Collaborative Filtering</a></li>
         <li><a href="#graph-based">Graph Based</a></li>
       </ul>
     </li>
     <li><a href="#point-process">Point Process</a></li>
     <li><a href="#external-memory">External Memory</a></li>
     <li><a href="#attention">Attention</a></li>
+    <li><a href="#nlp">NLP</a>
+      <ul>
+        <li><a href="#summarization">Summarization</a></li>
+        <li><a href="#code">Code</a></li>
+      </ul>
+    </li>
     <li><a href="#misc">Misc</a></li>
   </ul>
 </nav>
@@ -146,6 +153,10 @@
 <p><code>[Geom-GCN] Pei et al., Geom-GCN: Geometric Graph Convolutional Networks. ICLR'2020.</code></p>
 <blockquote>
 <p>指出基于message passing的GNN存在两个问题：一是聚合邻居信息时不对邻居的身份加以区分，二是不能处理长距离依赖，尤其是在disassortative图上（即节点相连并不是因为他们有相同的label）；利用node embedding将节点映射到2D隐空间上；聚合信息时，除了图上的邻居节点，也要考虑在embedding空间上的邻居；low-level聚合先将结构相似的节点聚合为一个虚拟节点，high-level再聚合虚拟节点的表征；在disassortative数据集上有着明显的提升。</p>
+</blockquote>
+<p><code>[GeniePath] Liu et al., GeniePath: Graph Neural Networks with Adaptive Receptive Paths. AAAI'2019.</code></p>
+<blockquote>
+<p>用softmax来决定1阶邻居的重要性（Breadth）；用类似LSTM的结构对多层GNN进行信息聚合（Depth）。</p>
 </blockquote>
 <p><code>[MixHop] Abu-El-Haija et al., MixHop: Higher-Order Graph Convolutional Architectures via Sparsified Neighborhood Mixing. ICML'2019.</code></p>
 <blockquote>
@@ -214,6 +225,11 @@
 <blockquote>
 <p>提出了graph transformer layer，通过softmax从基础的邻接矩阵中选择两个进行组合；堆叠l层，并将单位阵也视为邻接矩阵，即可学习长度不超l的meta path；可以通过分析softmax的权重，发现最显著的meta path。</p>
 </blockquote>
+<h4 id="gnn---dynamic-graphs">GNN - Dynamic Graphs</h4>
+<p><code>[EvolveGCN] Pareja et al., EvolveGCN: Evolving Graph Convolutional Networks for Dynamic Graphs. AAAI'2020.</code></p>
+<blockquote>
+<p>不同于以往的GNN的输出接RNN，这篇文章用RNN来建模GNN的参数矩阵；给出了GRU和LSTM在矩阵输入上的变体。</p>
+</blockquote>
 <h4 id="gnn---misc">GNN - Misc.</h4>
 <p><code>[GraphMix] Verma et al., GraphMix: Regularized Training of Graph Neural Networks for Semi-Supervised Learning. arXiv'2020.</code></p>
 <blockquote>
@@ -223,12 +239,33 @@
 <blockquote>
 <p>详细比较了GCN、GAT、MoNet、GraphSAGE四种算法；说明了采用经典Planetoid划分会导致后续模型都在过拟合；不同的训练设置（如early stopping、lr decay等）也会导致不同的结果；在10个数据集上，大量的重复实验，表明GCN有着平均最佳性能；如果超参调整公平仔细，简单模型经常会能超越复杂模型；给出了四个算法的较佳参数设置。</p>
 </blockquote>
+<p><code>Errica et al., A Fair Comparison of Graph Neural Networks for Graph Classification. ICLR'2020.</code></p>
+<blockquote>
+<p>对比了DGCNN、DiffPool、ECC、GIN、GraphSAGE+Pooling及基于sum-pooling的baseline方法；给出了详细的训练验证设置；说明了degree信息的重要性；baseline很强，应该加入实验对比。</p>
+</blockquote>
 <p><code>[Robust-GCN] Zügner and Günnemann, Certifiable Robustness and Robust Training for Graph Convolutional Networks. KDD'2019.</code></p>
 <blockquote>
 <p>图上的攻击的鲁棒性分析，允许的攻击被$/ell_0$约束；提出了relu激活函数下的GCN的凸近似；将CR问题松弛为线性规划，再用对偶问题给出下界；提出了图上的robust training方法，实际就是将对偶问题插入到损失函数里。</p>
 </blockquote>
 <h2 id="recommender-systems">Recommender Systems</h2>
+<h3 id="collaborative-filtering">Collaborative Filtering</h3>
+<p><code>[EASER] Steck. Embarrassingly Shallow Autoencoders for Sparse Data. WWW'2019.</code></p>
+<blockquote>
+<p>定义了一个简单的约束优化问题，类似auto-encoder，要求利用其他交互信息还原对单点的预测；求解出closed-form solution发现了其对应了preicision matrix，进而关联到了MRF。</p>
+</blockquote>
+<p><code>Steck. Markov Random Fields for Collaborative Filtering. NeurIPS'2019.</code></p>
+<blockquote>
+<p>与WWW'2019相反，先定义了MRF，给出了优化目标（pseudo-likelihood），发现是www'2019中的优化问题；同样要求解precision matrix；给出了一个稀疏化后的近似版本。</p>
+</blockquote>
 <h3 id="graph-based">Graph Based</h3>
+<p><code>[NGCF] Wang et al., Neural Graph Collaborative Filtering. SIGIR'2019.</code></p>
+<blockquote>
+<p>将GCN用到CF上；message的构造利用了user与item的element-wise product；对比了message dropout与node dropout的效果。</p>
+</blockquote>
+<p><code>[LightGCN] He et al., LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation. SIGIR'2020.</code></p>
+<blockquote>
+<p>实验验证了NGCF中的feature transformation与nonlinearity对推荐无帮助；提出了LightGCN，只利用了第一层的embedding与aggregation；讨论了与SGC、APPNP的关系。</p>
+</blockquote>
 <p><code>[RMGCNN] Monti et al., Geometric Matrix Completion with Recurrent Multi-Graph Neural Networks. NeurIPS'2017.</code></p>
 <blockquote>
 <p>引入了column/row graphs，即user间的网络与item间的网络，提出了在两个dimension的分别做卷积的MGCNN；利用RNN建模score的传播过程，增量更新矩阵；大多数数据集上手工构建了k-NN graphs。</p>
@@ -260,6 +297,21 @@
 <blockquote>
 <p>提出了gated attention用于RNN上；引入auxiliary network输出0-1的值，从中sample binary gate，决定哪些位置不需要attend；利用gumbel softmax训练。</p>
 </blockquote>
+<p><code>Luong et al., Effective Approaches to Attention-based Neural Machine Translation. EMNLP'2015.</code></p>
+<blockquote>
+<p>提出了global attention和local attention；local attention机制先输出一个中心位置，然后用一个window将左右两边的词包裹在内，计算attention。</p>
+</blockquote>
+<h2 id="nlp">NLP</h2>
+<h3 id="summarization">Summarization</h3>
+<p><code>[MathchSum] Zhong et al., Extractive Summarization as Text Matching. ACL'2020.</code></p>
+<blockquote>
+<p>提出了基于semantic matching的summary-level的extractive summarization模型；两阶段，第一阶段利用BertSum剪枝原始文本，并生成候选集，第二阶段则用Siamese-BERT对candidates进行匹配。</p>
+</blockquote>
+<h3 id="code">Code</h3>
+<p><code>[GraphCodeBERT] Guo et al., GraphCodeBERT: Pre-training Code Representations with Data Flow.arXiv'2020.</code></p>
+<blockquote>
+<p>将Data Flow Graph引入BERT，提出了graph-guided masked attention，实际上可以看作是GAT。提出了3个pre-training tasks：传统的MLM；Data Flow上的edge prediction；Data Flow的节点和代码中的token对齐。在4个下游任务做了验证：code search, clone detection, code translation, and code reﬁnement.</p>
+</blockquote>
 <h2 id="misc">Misc</h2>
 <p><code>[ClusterNet] Wilder et al., End to End Learning and Optimization on Graphs. NeurIPS'2019.</code></p>
 <blockquote>
@@ -268,6 +320,10 @@
 <p><code>Chen et al., Neural Ordinary Differential Equations. NeurIPS'2018.</code></p>
 <blockquote>
 <p>将residual连接看作微分方程的Euler离散化，进而得到ODE；利用adjoint计算梯度，可以计算关于所有输入的梯度，而不需要知道solver的实现；对连续版本的Normalizing Flow计算有着一定的简化。</p>
+</blockquote>
+<p><code>Müller et al., When Does Label Smoothing Help? NeurIPS'2019.</code></p>
+<blockquote>
+<p>分析了Label Smoothing的作用，从倒数第二层（penultimate）的表征来看，LS会使得同一个class下的样本点的表征形成更tight的簇，同时保证距离其他class的簇有相同的距离(equidistant)，这保证了generalization和calibration（效果同Temperature Scaling）；但作为teacher，由于equidistant会丢失class之间的相关性信息，导致student不能很好学习。</p>
 </blockquote>
 
 		</div>
