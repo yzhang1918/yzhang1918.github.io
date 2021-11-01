@@ -6,18 +6,14 @@
     <description>Recent content in paper-reading on Ylog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2020 yzhang1918</copyright>
-    <lastBuildDate>Wed, 08 Apr 2020 11:36:05 +0800</lastBuildDate>
-    
-	<atom:link href="https://yzhang1918.github.io/categories/paper-reading/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 08 Apr 2020 11:36:05 +0800</lastBuildDate><atom:link href="https://yzhang1918.github.io/categories/paper-reading/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[置顶] Paper速查</title>
       <link>https://yzhang1918.github.io/posts/paper_comments/</link>
       <pubDate>Tue, 07 Apr 2020 15:03:44 +0800</pubDate>
       
       <guid>https://yzhang1918.github.io/posts/paper_comments/</guid>
-      <description>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。 Graph Node Embedding Temporal Network Embedding Graph Neural Networks Recommender Systems Collaborative Filtering Graph Based Point Process External Memory Attention NLP Summarization Code Misc Graph Node Embedding [GraphWave] Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD&#39;2018.</description>
+      <description>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。 Graph Node Embedding Temporal Network Embedding Graph Neural Networks Explainability Recommender Systems Collaborative Filtering Graph Based Point Process External Memory Attention NLP Summarization Code Rule-based Models Misc Graph Node Embedding [GraphWave] Donnat et al., Learning Structural Node Embeddings via</description>
     </item>
     
     <item>

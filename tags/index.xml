@@ -6,11 +6,7 @@
     <description>Recent content in Tags on Ylog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2020 yzhang1918</copyright>
-    <lastBuildDate>Wed, 08 Apr 2020 11:36:05 +0800</lastBuildDate>
-    
-	<atom:link href="https://yzhang1918.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 08 Apr 2020 11:36:05 +0800</lastBuildDate><atom:link href="https://yzhang1918.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>graph-comb-opt</title>
       <link>https://yzhang1918.github.io/tags/graph-comb-opt/</link>
@@ -21,7 +17,7 @@
     </item>
     
     <item>
-      <title>Reinforcement Learning</title>
+      <title>reinforcement-learning</title>
       <link>https://yzhang1918.github.io/tags/reinforcement-learning/</link>
       <pubDate>Wed, 08 Apr 2020 11:36:05 +0800</pubDate>
       
@@ -39,7 +35,7 @@
     </item>
     
     <item>
-      <title>gnn</title>
+      <title>GNN</title>
       <link>https://yzhang1918.github.io/tags/gnn/</link>
       <pubDate>Thu, 26 Mar 2020 21:24:03 +0800</pubDate>
       
