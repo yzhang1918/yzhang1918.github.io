@@ -117,9 +117,9 @@
       <ul>
         <li><a href="#summarization">Summarization</a></li>
         <li><a href="#code">Code</a></li>
-        <li><a href="#rule-based-models">Rule-based Models</a></li>
       </ul>
     </li>
+    <li><a href="#rule-based-models">Rule-based Models</a></li>
     <li><a href="#misc">Misc</a></li>
   </ul>
 </nav>
@@ -341,7 +341,7 @@
 <blockquote>
 <p>将Data Flow Graph引入BERT，提出了graph-guided masked attention，实际上可以看作是GAT。提出了3个pre-training tasks：传统的MLM；Data Flow上的edge prediction；Data Flow的节点和代码中的token对齐。在4个下游任务做了验证：code search, clone detection, code translation, and code reﬁnement.</p>
 </blockquote>
-<h3 id="rule-based-models">Rule-based Models</h3>
+<h2 id="rule-based-models">Rule-based Models</h2>
 <p><code>[RRL] Wang et al., Scalable Rule-Based Representation Learning for Interpretable Classification. NeurIPS'2021.</code></p>
 <blockquote>
 <p>binarization layer不可训练，随机选端点；logical layer同时学CNF和DNF；最后加一层线性层；应对离散问题，提出了Gradient Grafting，将离散版本模型与连续版本模型的梯度进行嫁接。</p>
