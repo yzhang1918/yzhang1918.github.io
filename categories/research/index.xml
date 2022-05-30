@@ -6,14 +6,23 @@
     <description>Recent content in research on Ylog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2020 yzhang1918</copyright>
-    <lastBuildDate>Wed, 08 Apr 2020 11:36:05 +0800</lastBuildDate><atom:link href="https://yzhang1918.github.io/categories/research/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Nov 2021 23:37:41 +0800</lastBuildDate><atom:link href="https://yzhang1918.github.io/categories/research/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[置顶] Paper速查 - Graph</title>
+      <link>https://yzhang1918.github.io/posts/paper_comments_graph/</link>
+      <pubDate>Thu, 25 Nov 2021 23:37:41 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/paper_comments_graph/</guid>
+      <description>Graph的文章读太多了，专门开一页吧。 Node Embedding Dynamic Graphs Graph Neural Networks Architecture Pooling Sampling Heterogeneous Networks Theory Misc. Explainability Node Embedding [GraphWave] Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD&#39;2018. 将graph heat kernel（即wavele</description>
+    </item>
+    
     <item>
       <title>[置顶] Paper速查</title>
       <link>https://yzhang1918.github.io/posts/paper_comments/</link>
       <pubDate>Tue, 07 Apr 2020 15:03:44 +0800</pubDate>
       
       <guid>https://yzhang1918.github.io/posts/paper_comments/</guid>
-      <description>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。 Graph Node Embedding Temporal Network Embedding Graph Neural Networks Explainability Recommender Systems Collaborative Filtering Graph Based Point Process External Memory Attention NLP Summarization Code Rule-based Models Misc Graph Node Embedding [GraphWave] Donnat et al., Learning Structural Node Embeddings via</description>
+      <description>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。 Recommender Systems Collaborative Filtering Graph Based Point Process External Memory Attention Time Embedding NLP Summarization Code Rule-based Models Confidence Calibration Misc Recommender Systems Collaborative Filtering [EASER] Steck. Embarrassingly Shallow Autoencoders for Sparse Data. WWW&#39;2019. 定义了一个</description>
     </item>
     
     <item>

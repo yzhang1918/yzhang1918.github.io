@@ -6,14 +6,23 @@
     <description>Recent content in Posts on Ylog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2020 yzhang1918</copyright>
-    <lastBuildDate>Wed, 08 Apr 2020 11:36:05 +0800</lastBuildDate><atom:link href="https://yzhang1918.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Nov 2021 23:37:41 +0800</lastBuildDate><atom:link href="https://yzhang1918.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[置顶] Paper速查 - Graph</title>
+      <link>https://yzhang1918.github.io/posts/paper_comments_graph/</link>
+      <pubDate>Thu, 25 Nov 2021 23:37:41 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/paper_comments_graph/</guid>
+      <description>Graph的文章读太多了，专门开一页吧。 Node Embedding Dynamic Graphs Graph Neural Networks Architecture Pooling Sampling Heterogeneous Networks Theory Misc. Explainability Node Embedding [GraphWave] Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD&#39;2018. 将graph heat kernel（即wavele</description>
+    </item>
+    
     <item>
       <title>[置顶] Paper速查</title>
       <link>https://yzhang1918.github.io/posts/paper_comments/</link>
       <pubDate>Tue, 07 Apr 2020 15:03:44 +0800</pubDate>
       
       <guid>https://yzhang1918.github.io/posts/paper_comments/</guid>
-      <description>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。 Graph Node Embedding Temporal Network Embedding Graph Neural Networks Explainability Recommender Systems Collaborative Filtering Graph Based Point Process External Memory Attention NLP Summarization Code Rule-based Models Misc Graph Node Embedding [GraphWave] Donnat et al., Learning Structural Node Embeddings via</description>
+      <description>开个新坑，把读过的paper用一行评论总结，只说优点不说缺点。 Recommender Systems Collaborative Filtering Graph Based Point Process External Memory Attention Time Embedding NLP Summarization Code Rule-based Models Confidence Calibration Misc Recommender Systems Collaborative Filtering [EASER] Steck. Embarrassingly Shallow Autoencoders for Sparse Data. WWW&#39;2019. 定义了一个</description>
     </item>
     
     <item>
@@ -41,6 +50,16 @@
       
       <guid>https://yzhang1918.github.io/posts/gcn_intuition/</guid>
       <description>实验室又有新生进来了，也有对图卷积感兴趣的，那就写篇文章，简单的讲一下。本篇文章参考了Kipf的博客，主要是直观的理解，加上我的一点解读，数</description>
+    </item>
+    
+    <item>
+      <title>GAE</title>
+      <link>https://yzhang1918.github.io/posts/gae/</link>
+      <pubDate>Thu, 02 Jan 2020 22:29:38 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/gae/</guid>
+      <description>GAE Proof To prove $\mathbb{E}\left[ \sum_{t=0}^\infty \Psi_t \nabla \log\pi(a_t|s_t) \right] = \nabla \mathbb{E}[\sum_{t=0}^\infty r_t]$, we only need to prove $\mathbb{E}[\Psi_t\nabla\log\pi(a_t|s_t)] = \mathbb{E}[(\sum_{t&#39;=0}^\infty r_{t&#39;})\nabla\log\pi(a_t|s_t)],~\forall t$.
+Reward-to-go  $$ \begin{aligned} &amp; \mathbb{E}_{s_{0:\infty}, a_{0:\infty}} \left[ \left( \sum_{t&#39;=t}^\infty r_{t&#39;} \right) \nabla \log \pi(a_t|s_t) \right] \\ =&amp; \mathbb{E}_{s_{0:\infty}, a_{0:\infty}} \left[ \left( \sum_{t&#39;=0}^{\infty} r_{t&#39;} \right) \nabla \log \pi(a_t|s_t) \right] - \mathbb{E}_{s_{0:\infty}, a_{0:\infty}} \left[ \left( \sum_{t&#39;=0}^{t-1} r_{t&#39;} \right) \nabla \log \pi(a_t|s_t) \right] \\ =&amp; \mathbb{E}_{s_{0:\infty}, a_{0:\infty}} \left[ \left( \sum_{t&#39;=0}^{\infty} r_{t&#39;} \right) \nabla \log \pi(a_t|s_t) \right] - \mathbb{E}_{s_{0:t}, a_{0:t}} \left[ \left( \sum_{t&#39;=0}^{t-1} r_{t&#39;} \right) \nabla \log \pi(a_t|s_t) \right] \\ =&amp; \mathbb{E}_{s_{0:\infty}, a_{0:\infty}} \left[ \left( \sum_{t&#39;=0}^{\infty} r_{t&#39;} \right) \nabla \log \pi(a_t|s_t) \right] - \mathbb{E}_{s_{0:t-1}, a_{0:t-1}} \left[ \left( \sum_{t&#39;=0}^{t-1} r_{t&#39;} \right) \mathbb{E}_{s_t, a_t}[\nabla \log \pi(a_t|s_t) |s_{t-1}, a_{t-1}] \right] \\ =&amp; \mathbb{E}_{s_{0:\infty}, a_{0:\infty}} \left[ \left( \sum_{t&#39;=0}^{\infty} r_{t&#39;} \right) \nabla \log \pi(a_t|s_t) \right] - \mathbb{E}_{s_{0:t-1}, a_{0:t-1}} \left[ \left( \sum_{t&#39;=0}^{t-1} r_{t&#39;} \right) \cdot 0 \right] \\ =&amp; \mathbb{E}_{s_{0:\infty}, a_{0:\infty}} \left[ \left( \sum_{t&#39;=0}^{\infty} r_{t&#39;} \right) \nabla \log \pi(a_t|s_t) \right].</description>
     </item>
     
     <item>

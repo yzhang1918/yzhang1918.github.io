@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>[置顶] Paper速查 - Graph - Ylog</title><link rel="icon" type="image/png" href=icons/Y.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="[置顶] Paper速查 - Graph" />
+<meta property="og:description" content="用一行评论总结paper - Graph专栏" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yzhang1918.github.io/posts/paper_comments_graph/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-25T23:37:41&#43;08:00" />
+<meta property="article:modified_time" content="2021-11-25T23:37:41&#43;08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[置顶] Paper速查 - Graph"/>
+<meta name="twitter:description" content="用一行评论总结paper - Graph专栏"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/main.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://yzhang1918.github.io/js/main.js"></script>
+</head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false}
+                ]
+            });"></script>
+        
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://yzhang1918.github.io/">Ylog</a></h1>
+	<div class="site-description"><h2>yzhang1918&rsquo;s Blog</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/yzhang1918" title="Github"><i data-feather="github"></i></a><a href="https://www.instagram.com/yaozh1918/" title="Instagram"><i data-feather="instagram"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/categories">Categories</a>
+			</li>
+			
+			<li>
+				<a href="/tags">Tags</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">[置顶] Paper速查 - Graph</h1>
+			<div class="meta">Posted at &mdash; Nov 25, 2021</div>
+		</div>
+
+		<div class="post-tags">
+			
+				
+				<nav class="nav">
+						<ul class="flat">
+							
+							<li class="tags"><a href="/tags/reference">reference</a></li>
+							
+							
+							<li class="categories"><a href="/categories/paper-reading">paper-reading</a></li>
+							
+							<li class="categories"><a href="/categories/research">research</a></li>
+							
+						</ul>
+				</nav>
+				
+			
+		</div>
+
+		<div class="markdown">
+			<p>Graph的文章读太多了，专门开一页吧。</p>
+<div class="toc">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#node-embedding">Node Embedding</a></li>
+    <li><a href="#dynamic-graphs">Dynamic Graphs</a></li>
+    <li><a href="#graph-neural-networks">Graph Neural Networks</a>
+      <ul>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#pooling">Pooling</a></li>
+        <li><a href="#sampling">Sampling</a></li>
+        <li><a href="#heterogeneous-networks">Heterogeneous Networks</a></li>
+        <li><a href="#theory">Theory</a></li>
+        <li><a href="#misc">Misc.</a></li>
+      </ul>
+    </li>
+    <li><a href="#explainability">Explainability</a></li>
+  </ul>
+</nav>
+</div>
+<h2 id="node-embedding">Node Embedding</h2>
+<p><code>[GraphWave] Donnat et al., Learning Structural Node Embeddings via Diffusion Wavelets. KDD'2018.</code></p>
+<blockquote>
+<p>将graph heat kernel（即wavelet）的特征函数作为节点embedding，对结构相同的节点可以得到几乎完全一致的embedding；kernel矩阵需要计算Chebyshev多项式近似；有关于特征系统bound的分析证明。</p>
+</blockquote>
+<h2 id="dynamic-graphs">Dynamic Graphs</h2>
+<p><code>[HTNE] Zuo et al.,  Embedding Temporal Network via Neighborhood Formation. KDD'2018.</code></p>
+<blockquote>
+<p>将每个节点的邻居节点的形成顺序表示为一个事件序列，用Hawkes Process建模；利用attention机制调整不同历史节点的影响力；base intensity等均通过节点对的embedding计算得到。</p>
+</blockquote>
+<p><code>[MDNE] Lu et al., Temporal Network Embedding with Micro- and Macro-dynamics. CIKM'2019.</code></p>
+<blockquote>
+<p>Follow HTNE的工作，从HTNE的souce-&gt;target的建模变成了对称式的建模；将边的formation序列作为micro-dynamic用HP建模；将边的数量的序列作为marco-dynamic用类似power-law的形式建模。</p>
+</blockquote>
+<p><code>[DyRep] Trivedi et al., DyRep: Learning Representations over Dynamic Graphs. ICLR'2019.</code></p>
+<blockquote>
+<p>考虑了动态网络中的两种过程，一种为association，表现为图结构上的变化（增加边或节点）；另一种为communication，即图中两个（可能不相连）的节点的交互行为；将两种过程都用点过程建模，互相影响；设计了基于intensity的attention机制，聚合邻居信息进行传播；inductive learning。</p>
+</blockquote>
+<p><code>[EvolveGCN] Pareja et al., EvolveGCN: Evolving Graph Convolutional Networks for Dynamic Graphs. AAAI'2020.</code></p>
+<blockquote>
+<p>不同于以往的GNN的输出接RNN，这篇文章用RNN来建模GNN的参数矩阵；给出了GRU和LSTM在矩阵输入上的变体。</p>
+</blockquote>
+<h2 id="graph-neural-networks">Graph Neural Networks</h2>
+<h3 id="architecture">Architecture</h3>
+<p><code>[CGNN] Xhonneux et al., Continuous Graph Neural Networks. ICML'2020.</code></p>
+<blockquote>
+<p>将GNN的逐层传播连续化，从而得到ODE，进而求解。</p>
+</blockquote>
+<p><code>[GMNN] Qu et al., GMNN: Graph Markov Neural Networks. ICML'2019.</code></p>
+<blockquote>
+<p>用GNN来建模CRF，将PGM与GNN做了统一；采用Variational EM训练，E、M均用一个GNN建模，不过M的GNN额外用到了label信息；将邻居节点的label信息泄露给了模型，但用了label信息的GNN效果反而差；两个GNN互相生成pseudo-label。</p>
+</blockquote>
+<p><code>[Geom-GCN] Pei et al., Geom-GCN: Geometric Graph Convolutional Networks. ICLR'2020.</code></p>
+<blockquote>
+<p>指出基于message passing的GNN存在两个问题：一是聚合邻居信息时不对邻居的身份加以区分，二是不能处理长距离依赖，尤其是在disassortative图上（即节点相连并不是因为他们有相同的label）；利用node embedding将节点映射到2D隐空间上；聚合信息时，除了图上的邻居节点，也要考虑在embedding空间上的邻居；low-level聚合先将结构相似的节点聚合为一个虚拟节点，high-level再聚合虚拟节点的表征；在disassortative数据集上有着明显的提升。</p>
+</blockquote>
+<p><code>[GeniePath] Liu et al., GeniePath: Graph Neural Networks with Adaptive Receptive Paths. AAAI'2019.</code></p>
+<blockquote>
+<p>用softmax来决定1阶邻居的重要性（Breadth）；用类似LSTM的结构对多层GNN进行信息聚合（Depth）。</p>
+</blockquote>
+<p><code>[MixHop] Abu-El-Haija et al., MixHop: Higher-Order Graph Convolutional Architectures via Sparsified Neighborhood Mixing. ICML'2019.</code></p>
+<blockquote>
+<p>在聚合信息的过程中，同时接受不同幂关联矩阵下的信息，即多hop信息；利用group lasso去学习task-specific的结构（即不同幂次下的特征变换维数）。</p>
+</blockquote>
+<p><code>[DisenGCN] Ma et al., Disentangled Graph Convolutional Networks. ICML'2019.</code></p>
+<blockquote>
+<p>学习解耦的表征，实际是对特征做clustering分了多个channel，很像Capsule；收敛性证明与GMM的类似；related work部分写的即简洁又全面。</p>
+</blockquote>
+<p><code>[GWNN] Xu et al., Graph Wavelet Neural Network. ICLR'2019.</code></p>
+<blockquote>
+<p>图谱分析中将Fourier基替换为wavelet基；基高度稀疏；kernel矩阵需要计算Chebyshev多项式近似。</p>
+</blockquote>
+<p><code>[CapsGNN] Zhang and Chen, Capsule Graph Neural Network. ICLR'2019.</code></p>
+<blockquote>
+<p>Capsule在GNN上的应用；图分类；用GCN提取Primary Capsules，然后用Attention做scale，最后走dynamic routing的流程。</p>
+</blockquote>
+<p><code>[DGCNN] Zhang et al., An End-to-End Deep Learning Architecture for Graph Classification. AAAI'2018.</code></p>
+<blockquote>
+<p>提出了sort pooling用于图分类；用GCN得到节点表征后进行排序，取top-k输入到1d Conv；探讨了与WL算法及WL subtree kernel的关系。</p>
+</blockquote>
+<p><code>[Patchy-SAN] Niepert et al., Learning Convolutional Neural Networks for Graphs. ICML'2016.</code></p>
+<blockquote>
+<p>早期将CNN迁移到graph上的尝试之一；为每个节点生成定长的感受野（不等价于邻居）。</p>
+</blockquote>
+<p><code>[MCN] Lee et al., Graph Convolutional Networks with Motif-based Attention. CIKM'2019.</code></p>
+<blockquote>
+<p>计算了多种motif下的邻接矩阵，作为结构加强；在aggregation中动态决定选择哪一个motif矩阵，及阶数，利用RL进行训练。</p>
+</blockquote>
+<p><code>[MoNet] Monti et al., Geometric deep learning on graphs and manifolds using mixture model CNNs. CVPR'2017.</code></p>
+<blockquote>
+<p>经典算法之一的MoNet；对images、graphs、manifolds上的convolution做了泛化；利用Pseudo-coordinates和weight function将一系列方法概括为了template-matching；文中给出的weight function为gaussian核，对应了混合高斯。</p>
+</blockquote>
+<p><code>[DCNN] Atwood and Towsley. Diffusion-Convolutional Neural Networks. NeurIPS'2016.</code></p>
+<blockquote>
+<p>用转移矩阵建模diffusion过程；单层但同时考虑多阶的转移矩阵。</p>
+</blockquote>
+<p><code>[NEST] Yang et al., Node, Motif and Subgraph: Leveraging Network Functional Blocks Through Structural Convolution. ASONAM'2018.</code></p>
+<blockquote>
+<p>node-&gt;motif-subgraph三层次表征；需要枚举motif；subgraph分类；无真正意义上的graph convolution操作。</p>
+</blockquote>
+<p><code>[Graphormer] Ying et al., Do Transformers Really Perform Bad for Graph Representation?. NeurIPS'2021.</code></p>
+<blockquote>
+<p>Graph上的Transformer；基于度数的Centrality Encoding；基于最短路径长度的Spatial Encoding；基于最短路径上属性聚合的Edge Encoding；利用虚拟节点获得图表征。</p>
+</blockquote>
+<h3 id="pooling">Pooling</h3>
+<p><code>[GMN / MemGNN] Khasahmadi et al., Memory-Based Graph Networks. ICLR'2020.</code></p>
+<blockquote>
+<p>提出了memory layer，利用multi-head memory对上层的特征进行聚合，压缩为更少的点，类似attentional pooling，只不过keys是memory给出的；memory layer完全不考虑图结构；memory keys在化学数据集上表达了特定的化学子结构。</p>
+</blockquote>
+<h3 id="sampling">Sampling</h3>
+<p><code>[S-GCN/GCN-CV] Chen et al., Stochastic Training of Graph Convolutional Networks with Variance Reduction. ICML'2018.</code></p>
+<blockquote>
+<p>node sampling方式采样；利用节点历史的activation作为control variate进行方差减小；对dropout引入的随机性也进行了分析；理论证明在强假设下，考虑了激活函数与多层。</p>
+</blockquote>
+<p><code>[AS-GCN] Huang et al., Adaptive Sampling Towards Fast Graph Representation Learning. NeurIPS'2018.</code></p>
+<blockquote>
+<p>layer sampling方式采样；整体框架类似FastGCN，但引入一个self-dependent function用来计算importance weights；将l-1层的表征直接传给l+1层来捕捉second-order proximity，不同于普通的skip-connection，存在权重共享。</p>
+</blockquote>
+<p><code>[LADIES] Zou et al., Layer-Dependent Importance Sampling for Training Deep and Large Graph Convolutional Networks. NeurIPS'2019.</code></p>
+<blockquote>
+<p>在FastGCN的基础上做了改进，保证了层与层之间的稠密连接。</p>
+</blockquote>
+<p><code>[GraphSAINT] Zeng et al., GraphSAINT: Graph Sampling Based Inductive Learning Method. ICLR'2020.</code></p>
+<blockquote>
+<p>提前抽取子图输入到GNN中，可以保证GNN中各层都基于相同的图结构，不用layer-wise sampling（如graphSAGE、FastGCN）;提出了normalization方法保证为无偏估计量；分析variance并提出了optimal sampler。</p>
+</blockquote>
+<h3 id="heterogeneous-networks">Heterogeneous Networks</h3>
+<p><code>[GTN] Yun et al., Graph Transformer Networks. NeurIPS'2019.</code></p>
+<blockquote>
+<p>提出了graph transformer layer，通过softmax从基础的邻接矩阵中选择两个进行组合；堆叠l层，并将单位阵也视为邻接矩阵，即可学习长度不超l的meta path；可以通过分析softmax的权重，发现最显著的meta path。</p>
+</blockquote>
+<h3 id="theory">Theory</h3>
+<p><code>Zhu et al., Interpreting and Unifying Graph Neural Networks with An Optimization Framework. WWW'2021.</code></p>
+<blockquote>
+<p>将多种GNN模型用一个优化框架统一起来，并根据此优化框架提出了low-pass和high-pass两种更灵活的GNN；分析过程忽略了非线性变换；在spectral domain上分析了expressive power，即看Laplacian前系数的取值空间。</p>
+</blockquote>
+<p><code>[GCNII] Chen et al., Simple and Deep Graph Convolutional Networks. ICML'2020.</code></p>
+<blockquote>
+<p>在GCN的基础上加入了Initial residual和Identity mapping，有效处理over-smoothing；分析了expressive power；和LASSO的关系进行了讨论；提出了猜想，度数大的节点更容易over-smoothin，并用实验作了验证。</p>
+</blockquote>
+<p><code>[H2GCN] Zhu et al., Beyond Homophily in Graph Neural Networks: Current Limitations and Effective Designs. NeurIPS'2020.</code></p>
+<blockquote>
+<p>提出了针对同质性较低的图的GNN结构，主要包含三种设计；D1为分离节点自身与邻居的表征；D2为直接AGG二阶邻居；D3为Jumping Knowledge；证明了二阶邻居为homophily-dominant（D2的依据）；证明了在heterophily场景中，高频信号更重要（D3的依据）。</p>
+</blockquote>
+<h3 id="misc">Misc.</h3>
+<p><code>[GraphMix] Verma et al., GraphMix: Regularized Training of Graph Neural Networks for Semi-Supervised Learning. arXiv'2020.</code></p>
+<blockquote>
+<p>将mixup技术引入GNN中；在图上，传统的mixup通过插值方式会产生新的节点，如何将这些节点插入到图中是不明确的，因此作者引入一个额外的全连接网络FCN，在该网络上做manifold mixup；FCN利用GNN给出的预测（ensemble+sharpening），将未标记节点也纳入训练中；GNN与FCN共享特征变换的参数，以此模拟co-training过程（直接用FCN的预测作为GNN的扩充效果不好）。</p>
+</blockquote>
+<p><code>Shchur et al., Pitfalls of Graph Neural Network Evaluation. NeurIPS(Workshop)'2018.</code></p>
+<blockquote>
+<p>详细比较了GCN、GAT、MoNet、GraphSAGE四种算法；说明了采用经典Planetoid划分会导致后续模型都在过拟合；不同的训练设置（如early stopping、lr decay等）也会导致不同的结果；在10个数据集上，大量的重复实验，表明GCN有着平均最佳性能；如果超参调整公平仔细，简单模型经常会能超越复杂模型；给出了四个算法的较佳参数设置。</p>
+</blockquote>
+<p><code>Errica et al., A Fair Comparison of Graph Neural Networks for Graph Classification. ICLR'2020.</code></p>
+<blockquote>
+<p>对比了DGCNN、DiffPool、ECC、GIN、GraphSAGE+Pooling及基于sum-pooling的baseline方法；给出了详细的训练验证设置；说明了degree信息的重要性；baseline很强，应该加入实验对比。</p>
+</blockquote>
+<p><code>[Robust-GCN] Zügner and Günnemann, Certifiable Robustness and Robust Training for Graph Convolutional Networks. KDD'2019.</code></p>
+<blockquote>
+<p>图上的攻击的鲁棒性分析，允许的攻击被$/ell_0$约束；提出了relu激活函数下的GCN的凸近似；将CR问题松弛为线性规划，再用对偶问题给出下界；提出了图上的robust training方法，实际就是将对偶问题插入到损失函数里。</p>
+</blockquote>
+<h2 id="explainability">Explainability</h2>
+<p><code>[subgraphX] Yuan et al., On Explainability of Graph Neural Networks via Subgraph Explorations. ICML'2021.</code></p>
+<blockquote>
+<p>利用MCTS搜子图，Shapley value作为评分函数；root为全图，edge代表node pruning；量化评价指标为在相同sparsity下的fidelity。</p>
+</blockquote>
+<p><code>[GNNExplainer] Ying et al., GNNExplainer: Generating Explanations for Graph Neural Networks. NeurIPS'2019.</code></p>
+<blockquote>
+<p>Instance-level可解释性，最大化子图与label的互信息。</p>
+</blockquote>
+<p><code>[PGExplainer] Luo et al., Parameterized Explainer for Graph Neural Network. NeurIPS'2020.</code></p>
+<blockquote>
+<p>Instance-level可解释，GNNExplainer的加强版，采用了参数化的mask。</p>
+</blockquote>
+<p><code>[PGM-Explainer] Vu et al., PGM-Explainer: Probabilistic Graphical Model Explanations for Graph Neural Networks. NeurIPS'2020.</code></p>
+<blockquote>
+<p>Instance-level可解释，采用概率图模型作为surrogate model，扰动输入获得输出作为PGM的训练数据。</p>
+</blockquote>
+<p><code>[XGNN] Yuan et al., XGNN: Towards Model-Level Explanations of Graph Neural Networks. KDD'2020.</code></p>
+<blockquote>
+<p>Model-level可解释性，用RL生成一个小图来最大化某一class的预测概率；适用于graph classification。</p>
+</blockquote>
+<p><code>[CoGE] Faber et al., Contrastive Graph Neural Network Explanation. ICML(Workshop)'2020.</code></p>
+<blockquote>
+<p>Instance-level可解释性，用optimal transport衡量两张图之间的距离，cost为对应节点embedding的距离乘以transport weight；给定一张图，需要寻找一种节点加权方式，使得与同class的均匀加权的图的OT最小，与不同class的均匀加权的图OT最大，即contrastive learning。提出了Distribution Compliant Explanation准则，要求做可解释性时的数据分布应该与训练GNN时的数据一致。该模型中，GNN只用于提供node embedding，可解释性完全用节点权重体现，由contrastive OT优化。</p>
+</blockquote>
+
+		</div>
+<script src="https://utteranc.es/client.js"
+    repo="yzhang1918/blog_comments"
+    issue-term="pathname"
+    label="Comment"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+</script></div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> ©2020 yzhang1918 |  <a href="https://github.com/yzhang1918/ezhil">Theme</a>  Modified from <a href="https://github.com/vividvilla/ezhil">Ezhil</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77357711-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>

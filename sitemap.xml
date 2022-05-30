@@ -2,38 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://yzhang1918.github.io/posts/paper_comments_graph/</loc>
+    <lastmod>2021-11-25T23:37:41+08:00</lastmod>
+  </url><url>
     <loc>https://yzhang1918.github.io/posts/paper_comments/</loc>
     <lastmod>2020-04-07T15:03:44+08:00</lastmod>
   </url><url>
-    <loc>https://yzhang1918.github.io/posts/clusternet/</loc>
-    <lastmod>2020-04-08T11:36:05+08:00</lastmod>
-  </url><url>
     <loc>https://yzhang1918.github.io/categories/</loc>
+    <lastmod>2021-11-25T23:37:41+08:00</lastmod>
+  </url><url>
+    <loc>https://yzhang1918.github.io/categories/paper-reading/</loc>
+    <lastmod>2021-11-25T23:37:41+08:00</lastmod>
+  </url><url>
+    <loc>https://yzhang1918.github.io/posts/</loc>
+    <lastmod>2021-11-25T23:37:41+08:00</lastmod>
+  </url><url>
+    <loc>https://yzhang1918.github.io/tags/reference/</loc>
+    <lastmod>2021-11-25T23:37:41+08:00</lastmod>
+  </url><url>
+    <loc>https://yzhang1918.github.io/categories/research/</loc>
+    <lastmod>2021-11-25T23:37:41+08:00</lastmod>
+  </url><url>
+    <loc>https://yzhang1918.github.io/tags/</loc>
+    <lastmod>2021-11-25T23:37:41+08:00</lastmod>
+  </url><url>
+    <loc>https://yzhang1918.github.io/</loc>
+    <lastmod>2021-11-25T23:37:41+08:00</lastmod>
+  </url><url>
+    <loc>https://yzhang1918.github.io/posts/clusternet/</loc>
     <lastmod>2020-04-08T11:36:05+08:00</lastmod>
   </url><url>
     <loc>https://yzhang1918.github.io/tags/graph-comb-opt/</loc>
     <lastmod>2020-04-08T11:36:05+08:00</lastmod>
   </url><url>
-    <loc>https://yzhang1918.github.io/categories/paper-reading/</loc>
-    <lastmod>2020-04-08T11:36:05+08:00</lastmod>
-  </url><url>
-    <loc>https://yzhang1918.github.io/posts/</loc>
-    <lastmod>2020-04-08T11:36:05+08:00</lastmod>
-  </url><url>
     <loc>https://yzhang1918.github.io/tags/reinforcement-learning/</loc>
     <lastmod>2020-04-08T11:36:05+08:00</lastmod>
-  </url><url>
-    <loc>https://yzhang1918.github.io/categories/research/</loc>
-    <lastmod>2020-04-08T11:36:05+08:00</lastmod>
-  </url><url>
-    <loc>https://yzhang1918.github.io/tags/</loc>
-    <lastmod>2020-04-08T11:36:05+08:00</lastmod>
-  </url><url>
-    <loc>https://yzhang1918.github.io/</loc>
-    <lastmod>2020-04-08T11:36:05+08:00</lastmod>
-  </url><url>
-    <loc>https://yzhang1918.github.io/tags/reference/</loc>
-    <lastmod>2020-04-07T15:03:44+08:00</lastmod>
   </url><url>
     <loc>https://yzhang1918.github.io/posts/s2v/</loc>
     <lastmod>2020-03-26T21:24:03+08:00</lastmod>
@@ -46,6 +49,9 @@
   </url><url>
     <loc>https://yzhang1918.github.io/posts/gcn_intuition/</loc>
     <lastmod>2020-02-17T20:51:33+08:00</lastmod>
+  </url><url>
+    <loc>https://yzhang1918.github.io/posts/gae/</loc>
+    <lastmod>2020-01-02T22:29:38+08:00</lastmod>
   </url><url>
     <loc>https://yzhang1918.github.io/posts/sac/</loc>
     <lastmod>2020-01-02T20:17:15+08:00</lastmod>
