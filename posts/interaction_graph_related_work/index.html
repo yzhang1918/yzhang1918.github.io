@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>交互图表征学习相关工作 - Ylog</title><link rel="icon" type="image/png" href=icons/Y.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="交互图表征学习相关工作" />
+<meta property="og:description" content="梳理相关工作与发展脉络" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yzhang1918.github.io/posts/interaction_graph_related_work/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-08T15:41:36&#43;08:00" />
+<meta property="article:modified_time" content="2022-06-08T15:41:36&#43;08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="交互图表征学习相关工作"/>
+<meta name="twitter:description" content="梳理相关工作与发展脉络"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/main.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://yzhang1918.github.io/js/main.js"></script>
+</head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false}
+                ]
+            });"></script>
+        
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://yzhang1918.github.io/">Ylog</a></h1>
+	<div class="site-description"><h2>yzhang1918&rsquo;s Blog</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/yzhang1918" title="Github"><i data-feather="github"></i></a><a href="https://www.instagram.com/yaozh1918/" title="Instagram"><i data-feather="instagram"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/categories">Categories</a>
+			</li>
+			
+			<li>
+				<a href="/tags">Tags</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">交互图表征学习相关工作</h1>
+			<div class="meta">Posted at &mdash; Jun 8, 2022</div>
+		</div>
+
+		<div class="post-tags">
+			
+				
+				<nav class="nav">
+						<ul class="flat">
+							
+							<li class="tags"><a href="/tags/reference">reference</a></li>
+							
+							<li class="tags"><a href="/tags/gnn">gnn</a></li>
+							
+							<li class="tags"><a href="/tags/interaction-graph">interaction graph</a></li>
+							
+							
+							<li class="categories"><a href="/categories/research">research</a></li>
+							
+						</ul>
+				</nav>
+				
+			
+		</div>
+
+		<div class="markdown">
+			<div class="toc">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是交互图">什么是交互图？</a></li>
+    <li><a href="#交互图静态表征学习">交互图静态表征学习</a></li>
+    <li><a href="#交互图动态表征学习">交互图动态表征学习</a>
+      <ul>
+        <li><a href="#建议阅读顺序">建议阅读顺序</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<h2 id="什么是交互图">什么是交互图？</h2>
+<p>交互图是从Interaction Graph翻译而来，其是一种连续时间动态图（Continuous Time Dynamic Graph）。图中的节点表示行为对象，边则表示一次交互行为，具有时间戳与属性信息。动态交互图的本质是对行为序列数据的一种呈现形式，在无损表达行为序列数据的同时直观呈现了节点（行为对象）间的关联关系。如下图所示（图源自HILI<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>）：</p>
+<p><img src="/imgs/interaction_graph_related_work/interaction_graph.png" alt="Interaction Graph"></p>
+<p>早期的工作会将交互图定义为一个二分图，包括user、item两类，有些工作也针对user/item的不对等性设计针对性的模型， 如Jodie<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>等。后期工作则主要集中在一般化的连续时间动态图上。可形式化地定义为$\mathcal{G}=(\mathcal{V}, \mathcal{E})$，其中$\mathcal{V}$为节点的集合，$ \mathcal{E}$为边的集合。$ \mathcal{E} = \{(u_i, v_i, t_i, \text{attr}_i)\}_{i=1}^{N}$，这里边（edges）的集合同时也表示了事件（events）的序列。</p>
+<p>PS. 由于允许一对节点间有多条交互，因此交互图应该是一个动态的重图（multigraph）。</p>
+<h2 id="交互图静态表征学习">交互图静态表征学习</h2>
+<p>交互图的静态表征学习旨在为图中节点生成一个d维特征向量，即
+$$f: \mathcal{V} \rightarrow \Re^d.$$</p>
+<p>该问题类似图神经网络之前的node embedding任务，只不过额外考虑了动态性。</p>
+<p>该领域的第一篇工作<strong>可能</strong>是我们的IGE<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>，我们在文章中形式化的引入了Interaction Graph的定义。</p>
+<p>CTDNE, TigeCMN</p>
+<p>To Be Continued&hellip;</p>
+<h2 id="交互图动态表征学习">交互图动态表征学习</h2>
+<p>交互图的动态表征学习可以认为是为图中的节点生成关于时间的表征函数，即
+$$f: \mathcal{V} \times \mathcal{T} \rightarrow \Re^d, $$</p>
+<p>该领域的第一篇工作<strong>可能</strong>是DeepCoevolve<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，利用一对RNN来更新user和item的表征，并利用 Hawkes Process 构建损失函数。文章聚焦推荐领域，且未提及interaction graph这个名词。</p>
+<p>后续Jodie<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>对其进行了一定改进，其中最主要的改动是引入projection operation，能对节点的表征随时间推移进行一定程度的预测。此外，损失函数的设计与batch构造也有创新。文章开源了代码与4个数据集，其中Wikipeida与Reddit被后续文章广泛对比使用。</p>
+<p>之后在Jodie基础上，我们提出了HILI<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，主要是额外维护一个历史窗口来解决 information asymmetry问题（和后来提出的staleness problem<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>其实是一回事儿），即由于DeepCoevolve与Jodie基于RNN的更新机制，导致如果无事件发生，节点的表征将停止更新。</p>
+<p>在我们提出的CoPE<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>中，我们同样观察到了上述问题，只不过描述为了continuous evolution现象，同时还指出基于RNN的更新机制不能有效刻画行为之间的互相影响，即information propagation，因此提出了基于神经常微分方程的连续演化与传播机制。</p>
+<p>上述方法可以理解为基于propagation，即从T0时刻演化到最后时刻。但TGAT<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>走了另一条路线，即基于aggregation的表征。其核心是在GAT的基础上引入了时间信息，关于文中的Time Encoding可以参考作者的另一篇文章functional time encoding<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>，TGAT也可以视作上篇文章的一个应用。然而，TGAT的第0层输入为节点的初始属性，因此无法捕捉历史信息。</p>
+<p>之后，TGN<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup>提出了一个基于memory的动态图表征框架，其泛化了包括Jodie、TGAT、DyRep在内的多个模型，同时效率非常高。其中，利用 memory缓存的节点动态表征对TGAT加强，使得一方面具备了TGAT的时空聚合能力，解决了staleness problem，也弥补了TGAT不能建模历史的缺陷。</p>
+<p>CAW<sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup>：to be continued</p>
+<p>DyRep<sup id="fnref:11"><a href="#fn:11" class="footnote-ref" role="doc-noteref">11</a></sup>：to be continued</p>
+<p>APAN<sup id="fnref:12"><a href="#fn:12" class="footnote-ref" role="doc-noteref">12</a></sup>：to be continued</p>
+<p>EDGE<sup id="fnref:13"><a href="#fn:13" class="footnote-ref" role="doc-noteref">13</a></sup>：to be continued</p>
+<h3 id="建议阅读顺序">建议阅读顺序</h3>
+<p>Tier 1: DeepCoevolve(不需要深入理解方法细节) -&gt; Jodie -&gt; TGAT(读懂代码) -&gt; TGN(读懂代码)</p>
+<p>Tier 2: CoPE, CAW</p>
+<p>Tier 3: APAN, HILI, EDGE</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Chen et al., Highly Liquid Temporal Interaction Graph Embeddings. <em>WWW'21</em>. <a href="https://dl.acm.org/doi/10.1145/3442381.3449921">link</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Kumar et al., Predicting Dynamic Embedding Trajectory in Temporal Interaction Networks. <em>KDD'19</em>. <a href="https://arxiv.org/abs/1908.01207">link</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>Zhang et al., Learning Node Embeddings in Interaction Graphs. <em>CIKM'17</em>. <a href="https://dl.acm.org/doi/10.1145/3132847.3132918">link</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>Dai et al., Deep Coevolutionary Network: Embedding User and Item Features for Recommendation. <em>DLRS'16</em>. <a href="https://arxiv.org/abs/1609.03675">link</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p>Kazemi et al., Representation Learning for Dynamic Graphs: A Survey. <em>JMLR'21</em>. <a href="https://jmlr.org/papers/v21/19-447.html">link</a> <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6" role="doc-endnote">
+<p>Zhang et al., CoPE: Modeling Continuous Propagation and Evolution on Interaction Graph. <em>CIKM'21</em>. <a href="https://dl.acm.org/doi/10.1145/3459637.3482419">link</a> <a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7" role="doc-endnote">
+<p>Xu et al., Inductive Representation Learning on Temporal Graphs. <em>ICLR'20</em>. <a href="https://arxiv.org/abs/2002.07962">link</a> <a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8" role="doc-endnote">
+<p>Xu et al., Self-attention with Functional Time Representation Learning. <em>NeurIPS'19</em>. <a href="https://arxiv.org/abs/1911.12864">link</a> <a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9" role="doc-endnote">
+<p>Rossi et al., Temporal Graph Networks for Deep Learning on Dynamic Graphs. <em>ICML(Workshop)&lsquo;21</em>. <a href="https://arxiv.org/abs/2006.10637">link</a> <a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:10" role="doc-endnote">
+<p>Wang et al., Inductive Representation Learning in Temporal Networks via Causal Anonymous Walks. <em>ICLR'21</em>. <a href="https://arxiv.org/abs/2101.05974">link</a> <a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:11" role="doc-endnote">
+<p>Trivedi et al., DyRep: Learning Representations over Dynamic Graphs. <em>ICLR'19</em>. <a href="https://openreview.net/forum?id=HyePrhR5KX">link</a> <a href="#fnref:11" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:12" role="doc-endnote">
+<p>Wang et al., APAN: Asynchronous Propagation Attention Network for Real-time Temporal Graph Embedding. <em>SIGMOD'21</em>. <a href="https://arxiv.org/abs/2011.11545">link</a> <a href="#fnref:12" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:13" role="doc-endnote">
+<p>Chen et al., Efficient Dynamic Graph Representation Learning at Scale. <em>arXiv'21</em>. <a href="https://arxiv.org/abs/2112.07768">link</a> <a href="#fnref:13" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+		</div>
+<script src="https://utteranc.es/client.js"
+    repo="yzhang1918/blog_comments"
+    issue-term="pathname"
+    label="Comment"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+</script></div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> ©2020 yzhang1918 |  <a href="https://github.com/yzhang1918/ezhil">Theme</a>  Modified from <a href="https://github.com/vividvilla/ezhil">Ezhil</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77357711-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>

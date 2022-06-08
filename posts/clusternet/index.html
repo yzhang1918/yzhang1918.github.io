@@ -200,7 +200,7 @@ $$
 <p>$\frac{\partial r}{\partial x}$也可通过式1由链式法则得到。因此，如果后续需要使用$\mu$或$r$，梯度是完全可以传回去的。</p>
 <p>$\frac{\partial f}{\partial \mu}$和$\frac{\partial f}{\partial x}$是可以很容易计算出闭式解。
 但是，注意Jacobian矩阵$\frac{\partial f}{\partial \mu}$是一个$Kp$维的方阵，式2中计算其逆矩阵复杂度过高，为$O(K^3p^3)$。</p>
-<p>所以作者提出了一个近似的反向传播。核心思想为用单位阵近似Jacobian矩阵
+<p>所以作者提出了一个近似的反向传播。核心思想为用单位阵近似Jacobian矩阵
 
 $\frac{\partial f}{\partial \mu} \approx I$
 。
