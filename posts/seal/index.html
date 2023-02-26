@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>SEAL论文解读 - Ylog</title><link rel="icon" type="image/png" href=icons/Y.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="SEAL论文解读" />
+<meta property="og:description" content="Seed Expansion with generative Adversarial Learning" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yzhang1918.github.io/posts/seal/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-15T16:36:54&#43;08:00" />
+<meta property="article:modified_time" content="2020-06-15T16:36:54&#43;08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SEAL论文解读"/>
+<meta name="twitter:description" content="Seed Expansion with generative Adversarial Learning"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://yzhang1918.github.io/css/main.css" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://yzhang1918.github.io/js/main.js"></script>
+</head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false}
+                ]
+            });"></script>
+        
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://yzhang1918.github.io/">Ylog</a></h1>
+	<div class="site-description"><h2>yzhang1918&rsquo;s Blog</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/yzhang1918" title="Github"><i data-feather="github"></i></a><a href="https://www.instagram.com/yaozh1918/" title="Instagram"><i data-feather="instagram"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/categories">Categories</a>
+			</li>
+			
+			<li>
+				<a href="/tags">Tags</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">SEAL论文解读</h1>
+			<div class="meta">Posted at &mdash; Jun 15, 2020</div>
+		</div>
+
+		<div class="post-tags">
+			
+				
+				<nav class="nav">
+						<ul class="flat">
+							
+							<li class="tags"><a href="/tags/reinforcement-learning">reinforcement-learning</a></li>
+							
+							<li class="tags"><a href="/tags/graph-comb-opt">graph-comb-opt</a></li>
+							
+							<li class="tags"><a href="/tags/community-detection">community-detection</a></li>
+							
+							
+							<li class="categories"><a href="/categories/research">research</a></li>
+							
+							<li class="categories"><a href="/categories/paper-reading">paper-reading</a></li>
+							
+						</ul>
+				</nav>
+				
+			
+		</div>
+
+		<div class="markdown">
+			<div class="toc">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#related-work">Related Work</a></li>
+      </ul>
+    </li>
+    <li><a href="#model">Model</a>
+      <ul>
+        <li><a href="#discriminator">Discriminator</a></li>
+        <li><a href="#generator">Generator</a></li>
+        <li><a href="#locator">Locator</a></li>
+        <li><a href="#seed-selection">Seed Selection</a></li>
+      </ul>
+    </li>
+    <li><a href="#experiments">Experiments</a>
+      <ul>
+        <li><a href="#targeted-community-detection">Targeted Community Detection</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+</div>
+<p>今天介绍的是我们在KDD'20的一篇paper：<code>SEAL: Learning Heuristics for Community Detection with Generative Adversarial Networks</code>。这篇工作将GAN、dual learning、graph combinatorial optimization这些有趣（且热门）的概念组合在了一起，从而解决semi-supervised community detection问题。</p>
+<p>社区发现（community detection）在互联网金融风控场景中有着广泛应用，相关技术可用于虚假注册团伙、欺诈团伙、作弊团伙等批量风险的识别。社区发现通常被视为无监督的学习任务，然而，对于什么样的模式构成一个社区业内一直没有达成共识。对于新的业务场景，通常需要进行大量的分析才能提出一种合理的社区假设，这也影响了算法的泛化能力。</p>
+<p>针对上述问题，支付宝天筭安全实验室与复旦大学计算机系的专家们提出了基于生成对抗网络的种子扩展算法SEAL。SEAL是一种半监督的社区发现算法，不对社区结构进行预先假设，而是从少量的训练社区（如由业务人员标注的欺诈团伙等）中通过判别器学习该数据集中社区的特征；生成器则利用图组合优化模拟种子节点扩展过程生成社区，从而通过欺骗判别器生成高质量的社区。SEAL以一种数据驱动的方式，摆脱了对社区的显式定义，因此可以部署在不同的场景，捕捉不同结构的社区，可大幅提升对于不同类型的团伙风险的识别能力。</p>
+<h2 id="introduction">Introduction</h2>
+<p>Community detection社区（群组）检测一直是图数据挖掘领域的一个重要问题，因为它可以将网络中关系紧密的子图找出来，有助于我们对整个网络的理解：比如在PPI网络上，community detection可以发现功能上相似的蛋白质；在引文网络上，可以发现有相同研究方向的作者群体。</p>
+<p><img src="/imgs/seal/comparison.png" alt="Comparison of related tasks"></p>
+<p>但有时，在一个网络中检测所有社区计算代价很高，同时也是没有必要的。比如，我们想要检测一个交易网络中的异常群组（比如洗钱团伙等），但这样的网络主要的社区结构是由正常用户构成的。如果检测所有的群组，算法通常会返回大量的正常群组，这对异常检测任务没有帮助。例如Fig.1(a)中，我们会找到2个异常群组和一个正常群组，对于异常检测任务我们还需要再进行额外的一步过滤操作。</p>
+<p>在这种场景下，seed expansion种子扩张（又称作local community detection局部社区检测、community search社区搜索）任务可能更有帮助。给定一个查询种子节点，seed expansion会返回一个包含了种子节点的局部社区。例如Fig.1(b)所示，给定红色的异常种子，seed expansion会找到右上角的异常群组。但显然，seed expansion存在覆盖率较低的问题，因为我们很难保证有足够多的种子节点覆盖所有的异常群组。</p>
+<p>此外，对于community detection与seed expansion有一个共性的问题：目前仍没有一个通用的community的定义，不同的工作都基于了不同的对community的假设。对于属性图，定义community变得更加困难。当面对一个新的场景，我们不可避免的需要做很多尝试才能提出一个合适的定义或假设。</p>
+<p>最近，Bakshi等人提出了一个半监督commnuity detection算法Bespoke。作者发现一个网络中的社区存在一定相似性，可以聚类成3～5种社区模式。给定若干个训练社区，Bespoke算法可以总结这些社区的模式，进而在网络中搜索其他的接近这些模式的社区。虽然Bespoke可以通过训练社区捕捉社区的定义而不做过多假设，但其在生成社区的时候还是假定了社区的结构都是1-ego net；此外，Bespoke也不能处理属性图。</p>
+<p>在这篇文章中，我们继续讨论半监督community detection任务。如Fig.1(c)所示，如果训练集仅仅由异常群组构成，那么我们希望一个半监督算法能检测出网络中更多的异常群组，且对正常群组自动进行过滤。</p>
+<p><img src="/imgs/seal/framework.png" alt="Framework"></p>
+<p>对此我们提出了算法SEAL(Seed Expansion with generative Adversarial Learning)。如Fig2.所示，SEAL由4个组件构成，每一个组件都对应了一个图神经网络GNN。</p>
+<p>给定一个种子节点，generator生成器会通过从判别器传回的信号隐式地拟合真实社区的特征，从而使得生成的局部社区欺骗判别器；discriminator判别器则对输入的社区是真实的亦或是生成的进行判断。当生成器与判别器达到均衡时，判别器无法区分生成的社区与真实的社区，此时生成器成功地拟合了真实社区的特征，从而可以在网络中找到更多的相似社区。</p>
+<p>Bespoke通过一系列labelling、clustering操作，也能归纳出训练社区的模式，但在生成时却假定了都是1-ego net的形式。在SEAL中，我们将generator用一个序列决策过程来建模，并用强化学习来训练。Generator通过模仿seed expansion过程，从种子节点逐步扩张，从而构造一个社区，这样保证了输出的社区结构的灵活性。通常传统的seed expansion策略都需要设计启发式规则，而我们则是利用强化学习从数据中学习启发式规则，即文章题目中的“learning heuristics”。此外，考虑到GNN的效率问题，我们还针对性地设计了一个特殊的GNN结构，iGPN，作为generator。</p>
+<p>SEAL中的另一个重要组件是locator定位器。给定一个输入社区，locator会预测该社区的种子节点，类似于影响力节点检测。可以发现locator与generator构成了一对对偶问题，locator会对generator提供额外的正则化信号，防止generator受free-rider effects的影响。</p>
+<p>最后，seed selector用于给generator提供有潜力的种子节点。因为generator需要从一个种子开始做expansion，一个没有潜力的种子，例如一个孤立节点，显然不会生成一个好的社区。seed selector便是用于寻找有潜力的节点。</p>
+<p>总结一下，本文的主要贡献有：</p>
+<ol>
+<li>提出了用于半监督社区检测的SEAL算法；</li>
+<li>将社区生成过程用序列决策过程建模，并针对性地设计了一种高效的GNN结构；</li>
+<li>为了应对free-rider effects，我们提出了locator，并与generator构成了对偶问题。这是首次将对偶学习思想引入到社区检测领域；</li>
+<li>提出了一个选取有潜力种子节点的算法方案；</li>
+<li>我们在5个真实数据集上验证了算法的有效性。</li>
+</ol>
+<h3 id="related-work">Related Work</h3>
+<p>本文的相关工作主要分为4组：</p>
+<ol>
+<li>Community Detection：社区检测主要可以分为optimization based methods、matrix factorization methods、generative models三类，经典算法有BigClam与CESNA等。近期也有一些基于深度学习的技术，如ComE与CommunityGAN。</li>
+<li>Seed Expansion：又称local community detection或community search。给定一个种子，seed expansion算法要去返回一个包含种子的连通子图使得一个community scoring function最优，并/或满足某些结构约束。通常利用启发式规则近似求解。</li>
+<li>Semi-supervised Community Detection：半监督社区检测通常指给定了must/must-not link约束的社区检测问题。然而，在这篇文章中，我们沿用了Bespoke一文中的设定，即给定少数群组作为训练集，寻找更多的群组。</li>
+<li>Graph Combinatorial Optimization with Deep (Reinforcement) Learning：图组合优化GCO是一类经典问题，随着GNN与RL的发展，最近有一些利用深度强化学习求解GCO的工作，例如经典的S2V-DQN。用RL求解GCO通常都需要逐步构造解集，运算量很大，尤其是通过GNN做表征计算的时候。这也是促使我们设计iGPN的原因。</li>
+</ol>
+<p>在此我们仅做简单介绍，论文中有更详细的讨论。</p>
+<h2 id="model">Model</h2>
+<p>现在我们开始逐模块的介绍SEAL。</p>
+<h3 id="discriminator">Discriminator</h3>
+<p>记$\mathcal{G}=(\mathcal{V}, \mathcal{E}, \mathbf{X})$为一个无向图。
+$\mathbf{X} \in \Re^{|\mathcal{V}| \times d_0}$为节点的特征矩阵，节点$u$的特征记为$\mathbf{x}(u)\in\Re^{d_0}$。
+如果图是无属性的，我们可以简单的令$\mathbf{x}(u)=1, ~\forall u$。
+社区$\mathcal{G_C}$是图上的一个连通子图，为了描述方便，我们直接用节点集合$\mathcal{C}$来表示。</p>
+<p>Discriminator $\mathbb{D}$的任务是判别$\mathcal{C}\subset \mathcal{V}$是真实的还是生成的，这对应了一个（子）图分类任务。我们可以利用一个GNN来建模。</p>
+<p>如果我们只用社区$\mathcal{C}$的子图作为输入，那么社区如何与网络中其他节点交互是无法建模的。而纵观经典的社区定义，通常都同时考虑了社区与社区、社区与外部的连接性，因此，我们对社区进行一定的扩增作为输入：
+$\bar{\mathcal{C}} = \mathcal{C} \cup \partial \mathcal{C}$，
+其中
+
+$\partial \mathcal{C} = \{u \notin \mathcal{C} | \exists v \in \mathcal{C} \text{ s.t. } (u, v) \in \mathcal{E}\}$
+
+称作$\mathcal{C}$的outer boundary外边界。同时，我们需要标注出哪些节点在社区内，哪些在社区外，因此需要对节点的特征做一下增强：</p>
+<p>
+$$
+\mathbf{z}^{(0)}(u) = \mathbf{W}_0\mathbf{x}(u) + \mathbb{I}\{u \in \mathcal{C} \}\cdot\mathbf{w}_1 + \mathbb{I}\{u \in \partial \mathcal{C}\}\cdot\mathbf{w}_2,
+$$
+</p>
+
+
+<p>其中，$\mathbf{W}_0 \in \Re^{d \times d_0}, \mathbf{w_1, w_2} \in \Re^{d}$为模型参数。
+$\mathbb{I}\{\text{condition} \}$为indicator function，如果condition成立，则返回1，否则返回0。</p>
+<p>我们现在用一个$L$层的GNN对来得到社区的表征。GNN通常采用逐层聚合的方式，节点$u$在第$l$层的表征由其邻居节点在$l-1$层的表征聚合得到：
+<p>
+$$
+\begin{aligned}
+\mathbf{m}^{(l)}(u) &= \sigma\left( \sum\nolimits_{ v \in \mathcal{N}_{\bar{\mathcal{C}}}(u)} \mathbf{z}^{(l-1)}(v)\right), & (\text{AGGREGATE}) \\
+\mathbf{z}^{(l)}(u) &= \mathbf{W}_l \left(\mathbf{z}^{(l-1)}(u) + \mathbf{m}^{(l)}(u)\right), & (\text{COMBINE})
+\end{aligned}
+$$
+</p>
+
+
+其中$\mathbf{W}_l\in \Re^{d\times d}$为$l$层的权重，$\sigma(\cdot)$为激活函数。
+$\mathcal{N}_{\bar{\mathcal{C}}}(u)$为在扩增后社区中$u$的邻居集合。
+节点$u$最终的表征由其在各层的表征拼接得到：
+$\mathbf{z}(u) = [\mathbf{z}^{(0)}(u), \mathbf{z}^{(1)}(u), \dots, \mathbf{z}^{(L)}(u)]$。
+社区的表征则由各个节点的表征聚合得到：
+$\mathbf{z}(\bar{\mathcal{C}}) = \sum\nolimits_{u\in\mathcal{\bar{C}}} \mathbf{z}(u)$。
+最后，我们的判别器利用sigmoid函数得到输入社区是否真实的概率：
+<p>
+$$
+\mathbb{D}(\mathcal{C}; \mathcal{W}) = \text{Pr}(\mathcal{C} \text{ is real}) = \left[1 + \exp(\mathbf{w}_3^T \mathbf{z}(\mathcal{\bar{C}}))\right]^{-1},
+$$
+</p>
+
+
+其中$\mathcal{W} = \{\mathbf{W_0, \dots, W_L, w_1, w_2, w_3} \}$为判别器的参数。</p>
+<h3 id="generator">Generator</h3>
+<p>给定种子节点$u_0$，生成器$\mathbb{G}$的目标在于生成一个局部群组：
+<p>
+$$
+\mathbb{G}(u_0) = \mathcal{C} = \{u_0, u_1, \dots, u_T \}.
+$$
+</p>
+
+</p>
+<p>受seed expansion算法启发，我们采用了通过逐步构造节点集合的社区生成策略。不同于之前的手工设计的启发式算法，我们将expansion过程建模为一个序列决策过程，并从数据中自动学习启发式规则。</p>
+<p>具体来说，假设在$t$步时我们已经获得了局部的节点集合$\mathcal{C}_{t-1} = \{u_0, u_1, \dots, u_{t-1} \}$，我们现在将要从外边界$\partial \mathcal{C}_{t-1}$中选取一个节点进行扩张：$\mathcal{C}_t = \mathcal{C}_{t-1} \cup \{u_t \}$。我们称policy策略为$\mathbb{G}(a_t|\mathcal{C}_{t-1})$，其中$\mathcal{C}_{t-1}$为state，$a_t \in A_t$为下一个action，$A_t = \partial C_{t-1} \cup \{\text{STOP}\}$为动作空间。注意到除了外边界上的节点外，我们还引入了一个特殊的动作STOP用于提示生成器停止生成。</p>
+<p>同样的，我们用一个GNN来实现policy $\mathbb{G}(a_t|\mathcal{C}_{t-1})$。首先对节点的特征进行增强，以便让模型感知哪些节点在当前的解集中、哪个节点是当前的中心：
+<p>
+$$\mathbf{h}^{(0)}_t(u) = \mathbf{Q} \mathbf{x}(u) + \mathbb{I}\{u = u_0\}\cdot \mathbf{q}_1 + \mathbb{I} \{u \in \mathcal{C}_{t-1}\}\cdot \mathbf{q}_2, \tag{1}$$ 
+</p>
+
+
+其中$\mathbf{Q}\in \Re^{d \times d_0},\mathbf{q_1, q_2} \in \Re^d$为参数。
+现假设有一个GNN对特征进行了处理：
+<p>
+$$
+\mathbf{\tilde{H}}_t = \text{SOME\_GNN}\left(\mathbf{H}^{(0)}_t\right), \tag{2}
+$$
+</p>
+
+
+这里我们用$\mathbf{\tilde{H}}_t$与$\mathbf{H}^{(\cdot)}_t$表示所有节点的表征。
+当模型决定是否要停止生成过程时，需要采取一个更宏观的视角，因此我们用聚合后的节点表征作为STOP的表征。</p>
+<p>
+$$
+\begin{aligned}
+\alpha_t(u) &= \frac{\exp(\mathbf{q}_3^T \mathbf{\tilde{h}}_t(u))}{\sum_{v\in \bar{\mathcal{C}}_{t-1}} \exp(\mathbf{q}_3^T \mathbf{\tilde{h}}_t(v)) },\\
+\mathbf{\tilde{h}}_t({\text{STOP}}) &= \sum\nolimits_{u \in \bar\mathcal{C}_{t-1}} \alpha_t(u) \cdot \mathbf{\tilde{h}}_t(u). 
+\end{aligned}
+\tag{3}
+$$
+</p>
+
+
+<p>那么将一个新的节点加到节点集合里或停止生成过程的概率可由下式计算：
+<p>
+$$
+\mathbb{G}(a_t | \mathcal{C}_{t-1}) \propto
+\begin{cases}
+\exp\left(\mathbf{q}_4^T \mathbf{\tilde{h}}_t(a_t)\right) & \text{ if } a_t \in \partial \mathcal{C}_{t-1} \text{ or } a_t=\text{STOP},\\
+0 & \text{ otherwise},
+\end{cases}
+\tag{4}
+$$
+</p>
+
+
+这里$\mathbf{q}_4$为参数。</p>
+<h4 id="igpn">iGPN</h4>
+<p>虽然Eq.2中我们可以采用多种GNN，但可以发现，在每一步生成过程中，都需要计算一次GNN，这会带来很大的计算开销。
+因此，我们提出了iGPN(Graph Pointer Network with incremental updates)。
+对于图上的序列决策问题，iGPN相比传统的GNN模型可以获得30x的加速。iGPN的性能优势来源于两点：1.iGPN通过增量更新避免在前向传播时所有节点都经过GNN；2.iGPN的节点聚合过程无参，因此也不需要参与反向传播。</p>
+<p>iGPN的核心组件为无参的GNN模型，例如本文采用的APPNP模型。我们定义$t$时刻所有节点的特征矩阵为$\mathbf{X}_t = [\mathbf{X}, \mathbf{e}_{\{u_0\}}, \mathbf{e}_{\mathcal{C}_{t-1}}]$，这里$\mathbf{e}_\mathcal{S}$为一个01向量，如果$u\in \mathcal{S}$则元素$\mathbf{e}_{\mathcal{S}}(u) = 1$，否则为0。
+APPNP的形式如下：
+<p>
+$$
+\mathbf{H}_t^{(L)} = \text{APPNP}(f(\mathbf{X_t})) \Rightarrow
+\begin{cases}
+\mathbf{H}_t^{(0)} = f(\mathbf{X}_t) = \tilde{\mathbf{Q}} \mathbf{X}_t, \\
+\mathbf{H}_t^{(l+1)} = (1- \beta) \mathbf{A} \mathbf{H}_t^{(l)} + \beta \mathbf{H}_t^{(0)}, 
+\end{cases}
+$$
+</p>
+
+
+这里$\mathbf{A}$对称归一化的邻接矩阵。</p>
+<p>因为$\text{APPNP}(\cdot)$是一个关于输入的多项式函数，我们发现$\mathbf{H}^{(L)}_t = \text{APPNP}(f(\mathbf{X}_t)) = \mathbf{\tilde{Q}} \cdot \text{APPNP}(\mathbf{X}_t)$。进而我们可以得到如下的更新公式：
+<p>
+$$
+\begin{aligned}
+\mathbf{X}_0 &= [\mathbf{X}, \mathbf{0, 0}],  & \mathbf{H}_0 &= \text{APPNP}(\mathbf{X}_0), \\
+\Delta \mathbf{X}_1 &= [\mathbf{O}, \mathbf{e}_{\{u_0 \}}, \mathbf{e}_{\{u_{0}\}}],  & \\
+\Delta \mathbf{X}_t &= [\mathbf{O}, \mathbf{0}, \mathbf{e}_{\{u_{t-1}\}}] ~( t > 1),  & \Delta \mathbf{H}_t& = \text{APPNP}(\Delta \mathbf{X}_t) \\ 
+\mathbf{H}_t &= \mathbf{H}_{t-1} + \Delta \mathbf{H}_t = \text{APPNP}(\mathbf{X}_t),
+\end{aligned}
+\tag{5}
+$$
+</p>
+
+
+其中$\mathbf{O}$ and $\mathbf{0}$表示全为0的矩阵、向量。
+我们对$t$时刻的特征进行了分解$\mathbf{X}_{t} = \mathbf{X}_{t-1} + \Delta \mathbf{X}_t$。
+而$\Delta \mathbf{X}_t$是一个仅有1或2个非零元素，因此极度稀疏，这也使得$\Delta \mathbf{H}_t$可以非常快速的计算出来。
+这样，我们以一种计算量很小的方式增量计算出了$\mathbf{H}_t$。</p>
+<p>当然，为了增强模型的表达能力，我们用一个MLP得到最终的表征：
+<p>
+$$
+\tilde{\mathbf{H}}_t(\mathcal{\bar{C}}_{t-1}) = \text{MLP}(\mathbf{H}_t(\mathcal{\bar{C}}_{t-1}); \mathcal{Q'}),
+$$
+</p>
+
+
+这里参数为$\mathcal{Q'}$。
+最后我们将结果代回Eqs.2-4，便可完成我们的生成器。</p>
+<h4 id="optimizing-the-generator-with-policy-gradient">Optimizing the Generator with policy gradient</h4>
+<p>考虑到生成器涉及到了sampling，我们选择policy gradient的方式进行训练。
+我们定义一个完整的社区的reward为$r(\mathcal{C}) = -\log (1 - \mathbb{{D}}(\mathcal{C}))$。
+生成器的训练目标为最大化期望reward，其policy gradient可以表示为
+<p>
+$$
+\begin{aligned}
+&\nabla J_\mathbb{G}(\mathcal{Q'} | u_0) = \nabla \mathbb{E}_{\mathcal{C} | u_0\sim \mathbb{G}} [r(\mathcal{C})] \\
+=& \mathbb{E}_{u_1, \dots, u_T|u_0 \sim \mathbb{G}}\left[\sum_{t=1}^{T} \nabla \log \mathbb{G}(u_t|\mathcal{C}_{t-1}) \cdot Q(\mathcal{C}_{t-1}, u_t)\right],
+\end{aligned}
+\tag{6}
+$$
+</p>
+
+
+这里$Q(\mathcal{C}_{t-1}, u_t) = \mathbb{E}_{u_{t+1}, \dots, u_T | \mathcal{C}_{t} \sim \mathbb{G}} [r(\mathcal{C})]$为state-action function，我们采用其Monte Carlo估计进行近似：
+<p>
+$$
+\hat{Q}(\mathcal{C}_{t-1}, u_t) = 
+\begin{cases}
+    \frac{1}{M}  \sum_{i=1}^{M} r(\mathcal{C}^{(i)}) & \text{ if } t < T,\\
+    r(\mathcal{C}_{t-1} \cup \{u_t \}) & \text{ if } t = T,\\
+\end{cases}
+$$
+</p>
+
+
+其中$\mathcal{C}^{(i)} ~(i=1, \dots, M)$为给定$\mathcal{C}_{t-1} \cup {u_t}$，由生成器补全的若干完整社区（rollouts）。</p>
+<p>生成过程可见下图示意。请注意梯度不会经过APPNP，且APPNP的输入仅为一个高度稀疏的矩阵。</p>
+<p><img src="/imgs/seal/generator.png" alt="Generator"></p>
+<h4 id="pre-training-and-teacher-forcing">Pre-training and Teacher Forcing</h4>
+<p>GAN与强化学习都很难训练，因此我们需要对生成器通过MLE进行pre-training与teacher forcing。
+注意到生成器以一种有序的方式生成了一个无序的集合，因此其似然函数的计算需要考虑所有可能的排序：</p>
+<p><p>
+$$
+L(\mathcal{C}) = \max_\pi \sum_{i=1}^T \log \mathbb{G}(u_{\pi(i)}|\{u_0, u_{\pi(1)}, \dots, u_{\pi(i-1)}\}),
+$$
+</p>
+
+
+这里$\pi$表示可能的置换。</p>
+<p>考虑到最多可能有$T!$种置换，我们需要对其进行近似。这里我们采用了set2set中的bootstrapped方式：
+<p>
+$$
+    L^{\text{set}}(\mathcal{C}) =  \sum_{i=1}^T \log \mathbb{G}(u_{\pi^*(i)}|\{u_0, u_{\pi^*(1)}, \dots, u_{\pi^*(i-1)}\}),
+\tag{7}
+$$
+</p>
+
+
+这里$\pi^*(i) = \arg \max \mathbb{G}(\cdot | \{u_0, u_{\pi^*(1)}, \dots, u_{\pi^*(i-1)}\})$，即我们动态地决定我们的训练目标。
+我们称优化上式为set-wise MLE。
+如set2set一文中指出，直接优化Eq.7可能会让模型陷入到某个随机的置换中，而不去探索其他可能。因此，我们还提出了list-wise MLE：</p>
+<p><p>
+$$
+    L^{\text{list}}(\mathcal{C}) =  \sum_{i=1}^T \log \mathbb{G}(u_{\pi'(i)}|\{u_0, u_{\pi'(1)}, \dots, u_{\pi'(i-1)}\}),
+\tag{8}
+$$
+</p>
+
+
+这里，$\pi'$是我们提前抽样的一个置换。</p>
+<p>Set-wise用于pre-training与teacher forcing阶段，但list-wise仅用于pre-training阶段。</p>
+<h3 id="locator">Locator</h3>
+<p>现在我们介绍SEAL的第三个组件，locator定位器。首先我们来看一个现象：</p>
+<p><img src="/imgs/seal/effects.png" alt="Effects"></p>
+<p>红色节点是种子节点，我们理想的输出结果是左侧的4-clique，但有时生成器会将右侧的8-clique也一起返回，这种现象称作free-rider effects。此外，在极端情况下，可能生成器直接无视了4-clique，转而输出8-clique（蓝色区域），我们称这种现象为dominance pursing effects。这两种现象出现的原因都是因为判别器可能给8-clique更高的reward，生成器便会忽视种子节点。</p>
+<p>注意到种子节点应当是一个社区中最有影响力的节点，换言之，一个好的生成社区，应该容易分辨出哪个是种子节点。
+这里我们引入locator定位器：输入一个社区，locator需要预测该社区的种子节点是哪一个。如果输入的生成社区质量较低，则locator很难定位到真正的种子节点，那么生成器就会接收到一个较低的reward；反之，如果。通过locator传递给生成器的正则信号，我们可以应对free-rider effects与dominance pursing effects。</p>
+<p><img src="/imgs/seal/dual.png" alt="Dual Learning"></p>
+<p>可以发现，locator与generator构成了一对对偶任务：给定一个种子，generator生成一个社区，之后locator预测该社区的种子，并与真实种子比较计算reward并传会给generator；给定一个社区，locator预测其种子，之后由generator根据种子生成社区，并与真实社区比较计算reward传会给locator。</p>
+<p>Locator与discriminator有一样的架构，这里省略类似的计算过程，假设我们已经得到了节点的表征$\mathbf{z}(u)$。那么节点$u$为种子的概率为
+<p>
+$$\mathbb{L}(u|\mathcal{C};\mathcal{P}) = \frac{\exp{\mathbf{p}^T \mathbf{z}(u)}}{\sum_v \exp{ \mathbf{p}^T \mathbf{z}(v)}}.$$
+</p>
+
+
+我们将reward进行扩充，加入种子节点$u_0$的在locator下的ranking：
+<p>
+$$r(\mathcal{C}) = -\log(1 - \mathbb{D}(\mathcal{C})) + \lambda_l\cdot \text{ranking}(u_0 | \mathcal{C})。$$
+</p>
+
+</p>
+<p>Locator则利用generator传来的信号进行训练。这里我们用generator重构的社区与真实社区的Jaccard相似度作为reward：
+<p>
+$$
+\begin{aligned}
+\nabla J_\mathbb{L}(\mathcal{P}| \mathcal{C}) &= \nabla \mathbb{E}_{s|\mathcal{C} \sim \mathbb{L}, \hat{\mathcal{C}}|s \sim \mathbb{G}}\left[\text{Jaccard}(\mathcal{C}, \hat{\mathcal{C}})\right]\\
+&\approx \nabla \log \mathbb{L}(s|\mathcal{C}) \cdot \text{Jaccard}(\mathcal{C}, \hat{\mathcal{C}}),
+\end{aligned}
+\tag{9}
+$$
+</p>
+
+</p>
+<p>此外，我们也可以引入一定的先验，例如假设生成的社区应该围绕着种子节点。故我们引入radius penalty：
+<p>
+$$
+r(\mathcal{C}) = -\log(1 - \mathbb{D}(\mathcal{C}))  + \lambda_l\cdot \text{ranking}(u_0 | \mathcal{C}) - \lambda_r \cdot \max_u D(u, u_0),
+\tag{10}
+$$
+</p>
+
+
+其中，$D(u, u_0)$为从$u_0$到$u$的最短路径的距离。我们称$\max_{u \in \mathcal{C}} D(u, u_0)$为$\mathcal{C}$的radius半径。引入radius penalty也可以应对Fig.4中的问题，因为此时4-clique的半径更短，Eq.10中reward更高。</p>
+<h3 id="seed-selection">Seed Selection</h3>
+<p>生成高质量的社区离不开高质量的种子。一种暴力的方法是计算
+<p>
+$$ y(u) = \mathbb{E}_{\mathcal{C}|u\sim \mathbb{G}}[r(\mathcal{C})]\approx r(\mathbb{G}(u)) $$
+</p>
+
+
+作为节点$u$的分数，然后选取top-$k$个节点（及其社区）返回。但显然这样的计算代价很高。这里我们采用一个简单高效的方案。</p>
+<p>我们采样一部分节点并生成他们的社区，计算社区的rewards，然后以此为训练集，训练一个图半监督节点回归模型，对其他节点进行打分。返回预测分数的top-$k$节点，生成其社区返回。我们采用了APPNP作为回归模型，并对节点特征用local degree profile进行了加强。</p>
+<p>SEAL算法的训练及预测伪代码如下所示。可以看到，node selector只在最后预测时刻才用到。</p>
+<p><img src="/imgs/seal/algo.png" alt="Algorithm"></p>
+<h2 id="experiments">Experiments</h2>
+<p>为了验证SEAL的有效性，我们对比了一系列的算法，包括overlapping社区检测经典算法BigClam与其在属性图上的拓展CESNA，及利用到训练数据的版本BigClam-A与CESNA-A；基于node/community embedding的ComE算法；基于GAN的CommunityGAN；及半监督算法Bespoke。我们自己的算法除了SEAL外，还对比了无属性的版本SEAL w/o attr.。</p>
+<p><img src="/imgs/seal/data.png" alt="Dataset"></p>
+<p>我们在上面5个数据集上做了实验。在Facebook上我们用28个社区做训练、2个做验证，其余做测试，要求半监督模型（SEAL与Bespoke）输出200个社区。其他数据集则都采用450个做训练、50个做验证、输出5000个的模式。对于其他算法，则由BigClam自动检测社区数量，并作为所有算法的输出社区数量。</p>
+<p><img src="/imgs/seal/results.png" alt="Experimental Results"></p>
+<p>从上面的结果可以看出，我们的算法SEAL不论是否考虑属性，都达到了非常好的效果，尤其是在DBLP与Amazon数据集上。此外，Bespoke大多数情况也表现不错，说明了半监督的设置确实会有助于社区检测。</p>
+<h3 id="targeted-community-detection">Targeted Community Detection</h3>
+<p>本文提出的一个动机就是网络中可能同时存在多种社区结构，但我们只想找其中的特定一种，例如欺诈团伙。因此，我们设计了一个实验来验证SEAL算法是否可以针对训练集中的社区捕捉其特点，找到更多类似的社区并自动过滤无关社区。我们将DBLP与Amazon两个网络通过随机添加10,000条跨网络连边联系起来。如果我们用450个DBLP中的社区做训练，输出5000个社区，可以发现其中90.50%的社区都来自DBLP，且有着0.6239的F1；反之，如果用450个来自Amazon的社区做训练，找到的社区中有72.46%都来自Amazon，且有着0.8091的F1。这说明SEAL确实可以针对特定类型的社区进行检测。</p>
+<p>在论文中，我们还探讨了locator与radius penalty的重要性，及seed selector的有效性。</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>这篇paper提出了可以从数据中学习启发式规则的半监督社区检测算法SEAL，并且在5个真实数据集上验证了有效性。我们认为未来可能的拓展方向有三点：1.研究数据增强技术，减少训练样本的数量；2.将iGPN应用到更多的图组合优化问题上；3.将generator-locator的思路用于影响力节点检测。</p>
+
+		</div>
+<script src="https://utteranc.es/client.js"
+    repo="yzhang1918/blog_comments"
+    issue-term="pathname"
+    label="Comment"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+</script></div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> ©2020 yzhang1918 |  <a href="https://github.com/yzhang1918/ezhil">Theme</a>  Modified from <a href="https://github.com/vividvilla/ezhil">Ezhil</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77357711-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>

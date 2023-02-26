@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>community-detection on Ylog</title>
+    <link>https://yzhang1918.github.io/tags/community-detection/</link>
+    <description>Recent content in community-detection on Ylog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>©2020 yzhang1918</copyright>
+    <lastBuildDate>Mon, 15 Jun 2020 16:36:54 +0800</lastBuildDate><atom:link href="https://yzhang1918.github.io/tags/community-detection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SEAL论文解读</title>
+      <link>https://yzhang1918.github.io/posts/seal/</link>
+      <pubDate>Mon, 15 Jun 2020 16:36:54 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/seal/</guid>
+      <description>Introduction Related Work Model Discriminator Generator Locator Seed Selection Experiments Targeted Community Detection Conclusion 今天介绍的是我们在KDD&#39;20的一篇paper：SEAL: Learning Heuristics for Community Detection with Generative Adversarial Networks。这篇工作将GAN、d</description>
+    </item>
+    
+  </channel>
+</rss>

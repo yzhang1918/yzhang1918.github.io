@@ -35,6 +35,15 @@
     </item>
     
     <item>
+      <title>SEAL论文解读</title>
+      <link>https://yzhang1918.github.io/posts/seal/</link>
+      <pubDate>Mon, 15 Jun 2020 16:36:54 +0800</pubDate>
+      
+      <guid>https://yzhang1918.github.io/posts/seal/</guid>
+      <description>Introduction Related Work Model Discriminator Generator Locator Seed Selection Experiments Targeted Community Detection Conclusion 今天介绍的是我们在KDD&#39;20的一篇paper：SEAL: Learning Heuristics for Community Detection with Generative Adversarial Networks。这篇工作将GAN、d</description>
+    </item>
+    
+    <item>
       <title>[GCO系列-番外01] ClusterNet</title>
       <link>https://yzhang1918.github.io/posts/clusternet/</link>
       <pubDate>Wed, 08 Apr 2020 11:36:05 +0800</pubDate>
